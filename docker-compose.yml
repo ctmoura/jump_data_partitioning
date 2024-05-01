@@ -13,6 +13,11 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 3G
     volumes:
       - ./data/postgresql/data:/var/lib/postgresql/data
       - ./data/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
