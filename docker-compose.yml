@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+
+  postgres:
+    image: postgres:16.2
+    env_file: env/dev.env
+    ports:
+      - 15432:5432
+    restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - ./data/postgresql/data:/var/lib/postgresql/data
+      - ./data/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - jump_sharding-network
+
+  pgadmin:
+    image: dpage/pgadmin4:8.5
+    env_file: env/dev.env
+    ports:
+      - "16543:80"
+    volumes:
+      - ./conf/pgadmin/servers.json:/pgadmin4/servers.json
+    restart: always
+    networks:
+      - jump_sharding-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+networks: 
+  jump_sharding-network:
+    driver: bridge
+    attachable: true
