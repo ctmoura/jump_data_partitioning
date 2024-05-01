@@ -19,3 +19,7 @@ deploy:
     limits:
       cpus: "2.0"
       memory: 3G
+
+## Experimento 01 - AS-IS
+
+Neste experimento temos o objetivo de avaliar arquitetura de dados atual sem qualquer intervenção no modelo de dados e coletar métricas de performance.
