@@ -135,7 +135,39 @@ ORDER BY "processoID", "dataFinal" DESC;
 
 ![Stats](./experimentos/01-as-is/stats.png)
 
+4. Escalabilidade
 
+Para essa métrica, implementamos uma aplicação em Java utilizando Spring Boot, que publica um endpoint REST responsável por executar a query destacada abaixo e fazer a leitura do ResultSet, capturando o timestamp inicial e final para cálculo da duração da execução.
+
+```sql
+SELECT
+	p."NPU", p."processoID", "dataPrimeiroMovimento",
+  c.descricao AS classe, a.descricao AS assunto,
+  activity, "dataInicio", "dataFinal", "usuarioID", "movimentoID", duration
+  "nomeServidor", "tipoServidor"
+FROM
+	processos_18006 AS p
+INNER JOIN
+	movimentos_18006 AS m ON p."processoID" = m."processoID"
+INNER JOIN
+	classes AS c ON p.classe = c.id
+INNER JOIN
+	assuntos AS a ON p.assunto = a.id
+INNER JOIN
+	servidores ON m."usuarioID" = servidores."servidorID"
+ORDER BY "processoID", "dataFinal" DESC;
+```
+
+Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou simular a carga de usuários simultâneos utilizando a aplicação.
+
+| # Usuários | Tempo mínimo de resposta   | Tempo máximo de resposta    | 
+| ---------- | -------------------------- | --------------------------- | 
+| 1          | 1 segundo                  | 2 segundos                  |
+| 50         | 33 segundos                | 43 segundos                 |
+| 100        | 67 segundos                | 77 segundos                 |
+| 200        | XX segundos                | XX segundos                 |
+| 500        | XX segundos                | XX segundos                 |
+| 1000       | XX segundos                | XX segundos                 |
 
 
 ### Reference Documentation
