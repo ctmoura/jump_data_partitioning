@@ -14,11 +14,13 @@ Para o experimento está sendo utilizada uma infraestrutura de containers com Do
 
 ### Docker Resources
 
+Limitamos os recursos de CPU e memória do contaneir para que fosse definido um baseline para comparação das estrégias.
+
 deploy:
   resources:
     limits:
-      cpus: "2.0"
-      memory: 3G
+      cpus: "4.0"
+      memory: 6G
 
 ## Experimento 01 - AS-IS
 
@@ -160,12 +162,12 @@ ORDER BY "processoID", "dataFinal" DESC;
 
 Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou simular a carga de usuários simultâneos utilizando a aplicação.
 
-| # Usuários | Tempo mínimo de resposta   | Tempo máximo de resposta    | 
-| ---------- | -------------------------- | --------------------------- | 
+| # Usuários | Tempo mínimo de resposta   | Tempo máximo de resposta    |
+| ---------- | -------------------------- | --------------------------- |
 | 1          | 1 segundo                  | 2 segundos                  |
-| 50         | 33 segundos                | 43 segundos                 |
-| 100        | 67 segundos                | 77 segundos                 |
-| 200        | XX segundos                | XX segundos                 |
+| 50         | 15 segundos                | 45 segundos                 |
+| 100        | 26 segundos                | 113 segundos                |
+| 200        | 47 segundos                | 203 segundos                |
 | 500        | XX segundos                | XX segundos                 |
 | 1000       | XX segundos                | XX segundos                 |
 
