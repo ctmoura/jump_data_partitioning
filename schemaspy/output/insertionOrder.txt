@@ -1,0 +1,14 @@
+assuntos
+classes
+tribunais
+processos_18006
+cod_movimentos
+documentos
+movimentos_18006
+complementos_18006
+unidades
+environment_variables
+metabase_statistics
+servidores
+templates
+usuarios

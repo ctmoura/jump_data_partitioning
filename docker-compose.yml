@@ -1,5 +1,3 @@
-version: '3.3'
-
 services:
 
   postgres:
@@ -38,6 +36,18 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+  schemaspy:
+    image: schemaspy/schemaspy:6.2.4
+    env_file: env/dev.env
+    volumes:
+      - ./schemaspy/output:/output
+      - ./conf/schemaspy/schemaspy.properties:/schemaspy.properties
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - jump_sharding-network
 
 networks: 
   jump_sharding-network:
