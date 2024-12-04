@@ -15,7 +15,7 @@ services:
       resources:
         limits:
           cpus: "2.0"
-          memory: 4G
+          memory: 6G
     command: ["postgres", "-c", "shared_buffers=1024MB", "-c", "max_connections=200"]
     volumes:
       - ./data/postgresql/data:/var/lib/postgresql/data

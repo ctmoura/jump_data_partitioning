@@ -7,9 +7,9 @@ Para o experimento está sendo utilizada uma infraestrutura de containers com Do
 
 ### Equipamento Host
 
-- Macbook PRO
-- 2 GHz Quad-Core Intel Core i5
-- 16 GB 3733 MHz LPDDR4X
+- MacBook Pro 
+- Apple M2 Max
+- 32 GB
 - SSD 1TB
 
 ### Docker Resources
@@ -29,7 +29,11 @@ Neste experimento temos o objetivo de avaliar arquitetura de dados atual sem qua
 
 ## Premissas
 
-O JuMP utiliza em sua arquitetura de dados atual uma estratégia de particionamento de dados física, a nível de tabela na mesma instância do banco de dados. As tabelas processo_x, movimentos_x e complementos_x, onde "_x" se refere ao campo orgaoJulgadorID da tabela unidades, e elas são criadas dinâmicamente na medida que a carga de dados é realizada para cada Tribunal.
+O JuMP utiliza em sua arquitetura de dados atual uma estratégia de particionamento de dados física, a nível de tabela, e na mesma instância do banco de dados. Dessa forma, as tabelas de: processo, movimentos e complementos são criadas com um sufixo "_OrgaoJulgadorID", onde cada armazena os dados particionados por Órgão Julgador. Essas tabelas são criadas dinâmicamente na medida que a carga de dados é realizada para cada Tribunal.
+
+### Modelo de dados atual
+
+![Stats](./schemaspy/output/diagrams/summary/relationships.real.compact.png)
 
 
 ## Métricas
@@ -170,22 +174,4 @@ Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou si
 | 200        | 47 segundos                | 203 segundos                |
 | 500        | XX segundos                | XX segundos                 |
 | 1000       | XX segundos                | XX segundos                 |
-
-
-### Reference Documentation
-For further reference, please consider the following sections:
-
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.2.5/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.2.5/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#web)
-* [Spring Data JDBC](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#data.sql.jdbc)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Using Spring Data JDBC](https://github.com/spring-projects/spring-data-examples/tree/master/jdbc/basics)
 
