@@ -1,6 +1,10 @@
 ## Experimento 01 - AS-IS
 
-Neste experimento temos o objetivo de avaliar arquitetura de dados atual sem qualquer intervenção no modelo de dados e coletar métricas de performance.
+Este é o nosso ponto de partida para realização dos experimentos, nele serão coletados os resultados das métricas para availação comparativa, aplicadas ao atual cenário do JuMP, sem qualquer intervenção na estretégia de particionamento utilizada, modelo de dados, ou arquitetura.
+
+Sobre o ambiente de execução dos experimentos, vale destacar que se trata de um ambiente simulado e distinto do ambiente de produção, uma vez que precisamos ter o controle e dos parâmetros de concorrência, disponibilidade de recursos, e performance, sem impactar o ambiente real.
+
+Para uma comparação justa das estratégias, o ambiente, os recursos disponíveis de memória, cpu e aramezenamento serão sempre equivalentes em todos os experimentos.
 
 ## Resultados
 
@@ -28,7 +32,7 @@ ORDER BY "processoID", "dataFinal" DESC;
 ```
 
 - Total de registros: **123777**
-- Tempo de execução: **2 segundos e 750 ms**
+- Tempo de execução: **319 ms**
 
 2. Taxa de Transferência de Dados
 

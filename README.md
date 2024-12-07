@@ -1,9 +1,44 @@
-# jump_data_partitioning
-Projeto elaborado para implementação e experimentação das estratégias de particionamento de dados aplicadas ao JuMP.
+# JuMP: Data Partitioning
+Este projeto foi elaborado para experimentação e avaliação das estratégias de particionamento proposta pela pesquisa de mestrado que tem
+o objetivo realizar um benchmark das principais estratégias aplicadas a ferramenta JuMP.
 
-## Ambiente utilizado para os testes
+* Aluno: `Cleber Tavares de Moura` [ctm@cin.ufpe.br](mailto:ctm@cin.ufpe.br)
+* Orientador:  `Ricardo Massa` [rmfl@cin.ufpe.br](mailto:rmfl@cin.ufpe.br)
 
-Para o experimento está sendo utilizada uma infraestrutura de containers com Docker.
+## Arquitetura da Solução JuMP
+
+A imagem abaixo apresenta uma visão arquitetural de alto nível dos componentes que compõem a solução JuMP, demonstrando o fluxo dos dados.
+
+![Stats](./experimentos/arquitetura-solucao-jump.png)
+
+Abaixo destacamos o fluxo dos dados:
+
+1. Os tribunais, por meio de uma aplicação cliente do CODEX, envia diáriamente os dados processuais para o CODEX servidor;
+2. Estes dados processuais são armazenados na base do CODEX;
+3. Para cada processo criado e/ou movimentado, o CODEX publica as respectivas mensagens em tópicos RabbitMQ;
+4. O JuMP por meio de consumidores que estão subscritos nesses tópicos, é notificado das atualizações;
+5. O JuMP então realiza a atualização dos dados processuais em sua base de dados;
+6. Além disso, o JuMP executa rotinas de carga de dados, realizando consultas às APIs disponibilizadas pelo CODEX;
+7. As APIs do CODEX retornam os dados processuais;
+8. O JuMP atualiza os dados processuais em sua base de dados.
+
+
+### Arquitetura de dados do JuMP
+
+A arquitetura atual do JuMP possui uma única instância de banco de dados, e utiliza a estratégia de particionamento de dados física a nível de tabelas.
+
+Para melhor entendimento, a imagem abaixo apresenta o modelo físico do banco de dados, onde podemos observar que para cada Órgão Julgador, existem respectivas tabelas de: processos, movimentos e complementos, acrescidas do sufixo "_00000", que representa o identificador único de cada Órgão Julgador.
+
+Essas tabelas são criadas dinâmicamente, na carga inicial de dados de um Órgão Julgador, e atualizadas à medida que novas cargas são realizadas para cada Tribunal.
+
+#### Modelo físico do banco de dados
+
+![Stats](./schemaspy/output/diagrams/summary/relationships.real.compact.png)
+
+
+## Ambiente utilizado para os experimentos
+
+Para realização dos experimentos está sendo utilizada uma infraestrutura local baseada em Docker containers.
 
 ### Equipamento Host
 
@@ -12,30 +47,29 @@ Para o experimento está sendo utilizada uma infraestrutura de containers com Do
 - 32 GB
 - SSD 1TB
 
-### Docker Resources
+### Recursos disponíveis
 
-Limitamos os recursos de CPU e memória do contaneir para que fosse definido um baseline para comparação das estrégias.
+Os recursos de CPU e memória do container do banco de dados foi limitado  a fim de estabelecer um baseline para comparação das estratégias de particionamento.
+
+- [docker-compose.yml](./docker-compose.yml): limites definidos para CPU e memória:
 
 ```json
-deploy:
-  resources:
-    limits:
-      cpus: "4.0"
-      memory: 6G
+services:
+
+  postgres:
+    image: postgres:16.2
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 6G
 ```
-
-## Premissas
-
-O JuMP utiliza em sua arquitetura de dados atual uma estratégia de particionamento de dados física, a nível de tabela, e na mesma instância do banco de dados. Dessa forma, as tabelas de: processo, movimentos e complementos são criadas com um sufixo "_OrgaoJulgadorID", onde cada armazena os dados particionados por Órgão Julgador. Essas tabelas são criadas dinâmicamente na medida que a carga de dados é realizada para cada Tribunal.
-
-### Modelo de dados atual
-
-![Stats](./schemaspy/output/diagrams/summary/relationships.real.compact.png)
-
 
 ## Métricas
 
-Ao comparar a eficácia de diferentes estratégias de particionamento de dados, é essencial considerar uma variedade de métricas para avaliar o desempenho, a escalabilidade e a eficiência operacional do sistema. A tabela abaixo destacamos as principais métricas para essa finalidade:
+Ao comparar a eficácia de diferentes estratégias de particionamento de dados, é essencial considerar uma variedade de métricas para avaliar o desempenho, a escalabilidade e a eficiência operacional do sistema. 
+
+Na tabela abaixo destacamos as principais métricas para essa finalidade:
 
 
 | #        | Métrica                                                         | Descrição |
