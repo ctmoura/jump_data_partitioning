@@ -36,36 +36,7 @@ Essas tabelas são criadas dinâmicamente, na carga inicial de dados de um Órg�
 ![Stats](./schemaspy/output/diagrams/summary/relationships.real.compact.png)
 
 
-## 2. Ambiente utilizado para os experimentos
-
-Para realização dos experimentos está sendo utilizada uma infraestrutura local baseada em Docker containers.
-
-### 2.1 Equipamento Host
-
-- MacBook Pro 
-- Apple M2 Max
-- 32 GB
-- SSD 1TB
-
-### 2.2 Recursos disponíveis
-
-Os recursos de CPU e memória do container do banco de dados foi limitado  a fim de estabelecer um baseline para comparação das estratégias de particionamento.
-
-- [docker-compose.yml](./docker-compose.yml): limites definidos para CPU e memória:
-
-```yaml
-services:
-
-  postgres:
-    image: postgres:16.2
-    deploy:
-      resources:
-        limits:
-          cpus: "4.0"
-          memory: 6G
-```
-
-## 3. Métricas
+## 2. Métricas de avaliação
 
 Ao comparar a eficácia de diferentes estratégias de particionamento de dados, é essencial considerar uma variedade de métricas para avaliar o desempenho, a escalabilidade e a eficiência operacional do sistema. 
 
@@ -86,22 +57,52 @@ Na tabela abaixo destacamos as principais métricas para essa finalidade. Contud
 | 10       | Taxa de Fragmentação de Índices (se aplicável)                  | Em sistemas que utilizam índices, é importante monitorar a taxa de fragmentação dos índices para garantir um desempenho ótimo das consultas. |
 
 
-## 4 Metodologia dos experimentos
+## 3. Ambiente utilizado para os experimentos
 
-Para realização dos experimentos será utilizada a seguinte metodologia a fim de avaliar cada uma das estratégias.
+Para realização dos experimentos está sendo utilizada uma infraestrutura local baseada em Docker containers.
 
-1. **Estratégia de particionamento:** Descreve a estratégia de particionamento a ser avaliada.
+### 3.1 Equipamento Host
 
-2. **Cenários de testes:** Descreve os cenários e/ou consultas (queries) a serem avaliadas.
+- MacBook Pro 
+- Apple M2 Max
+- 32 GB
+- SSD 1TB
 
-3. **Ambiente dos testes:** Descreve o ambiente e recursos disponíveis para realização dos testes.
+### 3.2 Recursos disponíveis
 
-4. **Simulação da carga:** Descreve como a carga será simulada para os testes.
+Os recursos de CPU e memória do container do banco de dados foi limitado  a fim de estabelecer um baseline para comparação das estratégias de particionamento.
 
-5. **Métricas avaliadas e resultados:** Descreve as métricas e resultados obtidos nos testes.
+- [docker-compose.yml](./docker-compose.yml): limites definidos para CPU e memória:
+
+```yaml
+services:
+
+  postgres:
+    image: postgres:16.2
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 6G
+```
+
+## 4 Estrutura dos experimentos
+
+Para realização dos experimentos será utilizada a seguinte estrutura para documentação da avaliação e resultados de cada uma das estratégias de particionamento.
+
+
+| #         | Seção                                    | Descrição |
+| --------- | ---------------------------------------- | --------- |
+| 1         | **Estratégia de particionamento**       | Descreve a estratégia de particionamento a ser avaliada. |
+| 2         | **Cenários de testes**                  | Descreve os cenários e/ou consultas (queries) a serem avaliadas. |
+| 3         | **Ambiente de testes**                  | Descreve o ambiente e recursos disponíveis para realização dos testes. |
+| 4         | **Simulação da carga**                  | Descreve o processo e ferramentas utilizadas para simulação da carga. |
+| 5         | **Métricas avaliadas e resultados**     | Descreve as métricas e resultados obtidos após os testes. |
 
 
 ## 5. Resultados dos Experimentos
+
+Esta seção apresenta os experimentos realizados e seus resultados.
 
 ### 5.1 Experimento 01 - AS-IS
 
