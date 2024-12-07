@@ -1,10 +1,12 @@
 ## Experimento 01 - AS-IS
 
-Este é o nosso ponto de partida para realização dos experimentos, nele serão coletados os resultados das métricas para availação comparativa, aplicadas ao atual cenário do JuMP, sem qualquer intervenção na estretégia de particionamento utilizada, modelo de dados, ou arquitetura.
+Este é o nosso ponto de partida para realização dos experimentos.
 
-Sobre o ambiente de execução dos experimentos, vale destacar que se trata de um ambiente simulado e distinto do ambiente de produção, uma vez que precisamos ter o controle e dos parâmetros de concorrência, disponibilidade de recursos, e performance, sem impactar o ambiente real.
+Nele serão coletados os resultados das métricas estabelecidas para availação comparativa, aplicadas ao cenário atual do JuMP, sem qualquer intervenção na estretégia de particionamento utilizada, modelo de dados, ou arquitetura.
 
-Para uma comparação justa das estratégias, o ambiente, os recursos disponíveis de memória, cpu e aramezenamento serão sempre equivalentes em todos os experimentos.
+Sobre o ambiente de execução dos experimentos, vale destacar que se trata de um ambiente simulado e distinto do ambiente de produção, uma vez que precisamos ter controle e dos parâmetros de concorrência, disponibilidade de recursos e performance, sem impactar o ambiente real.
+
+Para uma comparação justa das estratégias, os recursos disponíveis de memória, cpu e aramezenamento, serão sempre equivalentes em todos os experimentos.
 
 ## Resultados
 

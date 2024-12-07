@@ -5,7 +5,7 @@ o objetivo realizar um benchmark das principais estratégias aplicadas a ferrame
 * Aluno: `Cleber Tavares de Moura` [ctm@cin.ufpe.br](mailto:ctm@cin.ufpe.br)
 * Orientador:  `Ricardo Massa` [rmfl@cin.ufpe.br](mailto:rmfl@cin.ufpe.br)
 
-## Arquitetura da Solução JuMP
+## 1. Arquitetura da Solução JuMP
 
 A imagem abaixo apresenta uma visão arquitetural de alto nível dos componentes que compõem a solução JuMP, demonstrando o fluxo dos dados.
 
@@ -23,7 +23,7 @@ Abaixo destacamos o fluxo dos dados:
 8. O JuMP atualiza os dados processuais em sua base de dados.
 
 
-### Arquitetura de dados do JuMP
+### 1.1 Arquitetura de dados do JuMP
 
 A arquitetura atual do JuMP possui uma única instância de banco de dados, e utiliza a estratégia de particionamento de dados física a nível de tabelas.
 
@@ -31,23 +31,23 @@ Para melhor entendimento, a imagem abaixo apresenta o modelo físico do banco de
 
 Essas tabelas são criadas dinâmicamente, na carga inicial de dados de um Órgão Julgador, e atualizadas à medida que novas cargas são realizadas para cada Tribunal.
 
-#### Modelo físico do banco de dados
+### 1.2 Modelo físico do banco de dados
 
 ![Stats](./schemaspy/output/diagrams/summary/relationships.real.compact.png)
 
 
-## Ambiente utilizado para os experimentos
+## 2. Ambiente utilizado para os experimentos
 
 Para realização dos experimentos está sendo utilizada uma infraestrutura local baseada em Docker containers.
 
-### Equipamento Host
+### 2.1 Equipamento Host
 
 - MacBook Pro 
 - Apple M2 Max
 - 32 GB
 - SSD 1TB
 
-### Recursos disponíveis
+### 2.2 Recursos disponíveis
 
 Os recursos de CPU e memória do container do banco de dados foi limitado  a fim de estabelecer um baseline para comparação das estratégias de particionamento.
 
@@ -65,7 +65,7 @@ services:
           memory: 6G
 ```
 
-## Métricas
+## 3. Métricas
 
 Ao comparar a eficácia de diferentes estratégias de particionamento de dados, é essencial considerar uma variedade de métricas para avaliar o desempenho, a escalabilidade e a eficiência operacional do sistema. 
 
@@ -86,9 +86,24 @@ Na tabela abaixo destacamos as principais métricas para essa finalidade. Contud
 | 10       | Taxa de Fragmentação de Índices (se aplicável)                  | Em sistemas que utilizam índices, é importante monitorar a taxa de fragmentação dos índices para garantir um desempenho ótimo das consultas. |
 
 
-## Resultados dos Experimentos
+## 4 Metodologia dos experimentos
 
-### Experimento 01 - AS-IS
+Para realização dos experimentos será utilizada a seguinte metodologia a fim de avaliar cada uma das estratégias.
+
+1. **Estratégia de particionamento:** Descreve a estratégia de particionamento a ser avaliada.
+
+2. **Cenários de testes:** Descreve os cenários e/ou consultas (queries) a serem avaliadas.
+
+3. **Ambiente dos testes:** Descreve o ambiente e recursos disponíveis para realização dos testes.
+
+4. **Simulação da carga:** Descreve como a carga será simulada para os testes.
+
+5. **Métricas avaliadas e resultados:** Descreve as métricas e resultados obtidos nos testes.
+
+
+## 5. Resultados dos Experimentos
+
+### 5.1 Experimento 01 - AS-IS
 
 Neste experimento temos o objetivo de avaliar arquitetura de dados atual sem qualquer intervenção no modelo de dados e coletar métricas de performance.
 
