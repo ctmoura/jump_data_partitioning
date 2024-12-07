@@ -69,7 +69,7 @@ services:
 
 Ao comparar a eficácia de diferentes estratégias de particionamento de dados, é essencial considerar uma variedade de métricas para avaliar o desempenho, a escalabilidade e a eficiência operacional do sistema. 
 
-Na tabela abaixo destacamos as principais métricas para essa finalidade:
+Na tabela abaixo destacamos as principais métricas para essa finalidade. Contudo, é importante destacar que algumas métricas como: Latência de Replicação, não será possível mensurar em todas as estratégias avaliadas, mas apenas naquelas que envolve replicação de dados em diferentes nós.
 
 
 | #        | Métrica                                                         | Descrição |
