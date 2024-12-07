@@ -53,7 +53,7 @@ Os recursos de CPU e memória do container do banco de dados foi limitado  a fim
 
 - [docker-compose.yml](./docker-compose.yml): limites definidos para CPU e memória:
 
-```json
+```yaml
 services:
 
   postgres:
