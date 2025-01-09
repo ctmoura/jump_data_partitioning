@@ -43,18 +43,18 @@ Ao comparar a eficácia de diferentes estratégias de particionamento de dados, 
 Na tabela abaixo destacamos as principais métricas para essa finalidade. Contudo, é importante destacar que algumas métricas como: Latência de Replicação, não será possível mensurar em todas as estratégias avaliadas, mas apenas naquelas que envolve replicação de dados em diferentes nós.
 
 
-| #        | Métrica                                                         | Descrição |
-| -------- | --------------------------------------------------------------- | --------- |
-| 1        | Tempo de Resposta de Consulta                                   | Mede o tempo necessário para uma consulta ser executada e retornar resultados. É uma métrica fundamental para avaliar o desempenho geral do sistema. |
-| 2        | Taxa de Transferência de Dados                                  | Avalia a quantidade de dados processados pelo sistema em um determinado período de tempo. Uma alta taxa de transferência indica uma boa capacidade de processamento. |
-| 3        | Utilização de Recursos do Sistema                               | Monitora a utilização de recursos do sistema, como CPU, memória e disco. É importante garantir que os recursos estejam sendo utilizados de forma eficiente e que não haja gargalos. |
-| 4        | Escalabilidade                                                  | Mede a capacidade do sistema de lidar com um aumento na carga de trabalho sem degradar significativamente o desempenho. Pode ser avaliada através de testes de carga e dimensionamento horizontal. |
-| 5        | Distribuição de Carga entre Partições/Shards                    | Verifica se a carga de trabalho está distribuída de forma equitativa entre as partições ou shards. Uma distribuição desigual pode resultar em gargalos de desempenho. |
-| 6        | Taxa de Transferência de Inserção/Atualização/Exclusão (I/A/E)  | Avalia a velocidade com que novos dados podem ser inseridos, atualizados ou excluídos no sistema. É importante garantir que essas operações sejam eficientes, especialmente em ambientes de alta concorrência. |
-| 7        | Latência de Replicação (se aplicável)                           | Se o sistema envolver replicação de dados entre diferentes nós, é importante monitorar a latência de replicação para garantir que os dados estejam sempre atualizados e consistentes entre os shards. |
-| 8        | Espaço em Disco Utilizado por Partição/Shard                    | Monitora o consumo de espaço em disco por cada partição ou shard. Isso ajuda a garantir um uso eficiente do armazenamento e a identificar partições que possam estar se aproximando de sua capacidade máxima. |
-| 9        | Tamanho Médio de Partição/Shard                                 | Avalia o tamanho médio dos dados em cada partição ou shard. Isso pode influenciar o desempenho das consultas e operações de E/S. |
-| 10       | Taxa de Fragmentação de Índices (se aplicável)                  | Em sistemas que utilizam índices, é importante monitorar a taxa de fragmentação dos índices para garantir um desempenho ótimo das consultas. |
+| #        | Métrica                                                         | Descrição | Relevância | 
+| -------- | --------------------------------------------------------------- | --------- | ---------- |
+| 1        | Tempo de Processamento                                   | Mede o tempo necessário para executar operações específicas, como consultas, inserções e/ou atualizações no sistema. | Avalia a eficiência das estratégias para lidar com grandes volumes de dados. Estratégias mal implementadas podem aumentar a latência. |
+| 2        | Utilização de Recursos                                  | Mede o uso de recursos computacionais, como CPU, memória e disco, durante a execução de operações no sistema. | Identifica gargalos que possam ser introduzidos por estratégias de particionamento. Mostra a eficiência no uso da infraestrutura. |
+| 3        | Escalabilidade                               | Avalia como a estratégia se comporta ao aumentar o volume de dados ou a quantidade de nós no sistema. | Sistemas com crescimento contínuo de dados exigem estratégias que possam escalar sem comprometer o desempenho. |
+| 4        | Equilíbrio de Carga                                                  | Mede a uniformidade na distribuição de dados e tarefas entre os nós do sistema. | Os desequilíbrios resultam em nós sobrecarregados e outros subutilizados, reduzindo a eficiência do sistema. |
+| 5        | Taxa de Transferência de Dados (Throughput)  | Mede a quantidade de operações processadas por unidade de tempo (ex.: consultas por segundo ou registros inseridos por segundo). | Avalia o desempenho global do sistema em cenários com alta concorrência. |
+| 6        | Custo de Redistribuição                           | Avalia o impacto de redistribuir dados em tempo real devido a alterações na carga ou na configuração do sistema. | Estratégias dinâmicas, como particionamento adaptativo, podem causar interrupções ou consumir recursos durante redistribuições. |
+| 7        | Eficiência de Consultas                    | Mede a eficácia da estratégia para consultas específicas, como aquelas que atravessam várias partições. | Importante para sistemas como o JuMP, onde dados são frequentemente acessados de diferentes tribunais e regiões. |
+| 8        | Consistência de Dados                                 | Mede a capacidade da estratégia de manter a consistência dos dados em diferentes nós. | Garantir que não haja discrepâncias ou conflitos de dados ao lidar com alta concorrência. |
+| 9       | Capacidade de Adaptação                 | Avalia a capacidade da estratégia de ajustar dinamicamente o particionamento para lidar com padrões de acesso variáveis. | Particularmente relevante para cenários onde a carga de trabalho muda com frequência. |
+| 10       | Custo Operacional                  | Mede os custos associados à implementação e manutenção de cada estratégia. | Identifica estratégias que exigem maior esforço de administração ou mais recursos computacionais. |
 
 
 ## 3. Ambiente utilizado para os experimentos
