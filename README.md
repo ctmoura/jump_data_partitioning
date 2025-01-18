@@ -118,6 +118,16 @@ Em seguida, execute o seguinte comando para descompactar o arquivo ZIP, que ira 
 
 Agora a aplicação será capaz de inicializar o banco de dados a partir deste backup.
 
+### Execução do ambiente
+
+Primeiramente, para rodar o ambiente simulado do JuMP execute o comando abaixo responsável por iniciar os containers com docker.
+
+> docker-compose up -d
+
+Em seguida, execute o comando que executa a aplicação SpringBoot responsável por executar a query de consulta que será utilizada para avaliar o desempenho do sistema para os cenários de cada experimento.
+
+> ./mvnw spring-boot:run
+
 
 ### 5.1 Experimento 01 - AS-IS
 
