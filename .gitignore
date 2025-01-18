@@ -35,3 +35,4 @@ build/
 jmeter.log
 .DS_Store
 data/postgresql/init.sql
+data/postgresql/init.sql.zip
