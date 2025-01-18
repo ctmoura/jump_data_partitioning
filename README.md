@@ -86,7 +86,7 @@ services:
           memory: 6G
 ```
 
-## 4 Estrutura dos experimentos
+## 4. Estrutura dos experimentos
 
 Para realização dos experimentos será utilizada a seguinte estrutura para documentação da avaliação e resultados de cada uma das estratégias de particionamento.
 
@@ -100,9 +100,24 @@ Para realização dos experimentos será utilizada a seguinte estrutura para doc
 | 5         | **Métricas avaliadas e resultados**      | Descreve as métricas e resultados obtidos após os testes. |
 
 
-## 5. Resultados dos Experimentos
+## 5. Execução e resultados dos Experimentos
 
 Esta seção apresenta os experimentos realizados e seus resultados.
+
+### Preparação do Banco de dados
+
+Para realização dos experimentos foi fornecida um Backup da base de dados do JuMP com uma massa de dados representativa e com os dados anonimizados. Os arquivos desse backup estão disponíveis em: [split_init.sql.zip](./data/postgresql/split_init.sql.zip).
+
+Para descompactar esse arquivo, utilize o seguinte comando do utilitário ZIP, para unificar as partes em um único arquivo ZIP: `init.sql.zip`.
+
+> zip -s 0 split_init.sql.zip --out init.sql.zip
+
+Em seguida, execute o seguinte comando para descompactar o arquivo ZIP, que ira gerar o arquivo: `init.sql`
+
+> unzip init.sql.zip
+
+Agora a aplicação será capaz de inicializar o banco de dados a partir deste backup.
+
 
 ### 5.1 Experimento 01 - AS-IS
 
