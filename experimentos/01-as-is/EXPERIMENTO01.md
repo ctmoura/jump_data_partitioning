@@ -45,29 +45,27 @@ ORDER BY "processoID", "dataFinal";
 
 ## 1.3 - Ambiente de testes
 
-### 1.3.1 - Banco de dados
-
-- Postgres: version 16.2
-
-### 1.3.2 - Equipamento Host
+### 1.3.1 - Equipamento Host
 
 - MacBook Pro 
 - Apple M2 Max
 - 32 GB
 - SSD 1TB
 
-### 1.3.3 - Execução em ambiente de containers
+### 1.3.2 - Execução em containers
 
 Será utilizado o Docker como ferramenta de virtualização em containers para execução do servidor de banco de dados Postgres.
 
 - Docker: version 27.4.0, build bde2b89
 - Docker Compose: version v2.31.0-desktop.2
 
-#### Recursos disponíveis
+### 1.3.3 - Banco de dados
 
-Os recursos de CPU e memória do container do banco de dados foi limitado a fim de estabelecer um baseline para comparação das estratégias de particionamento.
+Utilizamos Postgres: version 16.2, que é o banco de dados utilizado pelo JuMP.
 
-- [docker-compose.yml](./docker-compose.yml): limites definidos para CPU e memória:
+#### Configurações
+
+> 01 instância de container
 
 ```yaml
 services:
@@ -83,19 +81,6 @@ services:
         reservations:
           cpus: "2.0"
           memory: "6g"
-```
-
-####  Parâmetros do Postgres
-
-Para execução dos testes, foram realizadas alterações nos seguintes parâmetros do Postgres:
-
-```txt
-max_connections = 200
-
-statement_timeout = 90000			                # in milliseconds, 0 is disabled
-lock_timeout = 30000			                    # in milliseconds, 0 is disabled
-idle_in_transaction_session_timeout = 60000	  # in milliseconds, 0 is disabled
-idle_session_timeout = 60000		              # in milliseconds, 0 is disabled
 ```
 
 ## 1.4 - Simulação da carga
@@ -118,7 +103,6 @@ Os cenários do plano de teste segue uma sequencia fibonaci para determinar a qu
 
 ### 1.5.2 - Utilização de Recursos  
 
-
 | # Threads (Usuários em paralelo) | # Requests / Thread  | # Repetições  | Uso máximo de CPU | Uso de RAM  | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) | 
 | -------------------------------- | -------------------- | ------------- | ----------------- | ----------- | ----------- | ------------ | ---------------------  | ------------------ |
 | 1                                | 10                   | 10            |          180,56 % |     1,02 GB |        0 KB |         0 KB |                27,9 MB |             8,3 GB |
@@ -127,7 +111,7 @@ Os cenários do plano de teste segue uma sequencia fibonaci para determinar a qu
 | 5                                | 10                   | 50            |          299,57 % |     1,42 GB |        0 KB |         0 KB |                44,2 MB |            41,5 GB |
 | 8                                | 10                   | 50            |          ------ % |     ------- |        ---- |         ---- |                ------- |            ------- |
 
-Abaixo, temos os screenshots das estatísticas coletadas para cada cenário executado:
+Abaixo, estão os screenshots das estatísticas coletadas para cada cenário executado:
 
 #### 1 Thread
 
@@ -195,17 +179,17 @@ Não se aplica.
 
 A eficiência pode ser expressa como uma relação entre o tempo de execução e o número de partições acessadas:
 
-> Fórmula:
+#### Fórmula:
 
 ```plaintext 
 Eficiência (%) = (1 / Tempo de Execução Total) * (Número de Partições Acessadas / Partições Totais) * 100
 ```
 
-Tempo de Execução Total = 10 segundos
-Número de Partições Acessadas = 1
-Partições Totais = 1
+- Tempo de Execução Total: **10 segundos**
+- Número de Partições Acessadas: **1**
+- Partições Totais: **1**
 
-Eficiência (%) = (1 / 10) * (1 / 1) * 100 = **10%**
+> Eficiência (%) = (1 / 10) * (1 / 1) * 100 = **10%**
 
 ### 1.5.8 - Consistência de Dados
 

@@ -79,11 +79,15 @@ services:
 
   postgres:
     image: postgres:16.2
+    shm_size: "4g"
     deploy:
       resources:
         limits:
+          cpus: "4.0"
+          memory: "12g"
+        reservations:
           cpus: "2.0"
-          memory: 6G
+          memory: "6g"
 ```
 
 ## 4. Estrutura dos experimentos
@@ -104,15 +108,28 @@ Para realização dos experimentos será utilizada a seguinte estrutura para doc
 
 Esta seção apresenta os experimentos realizados e seus resultados.
 
-### Preparação do Banco de dados
+### Configurações do Banco de dados (Postgres)
 
-Para realização dos experimentos foi fornecida um Backup da base de dados do JuMP com uma massa de dados representativa e com os dados anonimizados. Os arquivos desse backup estão disponíveis em: [split_init.sql.zip](./data/postgresql/split_init.sql.zip).
+Para realização dos experimentos, foram realizadas alterações nos seguintes parâmetros do Postgres, para permitir a execução de queries paralelas e de longa duração. Os parâmtros abaixo estão configurados no arquivo: [./conf/postgresql/postgresql.conf](./conf/postgresql/postgresql.conf).
 
-Para descompactar esse arquivo, utilize o seguinte comando do utilitário ZIP, para unificar as partes em um único arquivo ZIP: `init.sql.zip`.
+```txt
+max_connections = 200
+
+statement_timeout = 90000			                # in milliseconds, 0 is disabled
+lock_timeout = 30000			                    # in milliseconds, 0 is disabled
+idle_in_transaction_session_timeout = 60000	  # in milliseconds, 0 is disabled
+idle_session_timeout = 60000		              # in milliseconds, 0 is disabled
+```
+
+### Preparação da massa de dados
+
+Foi fornecido pela equipe do Centro de Informática da UFPE um backup do banco de dados do JuMP com uma massa de dados representativa, e dados já anonimizados. Os arquivos desse backup estão disponíveis em: [./data/postgresql/split_init.sql.zip](./data/postgresql/split_init.sql.zip).
+
+Para descompactar esse arquivo, pode-se utilizar o seguinte comando do utilitário ZIP para unificar as partes em um único arquivo ZIP, a partir da pasta: `./data/postgresql`:
 
 > zip -s 0 split_init.sql.zip --out init.sql.zip
 
-Em seguida, execute o seguinte comando para descompactar o arquivo ZIP, que ira gerar o arquivo: `init.sql`
+Em seguida, pode-se executar o seguinte comando para descompactar o arquivo ZIP, que ira gerar o arquivo: `./data/postgresql/init.sql`
 
 > unzip init.sql.zip
 
