@@ -19,14 +19,19 @@ public class LoadTestController {
     }
 
     @GetMapping("/load-test")
-    public String executeLoadTest() throws SQLException {
+    public String executeLoadTest() {
         Instant start = Instant.now();
         // Executar o teste de carga aqui
         // Por exemplo, pode ser uma chamada a um serviço que realiza a consulta SQL
-        this.loadTestService.executeQuery();
+        boolean success = false;
+        try {
+            this.loadTestService.executeQuery();
+            success = true;
+        } catch (Exception e) {
+        }
         // Retornar uma mensagem indicando que o teste foi concluído
-        return String.format("Duration: %s",
-                Duration.between(start, Instant.now()).toMillis());
+        return String.format("Sucesso: %s, Duration: %s",
+                success, Duration.between(start, Instant.now()).toMillis());
     }
 
 }

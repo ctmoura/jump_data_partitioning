@@ -18,22 +18,30 @@ Para avaliar essa estratégia será utilizada a seguinte consulta SQL de referê
 
 ```sql
 SELECT
-    p."NPU", p."processoID", "dataPrimeiroMovimento",
-  c.descricao AS classe, a.descricao AS assunto,
-  activity, "dataInicio", "dataFinal", "usuarioID", "movimentoID", duration
-  "nomeServidor", "tipoServidor"
-FROM
-    processos_18006 AS p
+    p."NPU", p."processoID", p."ultimaAtualizacao",
+  	c.descricao AS classe, a.descricao AS assunto,
+  	m.activity, m."dataInicio", m."dataFinal", m."usuarioID",
+    m.duration, m."movimentoID", com.descricao AS complemento,
+  	s."nomeServidor", s."tipoServidor", d.tipo AS documento
+FROM 
+	movimentos_18006 AS m
 INNER JOIN
-    movimentos_18006 AS m ON p."processoID" = m."processoID"
+    processos_18006 AS p ON p."processoID" = m."processoID"
 INNER JOIN
     classes AS c ON p.classe = c.id
-INNER JOIN
+LEFT JOIN
     assuntos AS a ON p.assunto = a.id
-INNER JOIN
-    servidores ON m."usuarioID" = servidores."servidorID"
-ORDER BY "processoID", "dataFinal" DESC;
+LEFT JOIN
+    complementos_18006 AS com ON com."movimentoID" = m.id
+LEFT JOIN
+    servidores AS s ON s."servidorID" = m."usuarioID"
+LEFT JOIN
+	documentos AS d ON d."id" = m."documentoID"
+WHERE '2000-01-01' <= p."dataPrimeiroMovimento"
+ORDER BY "processoID", "dataFinal";
 ```
+
+- Total de registros retornando pela query: **3.364.537**
 
 ## 1.3 - Ambiente de testes
 
@@ -66,16 +74,35 @@ services:
 
   postgres:
     image: postgres:16.2
+    shm_size: "4g"
     deploy:
       resources:
         limits:
+          cpus: "4.0"
+          memory: "12g"
+        reservations:
           cpus: "2.0"
-          memory: 6G
+          memory: "6g"
+```
+
+####  Parâmetros do Postgres
+
+Para execução dos testes, foram realizadas alterações nos seguintes parâmetros do Postgres:
+
+```txt
+max_connections = 200
+
+statement_timeout = 90000			                # in milliseconds, 0 is disabled
+lock_timeout = 30000			                    # in milliseconds, 0 is disabled
+idle_in_transaction_session_timeout = 60000	  # in milliseconds, 0 is disabled
+idle_session_timeout = 60000		              # in milliseconds, 0 is disabled
 ```
 
 ## 1.4 - Simulação da carga
 
 Para simulação de cargas de execução utilizaremos a ferramenta JMeter para criar um plano de testes que possibile simular diferentes cenários de cargas dos usuários utilizando a aplicação.
+
+Os cenários do plano de teste segue uma sequencia fibonaci para determinar a quantidade de threads (usuários simulâneos) em cada cenário, sendo que cada thread (usuário) executa 10 requisições sequenciais de disparo da query no banco de dados.
 
 - [Apache JMeter: version 5.6.3](https://jmeter.apache.org/index.html)  
 
@@ -84,8 +111,10 @@ Para simulação de cargas de execução utilizaremos a ferramenta JMeter para c
 
 ### 1.5.1 - Tempo de Processamento
 
-- Total de registros: **123777**
-- Tempo de execução: **319 ms**
+| # Threads (Usuários em paralelo) | # Requests / Thread    | # Repetições     | Duração média | Duração mínima | Duração máxima | Duração mediana | 
+| -------------------------------- | ---------------------- | ---------------- | ------------- | -------------- | -------------- | --------------- |
+| 1                                | 10                     | 10               |     9763,9 ms |      8486,0 ms |     11003,0 ms |       9686,0 ms |
+
 
 ### 1.5.2 - Utilização de Recursos  
 
@@ -107,6 +136,10 @@ SELECT * FROM ...;
 - Network (received): 170KB
 - Network (sent): 85.5MB
 
+| # Threads (Usuários em paralelo) | # Requests / Thread  | # Repetições  | Uso de CPU  | Uso de RAM  | Disk (read) | Disk (write) | 
+| -------------------------------- | -------------------- | ------------- | ----------- | ----------- | ----------- | ------------ |
+| 1                                | 10                   | 10            |      152,92 |     1,02 GB |        0 KB |       4,1 KB |
+
 ![Stats](./stats.png)
 
 ### 1.5.3 - Escalabilidade
@@ -115,16 +148,27 @@ Para essa métrica, implementamos uma aplicação em Java utilizando Spring Boot
 
 Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou simular a carga de usuários simultâneos utilizando a aplicação.
 
-| # Usuários | Tempo mínimo de resposta   | Tempo máximo de resposta    |
-| ---------- | -------------------------- | --------------------------- |
-| 1          | 1 segundo                  | 2 segundos                  |
-| 50         | 15 segundos                | 45 segundos                 |
-| 100        | 26 segundos                | 113 segundos                |
-| 200        | 47 segundos                | 203 segundos                |
-| 500        | XX segundos                | XX segundos                 |
-| 1000       | XX segundos                | XX segundos                 |
+| # Threads (Usuários em paralelo) | # Requests / Thread    | # Repetições     | Duração média | Duração mínima | Duração máxima | Duração mediana | 
+| -------------------------------- | ---------------------- | ---------------- | ------------- | -------------- | -------------- | --------------- |
+| 1                                | 10                     | 10               |     9763,9 ms |      8486,0 ms |     11003,0 ms |       9686,0 ms |
+| 2                                | 10                     | 20               |    14027,8 ms |      9224,0 ms |     20246,0 ms |      12232,5 ms |
+| 3                                | 10                     | 30               |    18119,6 ms |      9288,0 ms |     37184,0 ms |      14618,0 ms |
+| 5                                | 10                     | 50               |    28012,6 ms |      9441,0 ms |     61072,0 ms |      22456,0 ms |
+| 8                                | 10                     | 80               |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
+| 13                               | 10                     | 130              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
+| 21                               | 10                     | 210              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
+| 34                               | 10                     | 340              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
+| 55                               | 10                     | 550              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
+| 89                               | 10                     | 890              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
+| 144                              | 10                     | 1440             |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
+
+Constatamos que a partir do cenário com 8 thread simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento
+da demanda conforme a execução dos testes, uma vez que com o aumento de usuários em paralelo, a execução da query passou a superar o limite máximo de 
+180.000 ms (3 minutos).
 
 ### 1.5.4 - Equilíbrio de Carga
+
+Não se aplica.
 
 ### 1.5.5 - Taxa de Transferência de Dados (Throughput)
 
@@ -134,19 +178,41 @@ Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou si
 SET track_io_timing = on;
 
 EXPLAIN ANALYZE 
-    -- CONSULTA SQL DE REFERÊNCIQ
+    -- CONSULTA SQL DE REFERÊNCIA
     SELECT * FROM ...;
     
 ```
 
-- Taxa: **123777** / **2.750** = **45009,81 registros por segundo**
+- Taxa: **3.364.537 registros** / **7,44 segundos** = **451897,94 registros por segundo**
 
 ### 1.5.6 - Custo de Redistribuição
 
+Não se aplica.
+
 ### 1.5.7 - Eficiência de Consultas
+
+A eficiência pode ser expressa como uma relação entre o tempo de execução e o número de partições acessadas:
+
+> Fórmula:
+
+```plaintext 
+Eficiência (%) = (1 / Tempo de Execução Total) * (Número de Partições Acessadas / Partições Totais) * 100
+```
+
+Tempo de Execução Total = 10 segundos
+Número de Partições Acessadas = 1
+Partições Totais = 1
+
+Eficiência (%) = (1 / 10) * (1 / 1) * 100 = **10%**
 
 ### 1.5.8 - Consistência de Dados
 
+Não se aplica.
+
 ### 1.5.9 - Capacidade de Adaptação
 
+Não se aplica.
+
 ### 1.5.10 - Custo Operacional
+
+Alto

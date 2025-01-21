@@ -114,7 +114,7 @@
             <column ascending="true" name="tribunal_sigla"/>
          </index>
       </table>
-      <table name="movimentos_18006" numRows="3318762" remarks="" schema="public" type="TABLE">
+      <table name="movimentos_18006" numRows="3348318" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('movimentos_18006_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5">
             <child column="movimentoID" foreignKey="complementos_18006_movimentoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="complementos_18006"/>
          </column>
