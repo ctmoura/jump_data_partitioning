@@ -118,29 +118,37 @@ Os cenários do plano de teste segue uma sequencia fibonaci para determinar a qu
 
 ### 1.5.2 - Utilização de Recursos  
 
-- Comandos para configurar o rastreamento e a coleta de informações estatísticas sobre as atividades do banco de dados. Executado antes de rodar a consulta SQL.
 
-```sql
-SET track_activities = on; 
-SET track_counts = on;
+| # Threads (Usuários em paralelo) | # Requests / Thread  | # Repetições  | Uso máximo de CPU | Uso de RAM  | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) | 
+| -------------------------------- | -------------------- | ------------- | ----------------- | ----------- | ----------- | ------------ | ---------------------  | ------------------ |
+| 1                                | 10                   | 10            |          180,56 % |     1,02 GB |        0 KB |         0 KB |                27,9 MB |             8,3 GB |
+| 2                                | 10                   | 20            |          224,33 % |     1,18 GB |        0 KB |         0 KB |                27,7 MB |            16,6 GB |
+| 3                                | 10                   | 30            |          244,40 % |     1,25 GB |        0 KB |         0 KB |                44,1 MB |            24,8 GB |
+| 5                                | 10                   | 50            |          299,57 % |     1,42 GB |        0 KB |         0 KB |                44,2 MB |            41,5 GB |
+| 8                                | 10                   | 50            |          ------ % |     ------- |        ---- |         ---- |                ------- |            ------- |
 
--- CONSULTA SQL DE REFERÊNCIQ
-SELECT * FROM ...;
+Abaixo, temos os screenshots das estatísticas coletadas para cada cenário executado:
 
-```
+#### 1 Thread
 
-- CPU Usage: 65.30%
-- Memory Usage: 107.9MB
-- Disk (read): 41MB
-- Disk (write): 4.1KB
-- Network (received): 170KB
-- Network (sent): 85.5MB
+![Stats - 1 Thread](./stats-1.jpg)
 
-| # Threads (Usuários em paralelo) | # Requests / Thread  | # Repetições  | Uso de CPU  | Uso de RAM  | Disk (read) | Disk (write) | 
-| -------------------------------- | -------------------- | ------------- | ----------- | ----------- | ----------- | ------------ |
-| 1                                | 10                   | 10            |      152,92 |     1,02 GB |        0 KB |       4,1 KB |
+#### 2 Threads
 
-![Stats](./stats.png)
+![Stats - 2 Thread](./stats-2.jpg)
+
+#### 3 Threads
+
+![Stats - 3 Thread](./stats-3.jpg)
+
+#### 5 Threads
+
+![Stats - 5 Thread](./stats-5.jpg)
+
+#### 8 Threads
+
+Não foi possível executar o cenário uma vez que o servidor não conseguiu responder as solicitações simultâneas.
+
 
 ### 1.5.3 - Escalabilidade
 
@@ -155,12 +163,6 @@ Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou si
 | 3                                | 10                     | 30               |    18119,6 ms |      9288,0 ms |     37184,0 ms |      14618,0 ms |
 | 5                                | 10                     | 50               |    28012,6 ms |      9441,0 ms |     61072,0 ms |      22456,0 ms |
 | 8                                | 10                     | 80               |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
-| 13                               | 10                     | 130              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
-| 21                               | 10                     | 210              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
-| 34                               | 10                     | 340              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
-| 55                               | 10                     | 550              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
-| 89                               | 10                     | 890              |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
-| 144                              | 10                     | 1440             |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
 
 Constatamos que a partir do cenário com 8 thread simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento
 da demanda conforme a execução dos testes, uma vez que com o aumento de usuários em paralelo, a execução da query passou a superar o limite máximo de 
@@ -207,12 +209,12 @@ Eficiência (%) = (1 / 10) * (1 / 1) * 100 = **10%**
 
 ### 1.5.8 - Consistência de Dados
 
-Não se aplica.
+Essa métrica não se aplica a essa estratégia, uma vez que não existe movimentação de dados, seja no próprio host ou em hosts distintos.
 
 ### 1.5.9 - Capacidade de Adaptação
 
-Não se aplica.
+Essa métrica não se aplica a essa estratégia, uma vez que ela não realiza mudanças ou ajustes dinâmicamente.
 
 ### 1.5.10 - Custo Operacional
 
-Alto
+Não foi avaliado o custo operacional pois se trata da estratégia atualmente implementada.
