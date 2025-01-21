@@ -1,8 +1,9 @@
 package br.com.ctmoura.jump_dp.controller;
 
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,16 +12,26 @@ import br.com.ctmoura.jump_dp.service.LoadTestService;
 @RestController
 public class LoadTestController {
 
-    @Autowired
-    private LoadTestService loadTestService;
+    private final LoadTestService loadTestService;
+
+    public LoadTestController(LoadTestService loadTestService) {
+        this.loadTestService = loadTestService;
+    }
 
     @GetMapping("/load-test")
-    public String executeLoadTest() throws SQLException {
+    public String executeLoadTest() {
+        Instant start = Instant.now();
         // Executar o teste de carga aqui
         // Por exemplo, pode ser uma chamada a um serviço que realiza a consulta SQL
-        this.loadTestService.executeQuery();
+        boolean success = false;
+        try {
+            this.loadTestService.executeQuery();
+            success = true;
+        } catch (Exception e) {
+        }
         // Retornar uma mensagem indicando que o teste foi concluído
-        return "Teste de carga concluído!";
+        return String.format("Sucesso: %s, Duration: %s",
+                success, Duration.between(start, Instant.now()).toMillis());
     }
-    
+
 }

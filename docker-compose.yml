@@ -11,15 +11,20 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    shm_size: "4g"
     deploy:
       resources:
         limits:
+          cpus: "4.0"
+          memory: "12g"
+        reservations:
           cpus: "2.0"
-          memory: 6G
-    command: ["postgres", "-c", "shared_buffers=1024MB", "-c", "max_connections=200"]
+          memory: "6g"
+    #command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
     volumes:
       - ./data/postgresql/data:/var/lib/postgresql/data
       - ./data/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    #  - ./conf/postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
     networks:
       - jump_sharding-network
 
@@ -39,6 +44,7 @@ services:
 
   schemaspy:
     image: schemaspy/schemaspy:6.2.4
+    platform: linux/amd64
     env_file: env/dev.env
     volumes:
       - ./schemaspy/output:/output

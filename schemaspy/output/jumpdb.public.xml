@@ -19,7 +19,7 @@
       <sequence increment="1" name="usuarios_log_id_seq" startValue="1"/>
    </sequences>
    <tables>
-      <table name="assuntos" numRows="5365" remarks="" schema="public" type="TABLE">
+      <table name="assuntos" numRows="5366" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('assuntos_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial" typeCode="4">
             <child column="assunto" foreignKey="processos_18006_assunto_fkey" implied="false" onDeleteCascade="false" schema="public" table="processos_18006"/>
          </column>
@@ -30,7 +30,7 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="classes" numRows="799" remarks="" schema="public" type="TABLE">
+      <table name="classes" numRows="835" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('classes_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial" typeCode="4">
             <child column="classe" foreignKey="processos_18006_classe_fkey" implied="false" onDeleteCascade="false" schema="public" table="processos_18006"/>
          </column>
@@ -41,15 +41,15 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="cod_movimentos" numRows="252" remarks="" schema="public" type="TABLE">
+      <table name="codigos" numRows="917" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('cod_movimentos_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5">
-            <child column="parentID" foreignKey="cod_movimentos_parentID_fkey" implied="false" onDeleteCascade="false" schema="public" table="cod_movimentos"/>
+            <child column="parentID" foreignKey="cod_movimentos_parentID_fkey" implied="false" onDeleteCascade="false" schema="public" table="codigos"/>
             <child column="movimentoID" foreignKey="movimentos_18006_movimentoID_fkey" implied="false" onDeleteCascade="false" schema="public" table="movimentos_18006"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="activity" nullable="false" remarks="" size="2147483647" type="varchar" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="level" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="parentID" nullable="true" remarks="" size="19" type="int8" typeCode="-5">
-            <parent column="id" foreignKey="cod_movimentos_parentID_fkey" implied="false" onDeleteCascade="false" schema="public" table="cod_movimentos"/>
+            <parent column="id" foreignKey="cod_movimentos_parentID_fkey" implied="false" onDeleteCascade="false" schema="public" table="codigos"/>
          </column>
          <column autoUpdated="false" defaultValue="CURRENT_TIMESTAMP" digits="6" id="4" name="ultimaAtualizacao" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
          <column autoUpdated="false" defaultValue="1" digits="0" id="5" name="weight" nullable="true" remarks="" size="0" type="numeric" typeCode="2"/>
@@ -58,7 +58,7 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="complementos_18006" numRows="28748" remarks="" schema="public" type="TABLE">
+      <table name="complementos_18006" numRows="1239205" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_18006_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="movimentoID" nullable="true" remarks="" size="19" type="int8" typeCode="-5">
             <parent column="id" foreignKey="complementos_18006_movimentoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="movimentos_18006"/>
@@ -70,11 +70,8 @@
             <column ascending="true" name="complementoID"/>
          </index>
       </table>
-      <table name="documentos" numRows="221965" remarks="" schema="public" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('documentos_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5">
-            <child column="referenceID" foreignKey="documentos_referenceID_fkey" implied="false" onDeleteCascade="false" schema="public" table="documentos"/>
-            <child column="documentoID" foreignKey="movimentos_18006_documentoID_fkey" implied="false" onDeleteCascade="false" schema="public" table="movimentos_18006"/>
-         </column>
+      <table name="documentos" numRows="1389975" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('documentos_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nomeArquivo" nullable="false" remarks="" size="2147483647" type="varchar" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="6" id="2" name="dataJuntada" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
          <column autoUpdated="false" defaultValue="null" digits="6" id="3" name="dataExclusao" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
@@ -82,9 +79,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="nivelSigilo" nullable="false" remarks="" size="2147483647" type="varchar" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="processado" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="origemID" nullable="false" remarks="" size="2147483647" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="referenceID" nullable="true" remarks="" size="19" type="int8" typeCode="-5">
-            <parent column="id" foreignKey="documentos_referenceID_fkey" implied="false" onDeleteCascade="false" schema="public" table="documentos"/>
-         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="referenceID" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
          <column autoUpdated="false" defaultValue="null" digits="6" id="9" name="ultimaAtualizacao" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="documentos_pkey" unique="true">
@@ -119,39 +114,33 @@
             <column ascending="true" name="tribunal_sigla"/>
          </index>
       </table>
-      <table name="movimentos_18006" numRows="126081" remarks="" schema="public" type="TABLE">
+      <table name="movimentos_18006" numRows="3348318" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('movimentos_18006_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5">
             <child column="movimentoID" foreignKey="complementos_18006_movimentoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="complementos_18006"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="processoID" nullable="true" remarks="" size="19" type="int8" typeCode="-5">
             <parent column="processoID" foreignKey="movimentos_18006_processoID_fkey" implied="false" onDeleteCascade="false" schema="public" table="processos_18006"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="NPU" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12">
-            <parent column="NPU" foreignKey="movimentos_18006_NPU_fkey" implied="false" onDeleteCascade="false" schema="public" table="processos_18006"/>
-         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="NPU" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="activity" nullable="false" remarks="" size="2147483647" type="varchar" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="duration" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
          <column autoUpdated="false" defaultValue="null" digits="6" id="5" name="dataInicio" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
          <column autoUpdated="false" defaultValue="null" digits="6" id="6" name="dataFinal" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="usuarioID" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="documentoID" nullable="true" remarks="" size="19" type="int8" typeCode="-5">
-            <parent column="id" foreignKey="movimentos_18006_documentoID_fkey" implied="false" onDeleteCascade="false" schema="public" table="documentos"/>
-         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="documentoID" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="movimentoID" nullable="true" remarks="" size="19" type="int8" typeCode="-5">
-            <parent column="id" foreignKey="movimentos_18006_movimentoID_fkey" implied="false" onDeleteCascade="false" schema="public" table="cod_movimentos"/>
+            <parent column="id" foreignKey="movimentos_18006_movimentoID_fkey" implied="false" onDeleteCascade="false" schema="public" table="codigos"/>
          </column>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="movimentos_18006_pkey" unique="true">
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="processos_18006" numRows="3784" remarks="" schema="public" type="TABLE">
+      <table name="processos_18006" numRows="350497" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;processos_18006_processoID_seq&quot;'::regclass)" digits="0" id="0" name="processoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5">
             <child column="processoID" foreignKey="movimentos_18006_processoID_fkey" implied="false" onDeleteCascade="false" schema="public" table="movimentos_18006"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="NPU" nullable="false" remarks="" size="2147483647" type="varchar" typeCode="12">
-            <child column="NPU" foreignKey="movimentos_18006_NPU_fkey" implied="false" onDeleteCascade="false" schema="public" table="movimentos_18006"/>
-         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="NPU" nullable="false" remarks="" size="2147483647" type="varchar" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="liminar" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="natureza" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="valorCausa" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12"/>
@@ -174,11 +163,8 @@
          <index name="processos_18006_pkey" unique="true">
             <column ascending="true" name="processoID"/>
          </index>
-         <index name="processos_18006_NPU_key" unique="true">
-            <column ascending="true" name="NPU"/>
-         </index>
       </table>
-      <table name="servidores" numRows="4081" remarks="" schema="public" type="TABLE">
+      <table name="servidores" numRows="1261" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;servidores_servidorID_seq&quot;'::regclass)" digits="0" id="0" name="servidorID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nomeServidor" nullable="false" remarks="" size="2147483647" type="varchar" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="CPF" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12"/>
