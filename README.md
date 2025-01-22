@@ -115,10 +115,21 @@ Para realização dos experimentos, foram realizadas alterações nos seguintes 
 ```txt
 max_connections = 200
 
-statement_timeout = 90000			                # in milliseconds, 0 is disabled
-lock_timeout = 30000			                    # in milliseconds, 0 is disabled
-idle_in_transaction_session_timeout = 60000	  # in milliseconds, 0 is disabled
-idle_session_timeout = 60000		              # in milliseconds, 0 is disabled
+shared_buffers = 2GB
+
+work_mem = 128MB
+maintenance_work_mem = 128MB
+
+max_worker_processes = 8
+max_parallel_workers_per_gather = 4
+max_parallel_workers = 8
+
+effective_cache_size = 4GB
+
+statement_timeout = 180000
+lock_timeout = 30000
+idle_in_transaction_session_timeout = 90000
+idle_session_timeout = 90000
 ```
 
 ### Preparação da massa de dados
@@ -146,8 +157,7 @@ Em seguida, execute o comando que executa a aplicação SpringBoot responsável 
 > ./mvnw spring-boot:run
 
 
-### 5.1 Experimento 01 - AS-IS
+### 5.1 Experimentos
 
-Neste experimento temos o objetivo de avaliar arquitetura de dados atual sem qualquer intervenção no modelo de dados e coletar métricas de performance.
-
-[Resultados](./experimentos/01-as-is/EXPERIMENTO01.md)
+* [00 - AS-IS](./experimentos/00-as-is/EXPERIMENTO-00.md)
+* [01 - Particionamento por Intervalo](./experimentos/01-particionamento-por-intervalo/EXPERIMENTO-01.md)
