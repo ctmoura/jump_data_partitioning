@@ -149,13 +149,14 @@ Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou si
 
 | # Threads (Usuários em paralelo) | # Requests / Thread    | # Repetições     | Duração média | Duração mínima | Duração máxima | Duração mediana | 
 | -------------------------------- | ---------------------- | ---------------- | ------------- | -------------- | -------------- | --------------- |
-| 1                                | 10                     | 10               |     9763,9 ms |      8486,0 ms |     11003,0 ms |       9686,0 ms |
-| 2                                | 10                     | 20               |    14027,8 ms |      9224,0 ms |     20246,0 ms |      12232,5 ms |
-| 3                                | 10                     | 30               |    18119,6 ms |      9288,0 ms |     37184,0 ms |      14618,0 ms |
-| 5                                | 10                     | 50               |    28012,6 ms |      9441,0 ms |     61072,0 ms |      22456,0 ms |
-| 8                                | 10                     | 80               |    ------- ms |     ------- ms |     ------- ms |      ------- ms |
+| 1                                | 10                     | 10               |     1794,8 ms |      1545,0 ms |      2603,0 ms |       1715,5 ms |
+| 2                                | 10                     | 20               |     2682,0 ms |      2336,0 ms |      3328,0 ms |       2667,0 ms |
+| 3                                | 10                     | 30               |     3369,8 ms |      1444,0 ms |      5510,0 ms |       3346,0 ms |
+| 5                                | 10                     | 50               |     5222,7 ms |      2057,0 ms |     11074,0 ms |       4513,5 ms |
+| 8                                | 10                     | 80               |     8836,6 ms |      1779,0 ms |     16170,0 ms |       7960,5 ms |
+| 13                               | 10                     | 130              |     --------- |      --------- |     ---------- |       --------- |
 
-Constatamos que a partir do cenário com 8 thread simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento
+Constatamos que a partir do cenário com 13 threads simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento
 da demanda conforme a execução dos testes, uma vez que com o aumento de usuários em paralelo, a execução da query passou a superar o limite máximo de 
 180.000 ms (3 minutos).
 
