@@ -3,7 +3,6 @@ templates
 servidores
 metabase_statistics
 environment_variables
-documentos
 processos_particionada_18006_2025
 processos_particionada_18006_2024
 processos_particionada_18006_2023
@@ -20,7 +19,8 @@ processos_particionada_18006_2013
 unidades
 complementos_18006
 movimentos_18006
-codigos
+documentos
+cod_movimentos
 processos_18006
 tribunais
 classes

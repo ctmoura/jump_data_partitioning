@@ -2,7 +2,8 @@ assuntos
 classes
 tribunais
 processos_18006
-codigos
+cod_movimentos
+documentos
 movimentos_18006
 complementos_18006
 unidades
@@ -19,7 +20,6 @@ processos_particionada_18006_2022
 processos_particionada_18006_2023
 processos_particionada_18006_2024
 processos_particionada_18006_2025
-documentos
 environment_variables
 metabase_statistics
 servidores
