@@ -22,6 +22,52 @@ public class LoadTestService {
     @Value("${spring.datasource.hikari.data-source-properties.socketTimeout}")
     private Integer queryTimeout;
 
+    public static final String QUERY = "SELECT\n" + //
+                "    p.\"NPU\", p.\"processoID\", p.\"ultimaAtualizacao\",\n" + //
+                "  \tc.descricao AS classe, a.descricao AS assunto,\n" + //
+                "  \tm.activity, m.\"dataInicio\", m.\"dataFinal\", m.\"usuarioID\",\n" + //
+                "    m.duration, m.\"movimentoID\", com.descricao AS complemento,\n" + //
+                "  \ts.\"nomeServidor\", s.\"tipoServidor\", d.tipo AS documento\n" + //
+                "FROM \n" + //
+                "\tprocessos_18006 AS p\n" + //
+                "INNER JOIN\n" + //
+                "    movimentos_18006 AS m ON m.\"processoID\" = p.\"processoID\"\n" + //
+                "INNER JOIN\n" + //
+                "    classes AS c ON p.classe = c.id\n" + //
+                "LEFT JOIN\n" + //
+                "    assuntos AS a ON p.assunto = a.id\n" + //
+                "LEFT JOIN\n" + //
+                "    complementos_18006 AS com ON com.\"movimentoID\" = m.id\n" + //
+                "LEFT JOIN\n" + //
+                "    servidores AS s ON s.\"servidorID\" = m.\"usuarioID\"\n" + //
+                "LEFT JOIN\n" + //
+                "\tdocumentos AS d ON d.\"id\" = m.\"documentoID\"\n" + //
+                "WHERE p.\"dataPrimeiroMovimento\" BETWEEN CURRENT_TIMESTAMP - interval '5 years' AND CURRENT_TIMESTAMP\n" + //
+                "ORDER BY \"processoID\", \"dataFinal\";";
+
+    public static final String QUERY_TABELA_PARTICIONADA = "SELECT\n" + //
+                "    p.\"NPU\", p.\"processoID\", p.\"ultimaAtualizacao\",\n" + //
+                "  \tc.descricao AS classe, a.descricao AS assunto,\n" + //
+                "  \tm.activity, m.\"dataInicio\", m.\"dataFinal\", m.\"usuarioID\",\n" + //
+                "    m.duration, m.\"movimentoID\", com.descricao AS complemento,\n" + //
+                "  \ts.\"nomeServidor\", s.\"tipoServidor\", d.tipo AS documento\n" + //
+                "FROM \n" + //
+                "\tprocessos_18006 AS p\n" + //
+                "INNER JOIN\n" + //
+                "    movimentos_18006 AS m ON m.\"processoID\" = p.\"processoID\"\n" + //
+                "INNER JOIN\n" + //
+                "    classes AS c ON p.classe = c.id\n" + //
+                "LEFT JOIN\n" + //
+                "    assuntos AS a ON p.assunto = a.id\n" + //
+                "LEFT JOIN\n" + //
+                "    complementos_18006 AS com ON com.\"movimentoID\" = m.id\n" + //
+                "LEFT JOIN\n" + //
+                "    servidores AS s ON s.\"servidorID\" = m.\"usuarioID\"\n" + //
+                "LEFT JOIN\n" + //
+                "\tdocumentos AS d ON d.\"id\" = m.\"documentoID\"\n" + //
+                "WHERE p.\"dataPrimeiroMovimento\" BETWEEN CURRENT_TIMESTAMP - interval '5 years' AND CURRENT_TIMESTAMP\n" + //
+                "ORDER BY \"processoID\", \"dataFinal\";";
+
     public LoadTestService(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -30,37 +76,10 @@ public class LoadTestService {
         log.trace("Iniciando execução do teste.");
         LocalDateTime startTime = LocalDateTime.now();
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT\n" + //
-                                "    p.\"NPU\", p.\"processoID\", p.\"ultimaAtualizacao\",\n" + //
-                                "  \tc.descricao AS classe, a.descricao AS assunto,\n" + //
-                                "  \tm.activity, m.\"dataInicio\", m.\"dataFinal\", m.\"usuarioID\",\n" + //
-                                "    m.duration, m.\"movimentoID\", com.descricao AS complemento,\n" + //
-                                "  \ts.\"nomeServidor\", s.\"tipoServidor\", d.tipo AS documento\n" + //
-                                "FROM \n" + //
-                                "\tprocessos_particionada_18006 AS p\n" + //
-                                "INNER JOIN\n" + //
-                                "    movimentos_18006 AS m ON m.\"processoID\" = p.\"processoID\"\n" + //
-                                "INNER JOIN\n" + //
-                                "    classes AS c ON p.classe = c.id\n" + //
-                                "LEFT JOIN\n" + //
-                                "    assuntos AS a ON p.assunto = a.id\n" + //
-                                "LEFT JOIN\n" + //
-                                "    complementos_18006 AS com ON com.\"movimentoID\" = m.id\n" + //
-                                "LEFT JOIN\n" + //
-                                "    servidores AS s ON s.\"servidorID\" = m.\"usuarioID\"\n" + //
-                                "LEFT JOIN\n" + //
-                                "\tdocumentos AS d ON d.\"id\" = m.\"documentoID\"\n" + //
-                                "WHERE '2000-01-01' <= p.\"dataPrimeiroMovimento\"\n" + //
-                                "ORDER BY \"processoID\", \"dataFinal\";";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            try (PreparedStatement statement = connection.prepareStatement(QUERY_TABELA_PARTICIONADA)) {
                 log.trace("Executando a query.");
                 statement.setQueryTimeout(this.queryTimeout / 1000);
                 try (ResultSet resultSet = statement.executeQuery()) {
-                    // log.trace("Iniciando leitura do resultset.");
-                    // resultSet.
-                    // while (resultSet.next()) {
-                    //     // Processar os resultados da consulta
-                    // }
                     log.trace("Query executada com sucesso.");
                 }
                 

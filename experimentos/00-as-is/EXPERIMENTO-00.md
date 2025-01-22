@@ -94,22 +94,25 @@ Os cenários do plano de teste segue uma sequencia fibonaci para determinar a qu
 
 ## 1.5 - Métricas avaliadas e resultados
 
-### 1.5.1 - Tempo de Processamento
-
 | # Threads (Usuários em paralelo) | # Requests / Thread    | # Repetições     | Duração média | Duração mínima | Duração máxima | Duração mediana | 
 | -------------------------------- | ---------------------- | ---------------- | ------------- | -------------- | -------------- | --------------- |
-| 1                                | 10                     | 10               |     9763,9 ms |      8486,0 ms |     11003,0 ms |       9686,0 ms |
+| 1                                | 10                     | 10               |     1794,8 ms |      1545,0 ms |      2603,0 ms |       1715,5 ms |
+| 2                                | 10                     | 20               |     2682,0 ms |      2336,0 ms |      3328,0 ms |       2667,0 ms |
+| 3                                | 10                     | 30               |     3369,8 ms |      1444,0 ms |      5510,0 ms |       3346,0 ms |
+| 5                                | 10                     | 50               |     5222,7 ms |      2057,0 ms |     11074,0 ms |       4513,5 ms |
+| 8                                | 10                     | 80               |     8836,6 ms |      1779,0 ms |     16170,0 ms |       7960,5 ms |
+| 13                               | 10                     | 130              |     --------- |      --------- |     ---------- |       --------- |
 
 
 ### 1.5.2 - Utilização de Recursos  
 
 | # Threads (Usuários em paralelo) | # Requests / Thread  | # Repetições  | Uso máximo de CPU | Uso de RAM  | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) | 
 | -------------------------------- | -------------------- | ------------- | ----------------- | ----------- | ----------- | ------------ | ---------------------  | ------------------ |
-| 1                                | 10                   | 10            |          180,56 % |     1,02 GB |        0 KB |         0 KB |                27,9 MB |             8,3 GB |
-| 2                                | 10                   | 20            |          224,33 % |     1,18 GB |        0 KB |         0 KB |                27,7 MB |            16,6 GB |
-| 3                                | 10                   | 30            |          244,40 % |     1,25 GB |        0 KB |         0 KB |                44,1 MB |            24,8 GB |
-| 5                                | 10                   | 50            |          299,57 % |     1,42 GB |        0 KB |         0 KB |                44,2 MB |            41,5 GB |
-| 8                                | 10                   | 50            |          ------ % |     ------- |        ---- |         ---- |                ------- |            ------- |
+| 1                                | 10                   | 10            |          213,22 % |     1,49 GB |        0 KB |         0 KB |                6,25 MB |            1,98 GB |
+| 2                                | 10                   | 20            |          347,73 % |     2,14 GB |        0 KB |         0 KB |                1,78 MB |            3,94 GB |
+| 3                                | 10                   | 30            |          390,09 % |     2,77 GB |        0 KB |         0 KB |                4,16 MB |            5,92 GB |
+| 5                                | 10                   | 50            |          401,10 % |     5,56 GB |        0 KB |         0 KB |                6,48 MB |            9,86 GB |
+| 8                                | 10                   | 80            |          419,55 % |     5,51 GB |        0 KB |         0 KB |                6,94 MB |           15,80 GB |
 
 Abaixo, estão os screenshots das estatísticas coletadas para cada cenário executado:
 
@@ -130,6 +133,10 @@ Abaixo, estão os screenshots das estatísticas coletadas para cada cenário exe
 ![Stats - 5 Thread](./stats-5.jpg)
 
 #### 8 Threads
+
+![Stats - 8 Thread](./stats-8.jpg)
+
+#### 13 Threads
 
 Não foi possível executar o cenário uma vez que o servidor não conseguiu responder as solicitações simultâneas.
 
