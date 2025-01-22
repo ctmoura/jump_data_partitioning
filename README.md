@@ -115,12 +115,21 @@ Para realização dos experimentos, foram realizadas alterações nos seguintes 
 ```txt
 max_connections = 200
 
-statement_timeout = 90000			                # in milliseconds, 0 is disabled
-lock_timeout = 30000			                    # in milliseconds, 0 is disabled
-idle_in_transaction_session_timeout = 60000	  # in milliseconds, 0 is disabled
-idle_session_timeout = 60000		              # in milliseconds, 0 is disabled
+shared_buffers = 2GB
 
 work_mem = 128MB
+maintenance_work_mem = 128MB
+
+max_worker_processes = 8
+max_parallel_workers_per_gather = 4
+max_parallel_workers = 8
+
+effective_cache_size = 4GB
+
+statement_timeout = 180000
+lock_timeout = 30000
+idle_in_transaction_session_timeout = 90000
+idle_session_timeout = 90000
 ```
 
 ### Preparação da massa de dados

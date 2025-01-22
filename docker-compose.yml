@@ -20,11 +20,11 @@ services:
         reservations:
           cpus: "2.0"
           memory: "6g"
-    #command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
     volumes:
       - ./data/postgresql/data:/var/lib/postgresql/data
       - ./data/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    #  - ./conf/postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./conf/postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
     networks:
       - jump_sharding-network
 
