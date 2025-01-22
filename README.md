@@ -157,8 +157,7 @@ Em seguida, execute o comando que executa a aplicação SpringBoot responsável 
 > ./mvnw spring-boot:run
 
 
-### 5.1 Experimento 01 - AS-IS
+### 5.1 Experimentos
 
-Neste experimento temos o objetivo de avaliar arquitetura de dados atual sem qualquer intervenção no modelo de dados e coletar métricas de performance.
-
-[Resultados](./experimentos/00-as-is/EXPERIMENTO-00.md)
+* [00 - AS-IS](./experimentos/00-as-is/EXPERIMENTO-00.md)
+* [01 - Particionamento por Intervalo](./experimentos/01-particionamento-por-intervalo/EXPERIMENTO-01.md)
