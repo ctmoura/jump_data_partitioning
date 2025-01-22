@@ -119,6 +119,8 @@ statement_timeout = 90000			                # in milliseconds, 0 is disabled
 lock_timeout = 30000			                    # in milliseconds, 0 is disabled
 idle_in_transaction_session_timeout = 60000	  # in milliseconds, 0 is disabled
 idle_session_timeout = 60000		              # in milliseconds, 0 is disabled
+
+work_mem = 128MB
 ```
 
 ### Preparação da massa de dados
@@ -150,4 +152,4 @@ Em seguida, execute o comando que executa a aplicação SpringBoot responsável 
 
 Neste experimento temos o objetivo de avaliar arquitetura de dados atual sem qualquer intervenção no modelo de dados e coletar métricas de performance.
 
-[Resultados](./experimentos/01-as-is/EXPERIMENTO01.md)
+[Resultados](./experimentos/00-as-is/EXPERIMENTO-00.md)
