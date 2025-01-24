@@ -52,7 +52,7 @@ public class LoadTestService {
                 "    m.duration, m.\"movimentoID\", com.descricao AS complemento,\n" + //
                 "  \ts.\"nomeServidor\", s.\"tipoServidor\", d.tipo AS documento\n" + //
                 "FROM \n" + //
-                "\tprocessos_18006 AS p\n" + //
+                "\tprocessos_particionada_18006 AS p\n" + //
                 "INNER JOIN\n" + //
                 "    movimentos_18006 AS m ON m.\"processoID\" = p.\"processoID\"\n" + //
                 "INNER JOIN\n" + //
@@ -76,7 +76,7 @@ public class LoadTestService {
         log.trace("Iniciando execução do teste.");
         LocalDateTime startTime = LocalDateTime.now();
         try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(QUERY_TABELA_PARTICIONADA)) {
+            try (PreparedStatement statement = connection.prepareStatement(QUERY)) {
                 log.trace("Executando a query.");
                 statement.setQueryTimeout(this.queryTimeout / 1000);
                 try (ResultSet resultSet = statement.executeQuery()) {

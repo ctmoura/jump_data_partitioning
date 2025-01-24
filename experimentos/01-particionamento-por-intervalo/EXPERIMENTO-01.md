@@ -298,24 +298,25 @@ Os cenários do plano de teste segue uma sequencia fibonaci para determinar a qu
 
 | # Threads (Usuários em paralelo) | # Requests / Thread    | # Repetições     | Duração média | Duração mínima | Duração máxima | Duração mediana | 
 | -------------------------------- | ---------------------- | ---------------- | ------------- | -------------- | -------------- | --------------- |
-| 1                                | 10                     | 10               |     1794,8 ms |      1545,0 ms |      2603,0 ms |       1715,5 ms |
-| 2                                | 10                     | 20               |     2682,0 ms |      2336,0 ms |      3328,0 ms |       2667,0 ms |
-| 3                                | 10                     | 30               |     3369,8 ms |      1444,0 ms |      5510,0 ms |       3346,0 ms |
-| 5                                | 10                     | 50               |     8881,5 ms |      1584,0 ms |     17187,0 ms |       9324,5 ms |
-| 8                                | 10                     | 80               |     8881,5 ms |      1584,0 ms |     17187,0 ms |       9324,5 ms |
-| 13                               | 10                     | 130              |     --------- |      --------- |     ---------- |       --------- |
-
+| 1                                | 10                     | 10               |     2604,9 ms |      2397,0 ms |      3610,0 ms |       2520,5 ms |
+| 2                                | 10                     | 20               |     4653,6 ms |      3486,0 ms |      6856,0 ms |       4489,0 ms |
+| 3                                | 10                     | 30               |     5982,3 ms |      2450,0 ms |     14975,0 ms |       4836,0 ms |
+| 5                                | 10                     | 50               |     8405,2 ms |      2416,0 ms |     22182,0 ms |       5482,0 ms |
+| 8                                | 10                     | 80               |    13600,9 ms |      2393,0 ms |     27838,0 ms |       9471,5 ms |
+| 13                               | 10                     | 130              |    25298,3 ms |      4783,0 ms |     43957,0 ms |      27686,0 ms |
 
 
 ### 1.5.2 - Utilização de Recursos  
 
-| # Threads (Usuários em paralelo) | # Requests / Thread  | # Repetições  | Uso máximo de CPU | Uso de RAM  | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) | 
-| -------------------------------- | -------------------- | ------------- | ----------------- | ----------- | ----------- | ------------ | ---------------------  | ------------------ |
-| 1                                | 10                   | 10            |          213,22 % |     1,49 GB |        0 KB |         0 KB |                6,25 MB |            1,98 GB |
-| 2                                | 10                   | 20            |          347,73 % |     2,14 GB |        0 KB |         0 KB |                1,78 MB |            3,94 GB |
-| 3                                | 10                   | 30            |          390,09 % |     2,77 GB |        0 KB |         0 KB |                4,16 MB |            5,92 GB |
-| 5                                | 10                   | 50            |          401,10 % |     5,56 GB |        0 KB |         0 KB |                6,48 MB |            9,86 GB |
-| 8                                | 10                   | 80            |          ------ % |     ------- |        ---- |         ---- |                ------- |            ------- |
+| # Threads (Em paralelo) | # Requests/Thread | # Repetições | Uso de CPU | Uso de RAM | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) | 
+| ----------------------- | ----------------- | ------------ | ---------- | ---------- | ----------- | ------------ | ---------------------  | ------------------ |
+| 1                       | 10                | 10           |   398,94 % |    1,75 GB |        0 KB |         0 KB |                2,47 MB |            1,98 GB |
+| 2                       | 10                | 20           |   405,96 % |    2,65 GB |        0 KB |         0 KB |                2,68 MB |            3,94 GB |
+| 3                       | 10                | 30           |   411,72 % |    2,99 GB |        0 KB |         0 KB |                4,73 MB |            5,92 GB |
+| 5                       | 10                | 50           |   414,09 % |    3,58 GB |        0 KB |         0 KB |               12,80 MB |            9,88 GB |
+| 8                       | 10                | 80           |   423,27 % |    4,99 GB |        0 KB |         0 KB |               12,70 MB |           15,80 GB |
+| 13                      | 10                | 80           |   439,54 % |    6,94 GB |        0 KB |         0 KB |               23,10 MB |           25,70 GB |
+
 
 Abaixo, estão os screenshots das estatísticas coletadas para cada cenário executado:
 
