@@ -304,6 +304,11 @@ Os cenários do plano de teste segue uma sequencia fibonaci para determinar a qu
 | 5                                | 10                     | 50               |     8405,2 ms |      2416,0 ms |     22182,0 ms |       5482,0 ms |
 | 8                                | 10                     | 80               |    13600,9 ms |      2393,0 ms |     27838,0 ms |       9471,5 ms |
 | 13                               | 10                     | 130              |    25298,3 ms |      4783,0 ms |     43957,0 ms |      27686,0 ms |
+| 21                               | 10                     | 210              |    ------- ms |      ------ ms |     ------- ms |      ------- ms |
+
+Constatamos que a partir do cenário com 21 threads simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento
+da demanda conforme a execução dos testes, uma vez que com o aumento de usuários em paralelo, a execução da query passou a superar o limite máximo de 
+180.000 ms (3 minutos).
 
 
 ### 1.5.2 - Utilização de Recursos  

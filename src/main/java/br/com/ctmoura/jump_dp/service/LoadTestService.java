@@ -76,7 +76,7 @@ public class LoadTestService {
         log.trace("Iniciando execução do teste.");
         LocalDateTime startTime = LocalDateTime.now();
         try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(QUERY)) {
+            try (PreparedStatement statement = connection.prepareStatement(QUERY_TABELA_PARTICIONADA)) {
                 log.trace("Executando a query.");
                 statement.setQueryTimeout(this.queryTimeout / 1000);
                 try (ResultSet resultSet = statement.executeQuery()) {
