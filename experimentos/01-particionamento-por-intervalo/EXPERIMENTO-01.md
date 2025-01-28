@@ -241,7 +241,7 @@ SELECT *
 FROM public.processos_18006 WHERE "dataPrimeiroMovimento" IS NOT NULL;
 ```
 
-- Total de registros retornando pela query: **3.364.537**
+- Total de registros retornando pela query e inseridos na migração: **350.437**
 
 ## 1.3 - Ambiente de testes
 
