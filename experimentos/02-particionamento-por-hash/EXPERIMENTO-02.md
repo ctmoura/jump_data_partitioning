@@ -678,7 +678,7 @@ ORDER BY
 Constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 72, casos onde o tempo de resposta foram superiores ao limite estabelecido para o timeout de execução de query de 180.000 ms (3 minutos), e portanto, não permitiu escalar o banco de dados para atender o crescimento da demanda e exeucuções em paralelo, conforme a execução dos testes.
 
 
-### 1.5.2 - Utilização de Recursos
+### 1.7.2 - Utilização de Recursos
 
 | # Threads (Em paralelo) | # Requests/Thread | # Repetições | Uso de CPU | Uso de RAM | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) |
 | ----------------------- | ----------------- | ------------ | ---------- | ---------- | ----------- | ------------ | ---------------------- | ------------------ |
@@ -726,73 +726,139 @@ Abaixo, estão os screenshots das estatísticas coletadas para cada cenário exe
 
 ![Stats - 34 Threads](./stats-34.jpg)
 
-Não foi possível executar o cenário uma vez que o servidor não conseguiu responder as solicitações simultâneas.
+#### 55 Threads
 
-### 1.5.3 - Escalabilidade
+![Stats - 55 Threads](./stats-55.jpg)
+
+A partir deste cenário, com 55 usuários simultâneos, começamos a evidenciar erros de execução nas consultas ao banco de dados, pois o tempo de resposta de algumas delas estavam superando o query timeout estabelecido em 180.000 ms (3 minutos).
+
+### 1.7.3 - Escalabilidade
 
 Para essa métrica, implementamos uma aplicação em Java utilizando Spring Boot, que publica um endpoint REST responsável por executar a query de referência, realizar a leitura do ResultSet, capturando o timestamp inicial e final da execução para cálculo da duração.
 
 Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou simular a carga de usuários simultâneos utilizando a aplicação.
 
-| # Threads (Usuários em paralelo) | # Requests / Thread | # Repetições | Duração média | Duração mínima | Duração máxima | Duração mediana |
-| -------------------------------- | ------------------- | ------------ | ------------- | -------------- | -------------- | --------------- |
-| 1                                | 10                  | 10           | 9763,9 ms     | 8486,0 ms      | 11003,0 ms     | 9686,0 ms       |
-| 2                                | 10                  | 20           | 14027,8 ms    | 9224,0 ms      | 20246,0 ms     | 12232,5 ms      |
-| 3                                | 10                  | 30           | 18119,6 ms    | 9288,0 ms      | 37184,0 ms     | 14618,0 ms      |
-| 5                                | 10                  | 50           | 28012,6 ms    | 9441,0 ms      | 61072,0 ms     | 22456,0 ms      |
-| 8                                | 10                  | 80           | ------- ms    | ------- ms     | ------- ms     | ------- ms      |
+Conforme apresentado na tabela `1.7.1 - Tempo de Processamento`, constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento da demanda, conforme a execução dos testes, uma vez que com o aumento de usuários em paralelo, a execução da query passou a superar o limite máximo de 180.000 ms (3 minutos).
 
-Constatamos que a partir do cenário com 8 thread simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento
-da demanda conforme a execução dos testes, uma vez que com o aumento de usuários em paralelo, a execução da query passou a superar o limite máximo de
-180.000 ms (3 minutos).
-
-### 1.5.4 - Equilíbrio de Carga
+### 1.7.4 - Equilíbrio de Carga
 
 Não se aplica.
 
-### 1.5.5 - Taxa de Transferência de Dados (Throughput)
+### 1.7.5 - Taxa de Transferência de Dados (Throughput)
 
 - Comando para ativar o rastreamento de tempos de entrada/saída (I/O) em operações realizadas pelo banco de dados.
 
 ```sql
-SET track_io_timing = on;
-
 EXPLAIN ANALYZE
-    -- CONSULTA SQL DE REFERÊNCIA
-    SELECT * FROM ...;
-
+SELECT
+    p."NPU", 
+    p."processoID", 
+    p."ultimaAtualizacao",
+    c.descricao AS classe, 
+    a.descricao AS assunto,
+    m.activity, 
+    m."dataInicio", 
+    m."dataFinal", 
+    m."usuarioID",
+    m.duration, 
+    m."movimentoID", 
+    com.descricao AS complemento,
+    s."nomeServidor", 
+    s."tipoServidor", 
+    d.tipo AS documento
+FROM 
+    processos_exp02 AS p
+INNER JOIN
+    movimentos_exp02 AS m 
+    ON 
+	m."unidadeID" = p."unidadeID"
+	AND m."anoPrimeiroMovimento" >= p."anoPrimeiroMovimento"
+	AND m."processoID" = p."processoID"
+INNER JOIN
+    classes AS c ON p.classe = c.id
+LEFT JOIN
+    assuntos AS a ON p.assunto = a.id
+LEFT JOIN
+    complementos_exp02 AS com 
+    ON 
+	com."unidadeID" = m."unidadeID" 
+	AND com."anoPrimeiroMovimento" >= p."anoPrimeiroMovimento"
+	AND com."movimentoID" = m."id" 
+LEFT JOIN
+    servidores AS s ON s."servidorID" = m."usuarioID"
+LEFT JOIN
+    documentos AS d ON d."id" = m."documentoID"
+WHERE 
+    p."unidadeID" = 18006 AND p."anoPrimeiroMovimento" >= 2020
+	AND m."unidadeID" = 18006 AND m."anoPrimeiroMovimento" >= 2020
+	AND com."unidadeID" = 18006 AND com."anoPrimeiroMovimento" >= 2020
+ORDER BY 
+    p."processoID", m."dataFinal";
 ```
 
-- Taxa: **3.364.537 registros** / **7,44 segundos** = **451897,94 registros por segundo**
+- Taxa: **353.945 registros** / **6.04 segundos** = **58600.16 registros por segundo**
 
-### 1.5.6 - Custo de Redistribuição
+### 1.7.6 - Custo de Redistribuição
 
 Não se aplica.
 
-### 1.5.7 - Eficiência de Consultas
+### 1.7.7 - Eficiência de Consultas
 
 A eficiência pode ser expressa como uma relação entre o tempo de execução e o número de partições acessadas:
 
 #### Fórmula:
 
+
 ```plaintext
-Eficiência (%) = (1 / Tempo de Execução Total) * (Número de Partições Acessadas / Partições Totais) * 100
+Eficiência (%) = (1 - (P_Acessadas / P_Total)) * (1 - (T_Query / T_Ideal)) * 100
 ```
 
-- Tempo de Execução Total: **10 segundos**
-- Número de Partições Acessadas: **1**
-- Partições Totais: **1**
+Onde:
+- P_Acessadas: Quantidade de partições acessadas.
+- P_Total: Total de partições disponíveis.
+- T_Query: Tempo total de execução da query (Execution Time no EXPLAIN ANALYZE).
+- T_Ideal: Tempo esperado para a melhor execução possível (vamos estabelecer como ideal o tempo de execução na arquitetura atual = 10 segundos).
 
-> Eficiência (%) = (1 / 10) _ (1 / 1) _ 100 = **10%**
+Sendo assim, temos:
 
-### 1.5.8 - Consistência de Dados
+- P_Acessadas: **23**
+- P_Total: **39**
+- T_Query: **6.04 segundos**
+- T_Ideal: **10 segundos** 
+
+> Eficiência (%) =  (1 - (23 / 39)) * (1 - (6.04 / 10)) * 100 => (1 - (0,58974358974359)) * (1 - (0,604)) * 100 = **16,24%**
+
+Nesta arquitetura, a consulta foi **16,24%** mais eficiente do que na arquitetura atual.
+
+
+### 1.7.8 - Consistência de Dados
 
 Essa métrica não se aplica a essa estratégia, uma vez que não existe movimentação de dados, seja no próprio host ou em hosts distintos.
 
-### 1.5.9 - Capacidade de Adaptação
+### 1.7.9 - Capacidade de Adaptação
 
 Essa métrica não se aplica a essa estratégia, uma vez que ela não realiza mudanças ou ajustes dinâmicamente.
 
-### 1.5.10 - Custo Operacional
+### 1.7.10 - Custo Operacional
 
 Não foi avaliado o custo operacional pois se trata da estratégia atualmente implementada.
+
+## 1.8 - Considerações
+
+> Vantagens:
+
+- A principal vantagem do particionamento por hash é que ele distribui os dados de maneira relativamente uniforme entre as partições, evitando problemas de desbalanceamento que podem ocorrer em particionamento por intervalo ou por valor.
+- Como a localização dos dados é determinada pelo cálculo do hash, consultas que utilizam filtros diretos na chave particionada (e.g., WHERE unidadeID = 10) são eficientes, pois a engine de banco de dados pode rapidamente identificar a partição correta e reduzir a busca.
+- Diferente do particionamento por intervalo, onde algumas partições podem crescer desproporcionalmente (hot partitions), o particionamento por hash garante que os dados sejam distribuídos de maneira uniforme, reduzindo gargalos em operações de leitura e escrita.
+- Essa estratégia facilita a escalabilidade horizontal, pois permite uma distribuição equilibrada das cargas de trabalho em diferentes nós em bancos de dados distribuídos.
+- Em sistemas transacionais (OLTP), onde há muitas operações de busca e inserção rápidas, a distribuição dos dados por hash pode reduzir contenção e melhorar a eficiência das transações.
+- Permitiu um aumento na escalabilidade de usuários simultaneos, com até 34 usuários (sem falhas) e até 55 (com 13,09% de falhas).
+- Mesmo experimentando falhas no cenário de 55 usuários simultaneos, o banco de dados continuou a responder as demais consultas.
+
+> Desvantagens:
+
+- Se a quantidade de partições precisar ser aumentada ou reduzida, o particionamento por hash pode ser problemático, pois exige a redistribuição dos dados, impactando a performance.
+- Consultas que buscam intervalos de valores (e.g., WHERE anoPrimeiroMovimento BETWEEN 2020 AND 2022) sofrem grande impacto de desempenho, pois os registros podem estar espalhados em várias partições, forçando o banco a escanear múltiplas partições.
+- Manter e monitorar um grande número de partições criadas por hash pode ser mais complexo do que o particionamento por intervalo ou por valor, especialmente em bancos distribuídos.
+- Como os dados são distribuídos aleatoriamente pelas partições, consultas que exigem junções (JOIN) ou agregações (SUM, AVG, COUNT) podem precisar acessar múltiplas partições, aumentando o tempo de resposta.
+- Dependendo do número de partições e da distribuição dos dados, pode ocorrer subutilização de algumas partições, especialmente se o número de registros for pequeno em relação ao número de partições.
