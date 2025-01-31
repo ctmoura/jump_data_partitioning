@@ -51,6 +51,8 @@ services:
       - ./experimentos/00-as-is/schemaspy.properties:/schemaspy.properties
       # - ./experimentos/01-particionamento-por-intervalo/schemaspy/output:/output
       # - ./experimentos/01-particionamento-por-intervalo/schemaspy.properties:/schemaspy.properties
+      #- ./experimentos/02-particionamento-por-hash/schemaspy/output:/output
+      #- ./experimentos/02-particionamento-por-hash/schemaspy.properties:/schemaspy.properties
     depends_on:
       postgres:
         condition: service_healthy

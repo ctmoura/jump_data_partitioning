@@ -4,10 +4,16 @@ servidores
 metabase_statistics
 environment_variables
 unidades
+complementos_18008
+complementos_18007
 complementos_18006
+movimentos_18008
+movimentos_18007
 movimentos_18006
 documentos
 cod_movimentos
+processos_18008
+processos_18007
 processos_18006
 tribunais
 classes
