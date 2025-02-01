@@ -21,8 +21,6 @@ public class LoadTestController {
     @GetMapping("/load-test")
     public String executeLoadTest() {
         Instant start = Instant.now();
-        // Executar o teste de carga aqui
-        // Por exemplo, pode ser uma chamada a um serviço que realiza a consulta SQL
         boolean success = false;
         try {
             this.loadTestService.executeQueryExp00e01();
@@ -36,11 +34,22 @@ public class LoadTestController {
     @GetMapping("/load-test-exp02")
     public String executeLoadTestExp02(@RequestParam Long origemId) {
         Instant start = Instant.now();
-        // Executar o teste de carga aqui
-        // Por exemplo, pode ser uma chamada a um serviço que realiza a consulta SQL
         boolean success = false;
         try {
             this.loadTestService.executeQueryExp02(origemId);
+            success = true;
+        } catch (Exception e) {}
+        // Retornar uma mensagem indicando que o teste foi concluído
+        return String.format("Sucesso: %s, Duration: %s",
+                success, Duration.between(start, Instant.now()).toMillis());
+    }
+
+    @GetMapping("/load-test-exp03")
+    public String executeLoadTestExp03(@RequestParam Long origemId) {
+        Instant start = Instant.now();
+        boolean success = false;
+        try {
+            this.loadTestService.executeQueryExp03(origemId);
             success = true;
         } catch (Exception e) {}
         // Retornar uma mensagem indicando que o teste foi concluído

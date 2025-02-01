@@ -675,7 +675,7 @@ ORDER BY
 | 34                               | 10                  | 340          |                0 | 72349,7 ms    | 15597,0 ms     | 109198,0 ms    | 74255,0 ms      |
 | 55                               | 10                  | 550          |               72 | 139699,7 ms   | 14745,0 ms     | 181299,0 ms    | 148002,5 ms     |
 
-Constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 72, casos onde o tempo de resposta foram superiores ao limite estabelecido para o timeout de execução de query de 180.000 ms (3 minutos), e portanto, não permitiu escalar o banco de dados para atender o crescimento da demanda e exeucuções em paralelo, conforme a execução dos testes.
+Constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 72 (13,09%), casos onde o tempo de resposta foram superiores ao limite estabelecido para o timeout de execução de query de 180.000 ms (3 minutos), e portanto, não permitiu escalar o banco de dados para atender o crescimento da demanda e exeucuções em paralelo, conforme a execução dos testes.
 
 
 ### 1.7.2 - Utilização de Recursos
@@ -822,13 +822,13 @@ Onde:
 Sendo assim, temos:
 
 - P_Acessadas: **23**
-- P_Total: **39**
-- T_Query: **6.04 segundos**
+- P_Total: **117**
+- T_Query: **6,04 segundos**
 - T_Ideal: **10 segundos** 
 
-> Eficiência (%) =  (1 - (23 / 39)) * (1 - (6.04 / 10)) * 100 => (1 - (0,58974358974359)) * (1 - (0,604)) * 100 = **16,24%**
+> Eficiência (%) =  (1 - (23 / 117)) * (1 - (6,04 / 10)) * 100 => (1 - (0,196581196581197)) * (1 - (0,604)) * 100 = **31,81%**
 
-Nesta arquitetura, a consulta foi **16,24%** mais eficiente do que na arquitetura atual.
+Nesta arquitetura, a consulta foi **31,81%** mais eficiente do que na arquitetura atual.
 
 
 ### 1.7.8 - Consistência de Dados
