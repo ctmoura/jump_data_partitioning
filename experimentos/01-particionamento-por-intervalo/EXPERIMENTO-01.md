@@ -759,33 +759,27 @@ FROM
     processos_exp01 AS p
 INNER JOIN
     movimentos_exp01 AS m 
-    ON 
-	m."anoPrimeiroMovimento" = p."anoPrimeiroMovimento"
-	AND m."unidadeID" = p."unidadeID"
-	AND m."processoID" = p."processoID"
+    ON m."processoID" = p."processoID"
 INNER JOIN
     classes AS c ON p.classe = c.id
 LEFT JOIN
     assuntos AS a ON p.assunto = a.id
 LEFT JOIN
     complementos_exp01 AS com 
-    ON 
-	com."anoPrimeiroMovimento" = p."anoPrimeiroMovimento"
-	AND com."unidadeID" = m."unidadeID" 
-	AND com."movimentoID" = m."id" 
+    ON com."movimentoID" = m."id" 
 LEFT JOIN
     servidores AS s ON s."servidorID" = m."usuarioID"
 LEFT JOIN
     documentos AS d ON d."id" = m."documentoID"
 WHERE 
-    p."anoPrimeiroMovimento" >= 2020 AND p."unidadeID" = 18006 
-	AND m."anoPrimeiroMovimento" >= 2020 AND m."unidadeID" = 18006
-	AND com."anoPrimeiroMovimento" >= 2020 AND com."unidadeID" = 18006
+    p."dataPrimeiroMovimento" >= '2020-01-01'AND p."unidadeID" = 18006 
+	AND m."dataPrimeiroMovimento" >= '2020-01-01' AND m."unidadeID" = 18006
+	AND com."dataPrimeiroMovimento" >= '2020-01-01' AND com."unidadeID" = 18006
 ORDER BY 
     p."processoID", m."dataFinal";
 ```
 
-- Taxa: **353.945 registros** / **6.04 segundos** = **58600.16 registros por segundo**
+- Taxa: **353.945 registros** / **0,913 segundos** = **353.945 registros por segundo**
 
 ### 1.7.6 - Custo de Redistribuição
 
@@ -812,12 +806,12 @@ Sendo assim, temos:
 
 - P_Acessadas: **6**
 - P_Total: **13**
-- T_Query: **1,387 segundos**
+- T_Query: **0,913 segundos**
 - T_Ideal: **10 segundos** 
 
-> Eficiência (%) =  (1 - (6 / 13)) * (1 - (1,387 / 10)) * 100 => (1 - (0,461538461538462)) * (1 - (0,1387)) * 100 = **46,37%**
+> Eficiência (%) =  (1 - (6 / 13)) * (1 - (0,913 / 10)) * 100 => (1 - (0,461538461538462)) * (1 - (0,0913)) * 100 = **48,92%**
 
-Nesta arquitetura, a consulta foi **46,37%** mais eficiente do que na arquitetura atual.
+Nesta arquitetura, a consulta foi **48,92%** mais eficiente do que na arquitetura atual.
 
 
 ### 1.7.8 - Consistência de Dados
