@@ -11,7 +11,10 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-    shm_size: "4g"
+    shm_size: "6g"
+    sysctls:
+      kernel.shmmax: 6442450944
+      kernel.shmall: 1572864
     deploy:
       resources:
         limits:
@@ -47,12 +50,14 @@ services:
     platform: linux/amd64
     env_file: env/dev.env
     volumes:
-      - ./experimentos/00-as-is/schemaspy/output:/output
-      - ./experimentos/00-as-is/schemaspy.properties:/schemaspy.properties
+      # - ./experimentos/00-as-is/schemaspy/output:/output
+      # - ./experimentos/00-as-is/schemaspy.properties:/schemaspy.properties
       # - ./experimentos/01-particionamento-por-intervalo/schemaspy/output:/output
       # - ./experimentos/01-particionamento-por-intervalo/schemaspy.properties:/schemaspy.properties
-      #- ./experimentos/02-particionamento-por-hash/schemaspy/output:/output
-      #- ./experimentos/02-particionamento-por-hash/schemaspy.properties:/schemaspy.properties
+      # - ./experimentos/02-particionamento-por-hash/schemaspy/output:/output
+      # - ./experimentos/02-particionamento-por-hash/schemaspy.properties:/schemaspy.properties
+      - ./experimentos/03-particionamento-hibrido/schemaspy/output:/output
+      - ./experimentos/03-particionamento-hibrido/schemaspy.properties:/schemaspy.properties
     depends_on:
       postgres:
         condition: service_healthy

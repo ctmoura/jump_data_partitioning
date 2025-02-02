@@ -29,154 +29,11 @@ Assim, ambos os registros serão armazenados na partição **processos_exp02_3**
 Essa distribuição visa equilibrar partições, não agrupar por valores. Ao contrário do particionamento LIST ou RANGE, que garante o agrupamento lógico, o particionamento hash distribui os dados uniformemente em todas as partições.
 
 
-## 1.3 - Unificação dos registros nas tabelas particionadas
+## 1.3 - Incremento de dados e unificação dos registros nas tabelas únicas
 
-Nesta etapa, iremos unificar os registros existentes em tabelas únicas.
+Essa estapa já foi realizada no experimento 01.
 
-Como a base de dados que foi fornecida só dispunha de registros para uma única unidade judiciária (id: 18006), optamos por clonar as tabelas desta unidade para simular o cenário com múltiplas unidades judiciárias.
-
-1. Clonando as tabelas da unidade judiciária existente
-
-```sql
-
--- Tabelas para unidade 18007
-
--- processos_18007
-
-CREATE TABLE public.processos_18007 AS
-SELECT
-"processoID" + 1000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
-"NPU", liminar, natureza, "valorCausa", "nivelSigilo", competencia,
-"situacaoMigracao", "justicaGratuita", "dataAjuizamento", assunto, classe,
-"ultimaAtualizacao", "ultimoMovimento", "dataPrimeiroMovimento", "dataUltimoMovimento",
-'18007'::bigint AS "unidadeID"
-FROM public.processos_18006;
-
-ALTER TABLE IF EXISTS public.processos_18007
-    ADD CONSTRAINT processos_18007_pkey PRIMARY KEY ("processoID");
-ALTER TABLE IF EXISTS public.processos_18007
-    ADD CONSTRAINT processos_18007_classe_fkey FOREIGN KEY (classe)
-    REFERENCES public.classes (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-ALTER TABLE IF EXISTS public.processos_18007
-    ADD CONSTRAINT processos_18007_assunto_fkey FOREIGN KEY (assunto)
-    REFERENCES public.assuntos (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-
--- movimentos_18007
-
-CREATE TABLE public.movimentos_18007 AS
-SELECT
-id + 10000000000 AS id, -- Adiciona um offset para as chaves primárias serem únicas
-"processoID" + 1000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
-"NPU", activity, duration, "dataInicio", "dataFinal", "usuarioID", "documentoID", "movimentoID",
-'18007'::bigint AS "unidadeID"
-FROM public.movimentos_18006;
-
-
-ALTER TABLE IF EXISTS public.movimentos_18007
-    ADD CONSTRAINT movimentos_18007_pkey PRIMARY KEY (id);
-ALTER TABLE IF EXISTS public.movimentos_18007
-    ADD CONSTRAINT "movimentos_18007_processoID_fkey" FOREIGN KEY ("processoID")
-    REFERENCES public.processos_18007 ("processoID") MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-ALTER TABLE IF EXISTS public.movimentos_18007
-    ADD CONSTRAINT "movimentos_18007_movimentoID_fkey" FOREIGN KEY ("movimentoID")
-    REFERENCES public.cod_movimentos (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-
--- complementos_18007
-
-CREATE TABLE public.complementos_18007 AS
-SELECT
-"complementoID" + 10000000000 AS "complementoID", -- Adiciona um offset para as chaves primárias serem únicas
-"movimentoID" + 10000000000 AS "movimentoID", -- Adiciona um offset para as chaves primárias serem únicas
-tipo, descricao,
-'18007'::bigint AS "unidadeID"
-FROM public.complementos_18006;
-
-ALTER TABLE IF EXISTS public.complementos_18007
-    ADD CONSTRAINT complementos_18007_pkey PRIMARY KEY ("complementoID");
-ALTER TABLE IF EXISTS public.complementos_18007
-    ADD CONSTRAINT "complementos_18007_movimentoID_fkey" FOREIGN KEY ("movimentoID")
-    REFERENCES public.movimentos_18007 (id) MATCH SIMPLE
-    ON UPDATE CASCADE
-    ON DELETE CASCADE;
-
-
--- Tabelas para unidade 18008
-
--- processos_18008
-
-CREATE TABLE public.processos_18008 AS
-SELECT
-"processoID" + 2000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
-"NPU", liminar, natureza, "valorCausa", "nivelSigilo", competencia,
-"situacaoMigracao", "justicaGratuita", "dataAjuizamento", assunto, classe,
-"ultimaAtualizacao", "ultimoMovimento", "dataPrimeiroMovimento", "dataUltimoMovimento",
-'18008'::bigint AS "unidadeID"
-FROM public.processos_18006;
-
-ALTER TABLE IF EXISTS public.processos_18008
-    ADD CONSTRAINT processos_18008_pkey PRIMARY KEY ("processoID");
-ALTER TABLE IF EXISTS public.processos_18008
-    ADD CONSTRAINT processos_18008_classe_fkey FOREIGN KEY (classe)
-    REFERENCES public.classes (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-ALTER TABLE IF EXISTS public.processos_18008
-    ADD CONSTRAINT processos_18008_assunto_fkey FOREIGN KEY (assunto)
-    REFERENCES public.assuntos (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-
--- movimentos_18008
-
-CREATE TABLE public.movimentos_18008 AS
-SELECT
-id + 20000000000 AS id, -- Adiciona um offset para as chaves primárias serem únicas
-"processoID" + 2000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
-"NPU", activity, duration, "dataInicio", "dataFinal", "usuarioID", "documentoID", "movimentoID",
-'18008'::bigint AS "unidadeID"
-FROM public.movimentos_18006;
-
-
-ALTER TABLE IF EXISTS public.movimentos_18008
-    ADD CONSTRAINT movimentos_18008_pkey PRIMARY KEY (id);
-ALTER TABLE IF EXISTS public.movimentos_18008
-    ADD CONSTRAINT "movimentos_18008_processoID_fkey" FOREIGN KEY ("processoID")
-    REFERENCES public.processos_18008 ("processoID") MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-ALTER TABLE IF EXISTS public.movimentos_18008
-    ADD CONSTRAINT "movimentos_18008_movimentoID_fkey" FOREIGN KEY ("movimentoID")
-    REFERENCES public.cod_movimentos (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-
--- complementos_18008
-
-CREATE TABLE public.complementos_18008 AS
-SELECT
-"complementoID" + 20000000000 AS "complementoID", -- Adiciona um offset para as chaves primárias serem únicas
-"movimentoID" + 20000000000 AS "movimentoID", -- Adiciona um offset para as chaves primárias serem únicas
-tipo, descricao,
-'18008'::bigint AS "unidadeID"
-FROM public.complementos_18006;
-
-ALTER TABLE IF EXISTS public.complementos_18008
-    ADD CONSTRAINT complementos_18008_pkey PRIMARY KEY ("complementoID");
-ALTER TABLE IF EXISTS public.complementos_18008
-    ADD CONSTRAINT "complementos_18008_movimentoID_fkey" FOREIGN KEY ("movimentoID")
-    REFERENCES public.movimentos_18008 (id) MATCH SIMPLE
-    ON UPDATE CASCADE
-    ON DELETE CASCADE;
-
-```
+## 1.4 - Adição da coluna unidadeID nas 
 
 2. Criando a coluna **unidadeID** nas tabelas originais de complementos_18006, movimentos_18006 e processos_18006.
 
@@ -675,7 +532,7 @@ ORDER BY
 | 34                               | 10                  | 340          |                0 | 72349,7 ms    | 15597,0 ms     | 109198,0 ms    | 74255,0 ms      |
 | 55                               | 10                  | 550          |               72 | 139699,7 ms   | 14745,0 ms     | 181299,0 ms    | 148002,5 ms     |
 
-Constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 72, casos onde o tempo de resposta foram superiores ao limite estabelecido para o timeout de execução de query de 180.000 ms (3 minutos), e portanto, não permitiu escalar o banco de dados para atender o crescimento da demanda e exeucuções em paralelo, conforme a execução dos testes.
+Constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 72 (13,09%), casos onde o tempo de resposta foram superiores ao limite estabelecido para o timeout de execução de query de 180.000 ms (3 minutos), e portanto, não permitiu escalar o banco de dados para atender o crescimento da demanda e exeucuções em paralelo, conforme a execução dos testes.
 
 
 ### 1.7.2 - Utilização de Recursos
@@ -822,13 +679,13 @@ Onde:
 Sendo assim, temos:
 
 - P_Acessadas: **23**
-- P_Total: **39**
-- T_Query: **6.04 segundos**
+- P_Total: **117**
+- T_Query: **6,04 segundos**
 - T_Ideal: **10 segundos** 
 
-> Eficiência (%) =  (1 - (23 / 39)) * (1 - (6.04 / 10)) * 100 => (1 - (0,58974358974359)) * (1 - (0,604)) * 100 = **16,24%**
+> Eficiência (%) =  (1 - (23 / 117)) * (1 - (6,04 / 10)) * 100 => (1 - (0,196581196581197)) * (1 - (0,604)) * 100 = **31,81%**
 
-Nesta arquitetura, a consulta foi **16,24%** mais eficiente do que na arquitetura atual.
+Nesta arquitetura, a consulta foi **31,81%** mais eficiente do que na arquitetura atual.
 
 
 ### 1.7.8 - Consistência de Dados

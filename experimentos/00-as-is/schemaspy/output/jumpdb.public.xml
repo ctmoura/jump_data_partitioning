@@ -6,14 +6,17 @@
       <sequence increment="1" name="codex_statistics_id_seq" startValue="1"/>
       <sequence increment="1" name="complementos_18006_complementoID_seq" startValue="1"/>
       <sequence increment="1" name="complementos_exp02_complementoID_seq" startValue="1"/>
+      <sequence increment="1" name="complementos_exp03_complementoID_seq" startValue="1"/>
       <sequence increment="1" name="conformance_templates_id_seq" startValue="1"/>
       <sequence increment="1" name="documentos_id_seq" startValue="1"/>
       <sequence increment="1" name="environment_variables_id_seq" startValue="1"/>
       <sequence increment="1" name="metabase_statistics_id_seq" startValue="1"/>
       <sequence increment="1" name="movimentos_18006_id_seq" startValue="1"/>
       <sequence increment="1" name="movimentos_exp02_id_seq" startValue="1"/>
+      <sequence increment="1" name="movimentos_exp03_id_seq" startValue="1"/>
       <sequence increment="1" name="processos_18006_processoID_seq" startValue="1"/>
       <sequence increment="1" name="processos_exp02_processoID_seq" startValue="1"/>
+      <sequence increment="1" name="processos_exp03_processoID_seq" startValue="1"/>
       <sequence increment="1" name="processos_particionada_18006_processoID_seq" startValue="1"/>
       <sequence increment="1" name="processqueue_id_seq" startValue="1"/>
       <sequence increment="1" name="servidores_servidorID_seq" startValue="1"/>

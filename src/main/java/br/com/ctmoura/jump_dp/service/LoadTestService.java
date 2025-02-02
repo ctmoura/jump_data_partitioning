@@ -45,6 +45,46 @@ public class LoadTestService {
                 "WHERE p.\"dataPrimeiroMovimento\" BETWEEN CURRENT_TIMESTAMP - interval '5 years' AND CURRENT_TIMESTAMP\n" + //
                 "ORDER BY \"processoID\", \"dataFinal\";";
 
+    public static final String QUERY_EXP_01 = "EXPLAIN ANALYSE\n" + //
+                "SELECT\n" + //
+                "    p.\"NPU\", \n" + //
+                "    p.\"processoID\", \n" + //
+                "    p.\"ultimaAtualizacao\",\n" + //
+                "    c.descricao AS classe, \n" + //
+                "    a.descricao AS assunto,\n" + //
+                "    m.activity, \n" + //
+                "    m.\"dataInicio\", \n" + //
+                "    m.\"dataFinal\", \n" + //
+                "    m.\"usuarioID\",\n" + //
+                "    m.duration, \n" + //
+                "    m.\"movimentoID\", \n" + //
+                "    com.descricao AS complemento,\n" + //
+                "    s.\"nomeServidor\", \n" + //
+                "    s.\"tipoServidor\", \n" + //
+                "    d.tipo AS documento\n" + //
+                "FROM \n" + //
+                "    processos_exp01 AS p\n" + //
+                "INNER JOIN\n" + //
+                "    movimentos_exp01 AS m \n" + //
+                "    ON m.\"processoID\" = p.\"processoID\"\n" + //
+                "INNER JOIN\n" + //
+                "    classes AS c ON p.classe = c.id\n" + //
+                "LEFT JOIN\n" + //
+                "    assuntos AS a ON p.assunto = a.id\n" + //
+                "LEFT JOIN\n" + //
+                "    complementos_exp01 AS com \n" + //
+                "    ON com.\"movimentoID\" = m.\"id\" \n" + //
+                "LEFT JOIN\n" + //
+                "    servidores AS s ON s.\"servidorID\" = m.\"usuarioID\"\n" + //
+                "LEFT JOIN\n" + //
+                "    documentos AS d ON d.\"id\" = m.\"documentoID\"\n" + //
+                "WHERE \n" + //
+                "    p.\"dataPrimeiroMovimento\" >= '2020-01-01'AND p.\"unidadeID\" = ? \n" + //
+                "\tAND m.\"dataPrimeiroMovimento\" >= '2020-01-01' AND m.\"unidadeID\" = ?\n" + //
+                "\tAND com.\"dataPrimeiroMovimento\" >= '2020-01-01' AND com.\"unidadeID\" = ?\n" + //
+                "ORDER BY \n" + //
+                "    p.\"processoID\", m.\"dataFinal\";";
+
     public static final String QUERY_EXP_02 = "SELECT\n" + //
                 "    p.\"NPU\", \n" + //
                 "    p.\"processoID\", \n" + //
@@ -90,6 +130,51 @@ public class LoadTestService {
                 "ORDER BY \n" + //
                 "    p.\"processoID\", m.\"dataFinal\";";
 
+    public static final String QUERY_EXP_03 = "SELECT\n" + //
+                "    p.\"NPU\", \n" + //
+                "    p.\"processoID\", \n" + //
+                "    p.\"ultimaAtualizacao\",\n" + //
+                "    c.descricao AS classe, \n" + //
+                "    a.descricao AS assunto,\n" + //
+                "    m.activity, \n" + //
+                "    m.\"dataInicio\", \n" + //
+                "    m.\"dataFinal\", \n" + //
+                "    m.\"usuarioID\",\n" + //
+                "    m.duration, \n" + //
+                "    m.\"movimentoID\", \n" + //
+                "    com.descricao AS complemento,\n" + //
+                "    s.\"nomeServidor\", \n" + //
+                "    s.\"tipoServidor\", \n" + //
+                "    d.tipo AS documento\n" + //
+                "FROM \n" + //
+                "    processos_exp03 AS p\n" + //
+                "INNER JOIN\n" + //
+                "    movimentos_exp03 AS m \n" + //
+                "    ON \n" + //
+                "\tm.\"anoPrimeiroMovimento\" = p.\"anoPrimeiroMovimento\"\n" + //
+                "\tAND m.\"unidadeID\" = p.\"unidadeID\"\n" + //
+                "\tAND m.\"processoID\" = p.\"processoID\"\n" + //
+                "INNER JOIN\n" + //
+                "    classes AS c ON p.classe = c.id\n" + //
+                "LEFT JOIN\n" + //
+                "    assuntos AS a ON p.assunto = a.id\n" + //
+                "LEFT JOIN\n" + //
+                "    complementos_exp03 AS com \n" + //
+                "    ON \n" + //
+                "\tcom.\"anoPrimeiroMovimento\" = p.\"anoPrimeiroMovimento\"\n" + //
+                "\tAND com.\"unidadeID\" = m.\"unidadeID\" \n" + //
+                "\tAND com.\"movimentoID\" = m.\"id\" \n" + //
+                "LEFT JOIN\n" + //
+                "    servidores AS s ON s.\"servidorID\" = m.\"usuarioID\"\n" + //
+                "LEFT JOIN\n" + //
+                "    documentos AS d ON d.\"id\" = m.\"documentoID\"\n" + //
+                "WHERE \n" + //
+                "    p.\"anoPrimeiroMovimento\" >= 2020 AND p.\"unidadeID\" = ? \n" + //
+                "\tAND m.\"anoPrimeiroMovimento\" >= 2020 AND m.\"unidadeID\" = ?\n" + //
+                "\tAND com.\"anoPrimeiroMovimento\" >= 2020 AND com.\"unidadeID\" = ?\n" + //
+                "ORDER BY \n" + //
+                "    p.\"processoID\", m.\"dataFinal\";";
+
     public LoadTestService(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -98,11 +183,23 @@ public class LoadTestService {
         this.executeQuery(QUERY_EXP_00_E_01);
     }
 
+    public void executeQueryExp01(Long unidadeId) throws Exception {
+        executeQueryComParametroUnidadeId(QUERY_EXP_01, unidadeId);
+    }
+
     public void executeQueryExp02(Long unidadeId) throws Exception {
+        executeQueryComParametroUnidadeId(QUERY_EXP_02, unidadeId);
+    }
+
+    public void executeQueryExp03(Long unidadeId) throws Exception {
+        executeQueryComParametroUnidadeId(QUERY_EXP_03, unidadeId);
+    }
+
+    private void executeQueryComParametroUnidadeId(String query, Long unidadeId) throws Exception {
         log.trace("Iniciando execução do teste.");
         LocalDateTime startTime = LocalDateTime.now();
         try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(QUERY_EXP_02)) {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 log.trace("Executando a query.");
                 statement.setLong(1, unidadeId);
                 statement.setLong(2, unidadeId);
