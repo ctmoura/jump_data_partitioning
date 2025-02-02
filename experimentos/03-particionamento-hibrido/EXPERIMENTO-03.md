@@ -755,7 +755,7 @@ Não se aplica.
 
 ### 1.7.7 - Eficiência de Consultas
 
-A eficiência pode ser expressa como uma relação entre o tempo de execução e o número de partições acessadas:
+A eficiência pode ser expressa como uma relação entre o tempo de execução, tempo ideal e o número de partições acessadas:
 
 #### Fórmula:
 

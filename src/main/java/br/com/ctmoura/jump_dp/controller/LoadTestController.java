@@ -31,6 +31,19 @@ public class LoadTestController {
                 success, Duration.between(start, Instant.now()).toMillis());
     }
 
+    @GetMapping("/load-test-exp01")
+    public String executeLoadTestExp01(@RequestParam Long origemId) {
+        Instant start = Instant.now();
+        boolean success = false;
+        try {
+            this.loadTestService.executeQueryExp01(origemId);
+            success = true;
+        } catch (Exception e) {}
+        // Retornar uma mensagem indicando que o teste foi concluído
+        return String.format("Sucesso: %s, Duration: %s",
+                success, Duration.between(start, Instant.now()).toMillis());
+    }
+
     @GetMapping("/load-test-exp02")
     public String executeLoadTestExp02(@RequestParam Long origemId) {
         Instant start = Instant.now();

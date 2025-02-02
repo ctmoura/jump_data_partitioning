@@ -398,19 +398,31 @@ Não se aplica.
 
 ### 1.5.7 - Eficiência de Consultas
 
-A eficiência pode ser expressa como uma relação entre o tempo de execução e o número de partições acessadas:
+A eficiência pode ser expressa como uma relação entre o tempo de execução, tempo ideal e o número de partições acessadas:
 
 #### Fórmula:
 
-```plaintext 
-Eficiência (%) = (1 / Tempo de Execução Total) * (Número de Partições Acessadas / Partições Totais) * 100
+
+```plaintext
+Eficiência (%) = (1 - (P_Acessadas / P_Total)) * (1 - (T_Query / T_Ideal)) * 100
 ```
 
-- Tempo de Execução Total: **10 segundos**
-- Número de Partições Acessadas: **1**
-- Partições Totais: **1**
+Onde:
+- P_Acessadas: Quantidade de partições acessadas.
+- P_Total: Total de partições disponíveis.
+- T_Query: Tempo total de execução da query (Execution Time no EXPLAIN ANALYZE).
+- T_Ideal: Tempo esperado para a melhor execução possível (vamos estabelecer como ideal o tempo de execução na arquitetura atual = 10 segundos).
 
-> Eficiência (%) = (1 / 10) * (1 / 1) * 100 = **10%**
+Sendo assim, temos:
+
+- P_Acessadas: **6**
+- P_Total: **13**
+- T_Query: **0.464 segundos**
+- T_Ideal: **10 segundos** 
+
+> Eficiência (%) =  (1 - (18 / 117)) * (1 - (0,464 / 10)) * 100 => (1 - (0,153846153846154)) * (1 - (0,0464)) * 100 = **80,68%**
+
+Nesta arquitetura, a consulta foi **80,68%** mais eficiente do que na arquitetura atual, e **48,87%** mais eficiente que a estratégia de particionamento por hash.
 
 ### 1.5.8 - Consistência de Dados
 
