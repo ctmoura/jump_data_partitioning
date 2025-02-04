@@ -38,12 +38,8 @@ ORDER BY DATE_TRUNC('year', "dataPrimeiroMovimento")
 
 Considerando o **particionamento por intervalo de anos**, verificamos que os processos estão distribuídos em **13 partições**.
 
-## 1.2 - Definição das técnicas de particionamento
 
-As partições das tabelas de **processos**, **movimentos** e **complementos** serão criadas com dois níveis de particionamento, no primeiro nível será utilizada a técnica de **Particionamento por Intervalo (RANGE)** aplicada a coluna `anoPrimeiroMovimento`, que cria uma nova partição para cada ano. Já no segundo nível será utilizada a técnica de **Particionamento por Valor (LIST)** aplicada a coluna `unidadeID` nas partições do primeiro nível.
-
-
-## 1.3 - Incremento de dados e unificação dos registros nas tabelas únicas
+## 1.2 - Incremento de dados e unificação dos registros nas tabelas únicas
 
 Nesta etapa, iremos unificar os registros existentes em tabelas únicas.
 
@@ -218,7 +214,7 @@ ALTER TABLE IF EXISTS public.complementos_18008
 
 ```
 
-## 1.4 - Criação das tabelas com o Particionamento por Intervalo
+## 1.3 - Criação das tabelas com o Particionamento por Intervalo
 
 Nesta etapa, iremos descrever os comandos necessários para criação das tabelas de **processos_exp01**, **movimentos_exp01** e **complementos_exp01** com o particionamento por intervalo ativado. Como descrito anteriormente, iremos particionar as tabelas por ano, utilizando a técnica de **Particionamento por Intervalo (RANGE)** aplicada a coluna `dataPrimeiroMovimento`.
 
@@ -476,7 +472,7 @@ CREATE UNIQUE INDEX complementos_exp01_unq1 ON public.complementos_exp01 ("dataP
 
 ```
 
-## 1.5 - Migração dos dados existentes, da tabela original (não particionada) para tabela particionada.
+## 1.4 - Migração dos dados existentes, da tabela original (não particionada) para tabela particionada.
 
 Nessa estapa realizaremos a migração dos dados existentes nas tabelas de origem para as tabelas particionadas.
 
@@ -542,23 +538,23 @@ VACUUM ANALYZE processos_exp01;
 
 ```
 
-## 1.6 - Ambiente de testes
+## 1.5 - Ambiente de testes
 
-### 1.6.1 - Equipamento Host
+### 1.5.1 - Equipamento Host
 
 - MacBook Pro
 - Apple M2 Max
 - 32 GB
 - SSD 1TB
 
-### 1.6.2 - Execução em containers
+### 1.5.2 - Execução em containers
 
 Será utilizado o Docker como ferramenta de virtualização em containers para execução do servidor de banco de dados Postgres.
 
 - Docker: version 27.4.0, build bde2b89
 - Docker Compose: version v2.31.0-desktop.2
 
-### 1.6.3 - Banco de dados
+### 1.5.3 - Banco de dados
 
 Utilizamos Postgres: version 16.2, que é o banco de dados utilizado pelo JuMP.
 
@@ -876,15 +872,3 @@ SELECT * FROM processos_exp01 WHERE "processoID" = 123456;
 5️⃣ Gerenciamento de Carga Pode Ser Desbalanceado
 - Se a distribuição dos dados não for bem planejada, algumas partições podem ficar desproporcionalmente grandes.
 - Exemplo: Se um unidadeID específico recebe muito mais registros que os outros, pode ocorrer desbalanceamento de carga, prejudicando consultas e operações de manutenção.
-
-### 1.5.8 - Consistência de Dados
-
-Essa métrica não se aplica a essa estratégia, uma vez que não existe movimentação de dados, seja no próprio host ou em hosts distintos.
-
-### 1.5.9 - Capacidade de Adaptação
-
-Essa métrica não se aplica a essa estratégia, uma vez que ela não realiza mudanças ou ajustes dinâmicamente.
-
-### 1.5.10 - Custo Operacional
-
-Não foi avaliado o custo operacional pois se trata da estratégia atualmente implementada.
