@@ -5,15 +5,21 @@
       <sequence increment="1" name="cod_movimentos_id_seq" startValue="1"/>
       <sequence increment="1" name="codex_statistics_id_seq" startValue="1"/>
       <sequence increment="1" name="complementos_18006_complementoID_seq" startValue="1"/>
+      <sequence increment="1" name="complementos_exp01_complementoID_seq" startValue="1"/>
       <sequence increment="1" name="complementos_exp02_complementoID_seq" startValue="1"/>
+      <sequence increment="1" name="complementos_exp03_complementoID_seq" startValue="1"/>
       <sequence increment="1" name="conformance_templates_id_seq" startValue="1"/>
       <sequence increment="1" name="documentos_id_seq" startValue="1"/>
       <sequence increment="1" name="environment_variables_id_seq" startValue="1"/>
       <sequence increment="1" name="metabase_statistics_id_seq" startValue="1"/>
       <sequence increment="1" name="movimentos_18006_id_seq" startValue="1"/>
+      <sequence increment="1" name="movimentos_exp01_id_seq" startValue="1"/>
       <sequence increment="1" name="movimentos_exp02_id_seq" startValue="1"/>
+      <sequence increment="1" name="movimentos_exp03_id_seq" startValue="1"/>
       <sequence increment="1" name="processos_18006_processoID_seq" startValue="1"/>
+      <sequence increment="1" name="processos_exp01_processoID_seq" startValue="1"/>
       <sequence increment="1" name="processos_exp02_processoID_seq" startValue="1"/>
+      <sequence increment="1" name="processos_exp03_processoID_seq" startValue="1"/>
       <sequence increment="1" name="processos_particionada_18006_processoID_seq" startValue="1"/>
       <sequence increment="1" name="processqueue_id_seq" startValue="1"/>
       <sequence increment="1" name="servidores_servidorID_seq" startValue="1"/>
@@ -3842,7 +3848,7 @@
             <column ascending="true" name="processoID"/>
          </index>
       </table>
-      <table name="processos_exp02_15" numRows="91089" remarks="" schema="public" type="TABLE">
+      <table name="processos_exp02_15" numRows="441526" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;processos_exp02_processoID_seq&quot;'::regclass)" digits="0" id="0" name="processoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5">
             <child column="processoID" foreignKey="movimentos_exp02_processoID_unidadeID_anoPrimeiroMovimen_fkey15" implied="false" onDeleteCascade="true" schema="public" table="movimentos_exp02"/>
          </column>
@@ -4220,7 +4226,7 @@
             <column ascending="true" name="processoID"/>
          </index>
       </table>
-      <table name="processos_exp02_21" remarks="" schema="public" type="TABLE">
+      <table name="processos_exp02_21" numRows="350439" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;processos_exp02_processoID_seq&quot;'::regclass)" digits="0" id="0" name="processoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5">
             <child column="processoID" foreignKey="movimentos_exp02_processoID_unidadeID_anoPrimeiroMovimen_fkey21" implied="false" onDeleteCascade="true" schema="public" table="movimentos_exp02"/>
          </column>
@@ -4544,7 +4550,7 @@
             <column ascending="true" name="processoID"/>
          </index>
       </table>
-      <table name="processos_exp02_27" remarks="" schema="public" type="TABLE">
+      <table name="processos_exp02_27" numRows="350437" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;processos_exp02_processoID_seq&quot;'::regclass)" digits="0" id="0" name="processoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5">
             <child column="processoID" foreignKey="movimentos_exp02_processoID_unidadeID_anoPrimeiroMovimen_fkey27" implied="false" onDeleteCascade="true" schema="public" table="movimentos_exp02"/>
          </column>
