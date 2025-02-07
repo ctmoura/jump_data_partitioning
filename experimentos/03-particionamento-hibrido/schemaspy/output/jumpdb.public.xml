@@ -1556,6 +1556,9 @@
          <index name="documentos_pkey" unique="true">
             <column ascending="true" name="id"/>
          </index>
+         <index name="documentos_idx1" unique="false">
+            <column ascending="true" name="id"/>
+         </index>
       </table>
       <table name="environment_variables" numRows="11" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('environment_variables_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial" typeCode="4"/>
@@ -6039,6 +6042,9 @@
          <column autoUpdated="false" defaultValue="null" digits="6" id="4" name="ultimaAtualizacao" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
          <primaryKey column="servidorID" sequenceNumberInPK="1"/>
          <index name="servidores_pkey" unique="true">
+            <column ascending="true" name="servidorID"/>
+         </index>
+         <index name="servidores_idx1" unique="false">
             <column ascending="true" name="servidorID"/>
          </index>
       </table>

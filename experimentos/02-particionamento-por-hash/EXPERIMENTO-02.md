@@ -4,11 +4,7 @@ O **particionamento por hash** é uma estratégia de particionamento em que os d
 
 ## 1.1 - Preparação
 
-Para avaliar essa estratégia se faz necessário executar alguns procedimentos no banco de dados para que as tabelas tenham suporte ao particionamento de dados por hash, pois o banco de dados utilizado (PostgreSQL) não suporta o particionamento em tabela pré existente.
-
-Além disso, o modelo de dados atual está armazenando os registros de processos, movimentos e complementos em tabelas separadas por unidade judiciária, ou seja, para cada unidade judiciária existem as respectivas tabelas de processos, movimentos e complementos daquela unidade.
-
-Para avalidar a estratégia de particionamento por hash, iremos unificar as tabelas de processos, movimentos e complementos, de cada unidade em tabelas únicas de processos, movimentos e complementos, adicionando uma coluna que representa a chave de unidade judiciária.
+Essa estapa já foi realizada no experimento 01 e portanto não será necessário repetir.
 
 ## 1.2 - Definição da função hash
 
@@ -26,8 +22,11 @@ A função hash combina os dois valores, o que significa:
 
 Assim, ambos os registros serão armazenados na partição **processos_exp02_3**, por exemplo. Permitindo que dados de diferentes anos e unidades apareçam em uma mesma partição.
 
-Essa distribuição visa equilibrar partições, não agrupar por valores. Ao contrário do particionamento LIST ou RANGE, que garante o agrupamento lógico, o particionamento hash distribui os dados uniformemente em todas as partições.
+Essa distribuição visa equilibrar partições, não agrupar por valores. Ao contrário do particionamento por valor (LIST) ou por intervalo (RANGE), que garante o agrupamento lógico, o particionamento por hash distribui os dados uniformemente em todas as partições.
 
+## 1.2 - Definição da quantidade de partições
+
+Considerando que na base de dados existem registros de 3 unidades distintas, distrubuídas em 13 anos, utilizaremos em nosso experimento 13 partições, para que os processos sejam distribuídos de forma equilibrada entre elas. 
 
 ## 1.3 - Incremento de dados e unificação dos registros nas tabelas únicas
 
@@ -35,39 +34,17 @@ Essa estapa já foi realizada no experimento 01.
 
 ## 1.4 - Adição da coluna unidadeID nas 
 
-2. Criando a coluna **unidadeID** nas tabelas originais de complementos_18006, movimentos_18006 e processos_18006.
+Essa estapa já foi realizada no experimento 01.
 
-```sql
-
--- Unidade Judiciária: 18006
-
--- Tabelas para complementos_18006
-ALTER TABLE IF EXISTS public.complementos_18006
-    ADD COLUMN "unidadeID" bigint;
-UPDATE public.complementos_18006 SET "unidadeID" = 18006;
-ALTER TABLE IF EXISTS public.complementos_18006
-    ALTER COLUMN "unidadeID" SET NOT NULL;
-
--- Tabelas para movimentos_18006
-ALTER TABLE IF EXISTS public.movimentos_18006
-    ADD COLUMN "unidadeID" bigint;
-UPDATE public.movimentos_18006 SET "unidadeID" = 18006;
-ALTER TABLE IF EXISTS public.movimentos_18006
-    ALTER COLUMN "unidadeID" SET NOT NULL;
-
--- Tabelas para processos_18006
-ALTER TABLE IF EXISTS public.processos_18006
-    ADD COLUMN "unidadeID" bigint;
-UPDATE public.processos_18006 SET "unidadeID" = 18006;
-ALTER TABLE IF EXISTS public.processos_18006
-    ALTER COLUMN "unidadeID" SET NOT NULL;
-```
-
-3. Criando as tabelas com particionamento por hash
+## 1.5 - Criação das tabelas com o Particionamento por por hash
 
 O comando abaixo cria seguintes tabelas: **processos_exp02**, **movimentos_exp02** e **complementos_exp02**, com o particionamento por hash ativado:
 
 ```sql
+----------------------------------------
+-- tabela particionada: processos_exp02
+----------------------------------------
+
 CREATE SEQUENCE IF NOT EXISTS public."processos_exp02_processoID_seq"
     INCREMENT 1
     START 1
@@ -96,7 +73,7 @@ CREATE TABLE IF NOT EXISTS public.processos_exp02
     "ultimoMovimento" bigint,
     "dataPrimeiroMovimento" timestamp without time zone,
     "dataUltimoMovimento" timestamp without time zone,
-    "unidadeID" bigint NOT NULL,
+	"unidadeID" bigint NOT NULL,
     "anoPrimeiroMovimento" integer,
     CONSTRAINT processos_exp02_assunto_fkey FOREIGN KEY (assunto)
         REFERENCES public.assuntos (id) MATCH SIMPLE
@@ -106,7 +83,7 @@ CREATE TABLE IF NOT EXISTS public.processos_exp02
         REFERENCES public.classes (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-) PARTITION BY HASH ("unidadeID", "anoPrimeiroMovimento");
+) PARTITION BY HASH ("processoID", "unidadeID");
 
 ALTER TABLE IF EXISTS public.processos_exp02
     OWNER to postgres;
@@ -114,11 +91,66 @@ ALTER TABLE IF EXISTS public.processos_exp02
 ALTER SEQUENCE public."processos_exp02_processoID_seq"
     OWNED BY public.processos_exp02."processoID";
 
-CREATE UNIQUE INDEX processos_exp02_unq1 
-    ON public.processos_exp02 ("unidadeID", "anoPrimeiroMovimento", "processoID");
+-- partições da tabela: processos_exp02
+
+CREATE TABLE processos_exp02_0 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 0);
+CREATE TABLE processos_exp02_1 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 1);
+CREATE TABLE processos_exp02_2 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 2);
+CREATE TABLE processos_exp02_3 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 3);
+CREATE TABLE processos_exp02_4 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 4);
+CREATE TABLE processos_exp02_5 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 5);
+CREATE TABLE processos_exp02_6 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 6);
+CREATE TABLE processos_exp02_7 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 7);
+CREATE TABLE processos_exp02_8 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 8);
+CREATE TABLE processos_exp02_9 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 9);
+CREATE TABLE processos_exp02_10 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 10);
+CREATE TABLE processos_exp02_11 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 11);
+CREATE TABLE processos_exp02_12 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 12);
+-- CREATE TABLE processos_exp02_13 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 13);
+-- CREATE TABLE processos_exp02_14 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 14);
+-- CREATE TABLE processos_exp02_15 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 15);
+-- CREATE TABLE processos_exp02_16 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 16);
+-- CREATE TABLE processos_exp02_17 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 17);
+-- CREATE TABLE processos_exp02_18 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 18);
+-- CREATE TABLE processos_exp02_19 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 19);
+-- CREATE TABLE processos_exp02_20 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 20);
+-- CREATE TABLE processos_exp02_21 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 21);
+-- CREATE TABLE processos_exp02_22 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 22);
+-- CREATE TABLE processos_exp02_23 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 23);
+-- CREATE TABLE processos_exp02_24 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 24);
+-- CREATE TABLE processos_exp02_25 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 25);
+-- CREATE TABLE processos_exp02_26 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 26);
+-- CREATE TABLE processos_exp02_27 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 27);
+-- CREATE TABLE processos_exp02_28 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 28);
+-- CREATE TABLE processos_exp02_29 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 29);
+-- CREATE TABLE processos_exp02_30 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 30);
+-- CREATE TABLE processos_exp02_31 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 31);
+-- CREATE TABLE processos_exp02_32 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 32);
+-- CREATE TABLE processos_exp02_33 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 33);
+-- CREATE TABLE processos_exp02_34 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 34);
+-- CREATE TABLE processos_exp02_35 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 35);
+-- CREATE TABLE processos_exp02_36 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 36);
+-- CREATE TABLE processos_exp02_37 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 37);
+-- CREATE TABLE processos_exp02_38 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 38);
 
 
--- movimentos
+-- índices da tabela: processos_exp02
+
+CREATE INDEX processos_exp02_idx1 ON public.processos_exp02 ("anoPrimeiroMovimento", "unidadeID");
+CREATE INDEX processos_exp02_idx2 ON public.processos_exp02 ("anoPrimeiroMovimento", "unidadeID", "processoID");
+CREATE INDEX processos_exp02_idx3 ON public.processos_exp02 ("anoPrimeiroMovimento", "unidadeID", "assunto");
+CREATE INDEX processos_exp02_idx4 ON public.processos_exp02 ("anoPrimeiroMovimento", "unidadeID", "classe");
+CREATE INDEX processos_exp02_idx5 ON public.processos_exp02 ("anoPrimeiroMovimento", "unidadeID", "processoID", "classe", "assunto");
+CREATE INDEX processos_exp02_idx6 ON processos_exp02 ("processoID", "anoPrimeiroMovimento", "unidadeID");
+
+
+
+CREATE UNIQUE INDEX processos_exp02_unq1 ON public.processos_exp02 ("anoPrimeiroMovimento", "unidadeID", "processoID");
+
+
+----------------------------------------
+-- tabela particionada: movimentos_exp02
+----------------------------------------
 
 CREATE SEQUENCE IF NOT EXISTS public."movimentos_exp02_id_seq"
     INCREMENT 1
@@ -142,17 +174,17 @@ CREATE TABLE IF NOT EXISTS public.movimentos_exp02
     "usuarioID" bigint,
     "documentoID" bigint,
     "movimentoID" bigint,
-    "unidadeID" bigint NOT NULL,
+	"unidadeID" bigint NOT NULL,
     "anoPrimeiroMovimento" integer,
     CONSTRAINT "movimentos_exp02_movimentoID_fkey" FOREIGN KEY ("movimentoID")
         REFERENCES public.cod_movimentos (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT "movimentos_exp02_processoID_fkey" FOREIGN KEY ("processoID", "unidadeID", "anoPrimeiroMovimento")
-        REFERENCES public.processos_exp02 ("processoID", "unidadeID", "anoPrimeiroMovimento") MATCH SIMPLE
+    CONSTRAINT "movimentos_exp02_processoID_fkey" FOREIGN KEY ("anoPrimeiroMovimento", "unidadeID", "processoID")
+        REFERENCES public.processos_exp02 ("anoPrimeiroMovimento", "unidadeID", "processoID") MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
-) PARTITION BY HASH ("unidadeID", "anoPrimeiroMovimento");
+) PARTITION BY HASH ("processoID", "unidadeID");
 
 ALTER TABLE IF EXISTS public.movimentos_exp02
     OWNER to postgres;
@@ -160,10 +192,73 @@ ALTER TABLE IF EXISTS public.movimentos_exp02
 ALTER SEQUENCE public."movimentos_exp02_id_seq"
     OWNED BY public.movimentos_exp02.id;
 
-CREATE UNIQUE INDEX movimentos_exp02_unq1 
-    ON public.movimentos_exp02 ("unidadeID", "anoPrimeiroMovimento", "id");
+-- partições da tabela: movimentos_exp02
 
--- complementos
+CREATE TABLE movimentos_exp02_0 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 0);
+CREATE TABLE movimentos_exp02_1 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 1);
+CREATE TABLE movimentos_exp02_2 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 2);
+CREATE TABLE movimentos_exp02_3 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 3);
+CREATE TABLE movimentos_exp02_4 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 4);
+CREATE TABLE movimentos_exp02_5 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 5);
+CREATE TABLE movimentos_exp02_6 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 6);
+CREATE TABLE movimentos_exp02_7 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 7);
+CREATE TABLE movimentos_exp02_8 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 8);
+CREATE TABLE movimentos_exp02_9 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 9);
+CREATE TABLE movimentos_exp02_10 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 10);
+CREATE TABLE movimentos_exp02_11 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 11);
+CREATE TABLE movimentos_exp02_12 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 12);
+-- CREATE TABLE movimentos_exp02_13 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 13);
+-- CREATE TABLE movimentos_exp02_14 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 14);
+-- CREATE TABLE movimentos_exp02_15 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 15);
+-- CREATE TABLE movimentos_exp02_16 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 16);
+-- CREATE TABLE movimentos_exp02_17 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 17);
+-- CREATE TABLE movimentos_exp02_18 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 18);
+-- CREATE TABLE movimentos_exp02_19 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 19);
+-- CREATE TABLE movimentos_exp02_20 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 20);
+-- CREATE TABLE movimentos_exp02_21 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 21);
+-- CREATE TABLE movimentos_exp02_22 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 22);
+-- CREATE TABLE movimentos_exp02_23 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 23);
+-- CREATE TABLE movimentos_exp02_24 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 24);
+-- CREATE TABLE movimentos_exp02_25 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 25);
+-- CREATE TABLE movimentos_exp02_26 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 26);
+-- CREATE TABLE movimentos_exp02_27 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 27);
+-- CREATE TABLE movimentos_exp02_28 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 28);
+-- CREATE TABLE movimentos_exp02_29 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 29);
+-- CREATE TABLE movimentos_exp02_30 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 30);
+-- CREATE TABLE movimentos_exp02_31 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 31);
+-- CREATE TABLE movimentos_exp02_32 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 32);
+-- CREATE TABLE movimentos_exp02_33 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 33);
+-- CREATE TABLE movimentos_exp02_34 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 34);
+-- CREATE TABLE movimentos_exp02_35 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 35);
+-- CREATE TABLE movimentos_exp02_36 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 36);
+-- CREATE TABLE movimentos_exp02_37 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 37);
+-- CREATE TABLE movimentos_exp02_38 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 38);
+
+-- índices da tabela: movimentos_exp02
+
+CREATE INDEX movimentos_exp02_idx1 ON public.movimentos_exp02 ("anoPrimeiroMovimento", "unidadeID");
+CREATE INDEX movimentos_exp02_idx2 ON public.movimentos_exp02 ("anoPrimeiroMovimento", "unidadeID", "id");
+CREATE INDEX movimentos_exp02_idx3 ON public.movimentos_exp02 ("anoPrimeiroMovimento", "unidadeID", "processoID");
+CREATE INDEX movimentos_exp02_idx4 ON public.movimentos_exp02 ("anoPrimeiroMovimento", "unidadeID", "documentoID");
+CREATE INDEX movimentos_exp02_idx5 ON public.movimentos_exp02 ("anoPrimeiroMovimento", "unidadeID", "processoID", "id", "dataFinal");
+CREATE INDEX movimentos_exp02_idx6 ON public.movimentos_exp02 ("processoID", "unidadeID", "dataFinal") INCLUDE (activity, duration, "movimentoID");
+CREATE INDEX movimentos_exp02_idx7 ON public.movimentos_exp02 ("unidadeID", "anoPrimeiroMovimento", "processoID") INCLUDE (activity, duration, "movimentoID");
+CREATE INDEX movimentos_exp02_idx8 ON public.movimentos_exp02 ("processoID", "anoPrimeiroMovimento", "unidadeID");
+CREATE INDEX movimentos_exp02_idx9 ON public.movimentos_exp02 ("unidadeID", "anoPrimeiroMovimento", "processoID", "dataFinal");
+CREATE INDEX movimentos_exp02_idx10 ON public.movimentos_exp02 ("processoID", "dataFinal");
+
+
+
+
+-- CREATE INDEX movimentos_exp02_idx4 ON public.movimentos_exp02 ("processoID", "unidadeID", "anoPrimeiroMovimento", "dataFinal") INCLUDE(activity, duration, "movimentoID");
+-- CREATE INDEX movimentos_exp02_idx6 ON public.movimentos_exp02 ("processoID", "dataFinal");
+
+CREATE UNIQUE INDEX movimentos_exp02_unq1 ON public.movimentos_exp02 ("anoPrimeiroMovimento", "unidadeID", "id");
+
+
+----------------------------------------
+-- tabela particionada: complementos_exp02
+----------------------------------------
 
 CREATE SEQUENCE IF NOT EXISTS public."complementos_exp02_complementoID_seq"
     INCREMENT 1
@@ -181,13 +276,13 @@ CREATE TABLE IF NOT EXISTS public.complementos_exp02
     "movimentoID" bigint,
     tipo character varying COLLATE pg_catalog."default" NOT NULL,
     descricao character varying COLLATE pg_catalog."default" NOT NULL,
-    "unidadeID" bigint NOT NULL,
+	"unidadeID" bigint NOT NULL,
     "anoPrimeiroMovimento" integer,
-    CONSTRAINT "complementos_exp02_movimentoID_fkey" FOREIGN KEY ("movimentoID", "unidadeID", "anoPrimeiroMovimento")
-        REFERENCES public.movimentos_exp02 (id, "unidadeID", "anoPrimeiroMovimento") MATCH SIMPLE
+    CONSTRAINT "complementos_exp02_movimentoID_fkey" FOREIGN KEY ("unidadeID", "movimentoID")
+        REFERENCES public.movimentos_exp02 ("unidadeID", "id") MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
-) PARTITION BY HASH ("unidadeID", "anoPrimeiroMovimento");
+) PARTITION BY HASH ("movimentoID", "unidadeID");
 
 ALTER TABLE IF EXISTS public.complementos_exp02
     OWNER to postgres;
@@ -195,169 +290,66 @@ ALTER TABLE IF EXISTS public.complementos_exp02
 ALTER SEQUENCE public."complementos_exp02_complementoID_seq"
     OWNED BY public.complementos_exp02."complementoID";
 
-CREATE UNIQUE INDEX complementos_exp02_unq1 ON public.complementos_exp02 ("unidadeID", "anoPrimeiroMovimento", "complementoID");
+-- partições da tabela: complementos_exp02
+
+CREATE TABLE complementos_exp02_0 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 0);
+CREATE TABLE complementos_exp02_1 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 1);
+CREATE TABLE complementos_exp02_2 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 2);
+CREATE TABLE complementos_exp02_3 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 3);
+CREATE TABLE complementos_exp02_4 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 4);
+CREATE TABLE complementos_exp02_5 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 5);
+CREATE TABLE complementos_exp02_6 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 6);
+CREATE TABLE complementos_exp02_7 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 7);
+CREATE TABLE complementos_exp02_8 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 8);
+CREATE TABLE complementos_exp02_9 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 9);
+CREATE TABLE complementos_exp02_10 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 10);
+CREATE TABLE complementos_exp02_11 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 11);
+CREATE TABLE complementos_exp02_12 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 12);
+-- CREATE TABLE complementos_exp02_13 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 13);
+-- CREATE TABLE complementos_exp02_14 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 14);
+-- CREATE TABLE complementos_exp02_15 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 15);
+-- CREATE TABLE complementos_exp02_16 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 16);
+-- CREATE TABLE complementos_exp02_17 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 17);
+-- CREATE TABLE complementos_exp02_18 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 18);
+-- CREATE TABLE complementos_exp02_19 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 19);
+-- CREATE TABLE complementos_exp02_20 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 20);
+-- CREATE TABLE complementos_exp02_21 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 21);
+-- CREATE TABLE complementos_exp02_22 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 22);
+-- CREATE TABLE complementos_exp02_23 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 23);
+-- CREATE TABLE complementos_exp02_24 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 24);
+-- CREATE TABLE complementos_exp02_25 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 25);
+-- CREATE TABLE complementos_exp02_26 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 26);
+-- CREATE TABLE complementos_exp02_27 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 27);
+-- CREATE TABLE complementos_exp02_28 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 28);
+-- CREATE TABLE complementos_exp02_29 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 29);
+-- CREATE TABLE complementos_exp02_30 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 30);
+-- CREATE TABLE complementos_exp02_31 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 31);
+-- CREATE TABLE complementos_exp02_32 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 32);
+-- CREATE TABLE complementos_exp02_33 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 33);
+-- CREATE TABLE complementos_exp02_34 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 34);
+-- CREATE TABLE complementos_exp02_35 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 35);
+-- CREATE TABLE complementos_exp02_36 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 36);
+-- CREATE TABLE complementos_exp02_37 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 37);
+-- CREATE TABLE complementos_exp02_38 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 13, REMAINDER 38);
+
+
+-- índices da tabela: complementos_exp02
+
+CREATE INDEX complementos_exp02_idx1 ON public.complementos_exp02 ("anoPrimeiroMovimento", "unidadeID");
+CREATE INDEX complementos_exp02_idx2 ON public.complementos_exp02 ("anoPrimeiroMovimento", "unidadeID", "complementoID");
+CREATE INDEX complementos_exp02_idx3 ON public.complementos_exp02 ("movimentoID", "unidadeID", "anoPrimeiroMovimento") INCLUDE (descricao);
+
+CREATE UNIQUE INDEX complementos_exp02_unq1 ON public.complementos_exp02 ("anoPrimeiroMovimento", "unidadeID", "movimentoID", "complementoID");
+
+CREATE INDEX servidores_idx ON servidores ("servidorID");
+CREATE INDEX documentos_idx ON documentos ("id");
+
 
 ```
 
-4. Criando as tabelas das partições e índices
+## 1.4 - Migração dos dados existentes, da tabela original (não particionada) para tabela particionada.
 
-Como já avaliado no experimento anterior, considerando a distribuição por ano, os registros de processos estão distribuídos em 13 anos (partes). 
-Sendo assim, para cada tupla ("unidadeID" + "ano") presente na distribuição dos dados, será criada uma tabela de particionamento, totalizando 39 partições.
-
-Os comanos abaixo criam as tabelas e índices mencionados:
-
-```sql
-CREATE TABLE processos_exp02_0 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 0);
-CREATE TABLE processos_exp02_1 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 1);
-CREATE TABLE processos_exp02_2 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 2);
-CREATE TABLE processos_exp02_3 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 3);
-CREATE TABLE processos_exp02_4 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 4);
-CREATE TABLE processos_exp02_5 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 5);
-CREATE TABLE processos_exp02_6 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 6);
-CREATE TABLE processos_exp02_7 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 7);
-CREATE TABLE processos_exp02_8 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 8);
-CREATE TABLE processos_exp02_9 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 9);
-CREATE TABLE processos_exp02_10 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 10);
-CREATE TABLE processos_exp02_11 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 11);
-CREATE TABLE processos_exp02_12 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 12);
-CREATE TABLE processos_exp02_13 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 13);
-CREATE TABLE processos_exp02_14 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 14);
-CREATE TABLE processos_exp02_15 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 15);
-CREATE TABLE processos_exp02_16 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 16);
-CREATE TABLE processos_exp02_17 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 17);
-CREATE TABLE processos_exp02_18 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 18);
-CREATE TABLE processos_exp02_19 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 19);
-CREATE TABLE processos_exp02_20 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 20);
-CREATE TABLE processos_exp02_21 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 21);
-CREATE TABLE processos_exp02_22 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 22);
-CREATE TABLE processos_exp02_23 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 23);
-CREATE TABLE processos_exp02_24 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 24);
-CREATE TABLE processos_exp02_25 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 25);
-CREATE TABLE processos_exp02_26 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 26);
-CREATE TABLE processos_exp02_27 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 27);
-CREATE TABLE processos_exp02_28 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 28);
-CREATE TABLE processos_exp02_29 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 29);
-CREATE TABLE processos_exp02_30 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 30);
-CREATE TABLE processos_exp02_31 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 31);
-CREATE TABLE processos_exp02_32 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 32);
-CREATE TABLE processos_exp02_33 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 33);
-CREATE TABLE processos_exp02_34 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 34);
-CREATE TABLE processos_exp02_35 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 35);
-CREATE TABLE processos_exp02_36 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 36);
-CREATE TABLE processos_exp02_37 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 37);
-CREATE TABLE processos_exp02_38 PARTITION OF processos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 38);
-
-
-CREATE INDEX processos_exp02_idx1 ON public.processos_exp02 ("unidadeID", "anoPrimeiroMovimento", "processoID");
-CREATE INDEX processos_exp02_idx2 ON public.processos_exp02 ("unidadeID", "anoPrimeiroMovimento");
-CREATE INDEX processos_exp02_idx3 ON public.processos_exp02 ("unidadeID", "anoPrimeiroMovimento", "assunto");
-CREATE INDEX processos_exp02_idx4 ON public.processos_exp02 ("unidadeID", "anoPrimeiroMovimento", "classe");
-
-
--- movimentos
-
-CREATE TABLE movimentos_exp02_0 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 0);
-CREATE TABLE movimentos_exp02_1 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 1);
-CREATE TABLE movimentos_exp02_2 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 2);
-CREATE TABLE movimentos_exp02_3 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 3);
-CREATE TABLE movimentos_exp02_4 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 4);
-CREATE TABLE movimentos_exp02_5 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 5);
-CREATE TABLE movimentos_exp02_6 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 6);
-CREATE TABLE movimentos_exp02_7 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 7);
-CREATE TABLE movimentos_exp02_8 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 8);
-CREATE TABLE movimentos_exp02_9 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 9);
-CREATE TABLE movimentos_exp02_10 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 10);
-CREATE TABLE movimentos_exp02_11 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 11);
-CREATE TABLE movimentos_exp02_12 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 12);
-CREATE TABLE movimentos_exp02_13 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 13);
-CREATE TABLE movimentos_exp02_14 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 14);
-CREATE TABLE movimentos_exp02_15 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 15);
-CREATE TABLE movimentos_exp02_16 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 16);
-CREATE TABLE movimentos_exp02_17 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 17);
-CREATE TABLE movimentos_exp02_18 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 18);
-CREATE TABLE movimentos_exp02_19 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 19);
-CREATE TABLE movimentos_exp02_20 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 20);
-CREATE TABLE movimentos_exp02_21 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 21);
-CREATE TABLE movimentos_exp02_22 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 22);
-CREATE TABLE movimentos_exp02_23 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 23);
-CREATE TABLE movimentos_exp02_24 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 24);
-CREATE TABLE movimentos_exp02_25 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 25);
-CREATE TABLE movimentos_exp02_26 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 26);
-CREATE TABLE movimentos_exp02_27 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 27);
-CREATE TABLE movimentos_exp02_28 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 28);
-CREATE TABLE movimentos_exp02_29 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 29);
-CREATE TABLE movimentos_exp02_30 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 30);
-CREATE TABLE movimentos_exp02_31 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 31);
-CREATE TABLE movimentos_exp02_32 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 32);
-CREATE TABLE movimentos_exp02_33 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 33);
-CREATE TABLE movimentos_exp02_34 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 34);
-CREATE TABLE movimentos_exp02_35 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 35);
-CREATE TABLE movimentos_exp02_36 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 36);
-CREATE TABLE movimentos_exp02_37 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 37);
-CREATE TABLE movimentos_exp02_38 PARTITION OF movimentos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 38);
-
-
-CREATE INDEX movimentos_exp02_idx1 ON public.movimentos_exp02 ("unidadeID", "anoPrimeiroMovimento", "id");
-CREATE INDEX movimentos_exp02_idx2 ON public.movimentos_exp02 ("unidadeID", "anoPrimeiroMovimento", "processoID");
-CREATE INDEX movimentos_exp02_idx3 ON public.movimentos_exp02 ("unidadeID", "anoPrimeiroMovimento");
-CREATE INDEX movimentos_exp02_idx4 ON public.movimentos_exp02 ("processoID", "unidadeID", "anoPrimeiroMovimento", "dataFinal") INCLUDE(activity, duration, "movimentoID");
-CREATE INDEX movimentos_exp02_idx5 ON public.movimentos_exp02 ("unidadeID", "anoPrimeiroMovimento", "documentoID");
-CREATE INDEX movimentos_exp02_idx6 ON public.movimentos_exp02 ("processoID", "dataFinal");
-
-
-
--- complementos
-
-CREATE TABLE complementos_exp02_0 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 0);
-CREATE TABLE complementos_exp02_1 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 1);
-CREATE TABLE complementos_exp02_2 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 2);
-CREATE TABLE complementos_exp02_3 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 3);
-CREATE TABLE complementos_exp02_4 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 4);
-CREATE TABLE complementos_exp02_5 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 5);
-CREATE TABLE complementos_exp02_6 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 6);
-CREATE TABLE complementos_exp02_7 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 7);
-CREATE TABLE complementos_exp02_8 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 8);
-CREATE TABLE complementos_exp02_9 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 9);
-CREATE TABLE complementos_exp02_10 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 10);
-CREATE TABLE complementos_exp02_11 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 11);
-CREATE TABLE complementos_exp02_12 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 12);
-CREATE TABLE complementos_exp02_13 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 13);
-CREATE TABLE complementos_exp02_14 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 14);
-CREATE TABLE complementos_exp02_15 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 15);
-CREATE TABLE complementos_exp02_16 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 16);
-CREATE TABLE complementos_exp02_17 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 17);
-CREATE TABLE complementos_exp02_18 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 18);
-CREATE TABLE complementos_exp02_19 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 19);
-CREATE TABLE complementos_exp02_20 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 20);
-CREATE TABLE complementos_exp02_21 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 21);
-CREATE TABLE complementos_exp02_22 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 22);
-CREATE TABLE complementos_exp02_23 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 23);
-CREATE TABLE complementos_exp02_24 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 24);
-CREATE TABLE complementos_exp02_25 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 25);
-CREATE TABLE complementos_exp02_26 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 26);
-CREATE TABLE complementos_exp02_27 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 27);
-CREATE TABLE complementos_exp02_28 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 28);
-CREATE TABLE complementos_exp02_29 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 29);
-CREATE TABLE complementos_exp02_30 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 30);
-CREATE TABLE complementos_exp02_31 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 31);
-CREATE TABLE complementos_exp02_32 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 32);
-CREATE TABLE complementos_exp02_33 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 33);
-CREATE TABLE complementos_exp02_34 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 34);
-CREATE TABLE complementos_exp02_35 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 35);
-CREATE TABLE complementos_exp02_36 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 36);
-CREATE TABLE complementos_exp02_37 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 37);
-CREATE TABLE complementos_exp02_38 PARTITION OF complementos_exp02 FOR VALUES WITH (MODULUS 39, REMAINDER 38);
-
-
-CREATE INDEX complementos_exp02_idx1 ON public.complementos_exp02 ("unidadeID", "anoPrimeiroMovimento", "complementoID");
-CREATE INDEX complementos_exp02_idx2 ON public.complementos_exp02 ("unidadeID", "anoPrimeiroMovimento", "movimentoID");
-CREATE INDEX complementos_exp02_idx3 ON public.complementos_exp02 ("unidadeID", "anoPrimeiroMovimento");
-
-```
-
-5. Migração dos dados existentes na tabela original (não particionada) para tabela particionada por hash.
-
-O comando realizará a migração dos dados da tabela original `processos_18006` para tabela particionada `processos_exp02`.
+Nessa estapa realizaremos a migração dos dados existentes nas tabelas de origem para as tabelas particionadas.
 
 > Atenção: Foi necessário aplicar o filtro `"dataPrimeiroMovimento" IS NOT NULL` pois existem registros onde o campo utilizado para particionamento é nulo.
 
@@ -367,56 +359,59 @@ O comando realizará a migração dos dados da tabela original `processos_18006`
 
 INSERT INTO public.processos_exp02
 SELECT *, EXTRACT(YEAR FROM "dataPrimeiroMovimento") AS "anoPrimeiroMovimento"
-	FROM public.processos_18006 WHERE "dataPrimeiroMovimento" IS NOT NULL;
+    FROM public.processos_18006 WHERE "dataPrimeiroMovimento" IS NOT NULL;
 
 INSERT INTO public.processos_exp02
 SELECT *, EXTRACT(YEAR FROM "dataPrimeiroMovimento") AS "anoPrimeiroMovimento"
-	FROM public.processos_18007 WHERE "dataPrimeiroMovimento" IS NOT NULL;
+    FROM public.processos_18007 WHERE "dataPrimeiroMovimento" IS NOT NULL;
 
 INSERT INTO public.processos_exp02
 SELECT *, EXTRACT(YEAR FROM "dataPrimeiroMovimento") AS "anoPrimeiroMovimento"
-	FROM public.processos_18008 WHERE "dataPrimeiroMovimento" IS NOT NULL;
+    FROM public.processos_18008 WHERE "dataPrimeiroMovimento" IS NOT NULL;
 
 -- movimentos_exp02
 
 INSERT INTO public.movimentos_exp02
 SELECT m.*, EXTRACT(YEAR FROM p."dataPrimeiroMovimento") AS "anoPrimeiroMovimento"
-	FROM public.movimentos_18006 m
-	INNER JOIN public.processos_18006 p ON p."processoID" = m."processoID";
+    FROM public.movimentos_18006 m
+    INNER JOIN public.processos_18006 p ON p."processoID" = m."processoID";
 
 INSERT INTO public.movimentos_exp02
 SELECT m.*, EXTRACT(YEAR FROM p."dataPrimeiroMovimento") AS "anoPrimeiroMovimento"
-	FROM public.movimentos_18007 m
-	INNER JOIN public.processos_18007 p ON p."processoID" = m."processoID";
+    FROM public.movimentos_18007 m
+    INNER JOIN public.processos_18007 p ON p."processoID" = m."processoID";
 
 INSERT INTO public.movimentos_exp02
 SELECT m.*, EXTRACT(YEAR FROM p."dataPrimeiroMovimento") AS "anoPrimeiroMovimento"
-	FROM public.movimentos_18008 m
-	INNER JOIN public.processos_18008 p ON p."processoID" = m."processoID";
+    FROM public.movimentos_18008 m
+    INNER JOIN public.processos_18008 p ON p."processoID" = m."processoID";
 
 -- complementos_exp02
 
-INSERT INTO public.complementos_exp02
-SELECT c.*, m."anoPrimeiroMovimento"
-	FROM public.complementos_18006 c
-	INNER JOIN public.movimentos_exp02 m ON
-		m."unidadeID" = c."unidadeID" AND m.id = c."movimentoID";
 
 INSERT INTO public.complementos_exp02
 SELECT c.*, m."anoPrimeiroMovimento"
-	FROM public.complementos_18007 c
-	INNER JOIN public.movimentos_exp02 m ON
-		m."unidadeID" = c."unidadeID" AND m.id = c."movimentoID";
+    FROM public.complementos_18006 c
+    INNER JOIN public.movimentos_exp02 m ON
+        m."unidadeID" = c."unidadeID" AND m.id = c."movimentoID";
 
 INSERT INTO public.complementos_exp02
 SELECT c.*, m."anoPrimeiroMovimento"
-	FROM public.complementos_18008 c
-	INNER JOIN public.movimentos_exp02 m ON
-		m."unidadeID" = c."unidadeID" AND m.id = c."movimentoID";
+    FROM public.complementos_18007 c
+    INNER JOIN public.movimentos_exp02 m ON
+        m."unidadeID" = c."unidadeID" AND m.id = c."movimentoID";
+
+INSERT INTO public.complementos_exp02
+SELECT c.*, m."anoPrimeiroMovimento"
+    FROM public.complementos_18008 c
+    INNER JOIN public.movimentos_exp02 m ON
+        m."unidadeID" = c."unidadeID" AND m.id = c."movimentoID";
+
+VACUUM ANALYZE complementos_exp02;
+VACUUM ANALYZE movimentos_exp02;
+VACUUM ANALYZE processos_exp02;
 
 ```
-
-- Total de registros retornando pela query e inseridos na migração: **1.051.311**
 
 ## 1.5 - Ambiente de testes
 
@@ -491,8 +486,8 @@ FROM
 INNER JOIN
     movimentos_exp02 AS m 
     ON 
-	m."unidadeID" = p."unidadeID"
-	AND m."anoPrimeiroMovimento" >= p."anoPrimeiroMovimento"
+	m."anoPrimeiroMovimento" = p."anoPrimeiroMovimento"
+	AND m."unidadeID" = p."unidadeID"
 	AND m."processoID" = p."processoID"
 INNER JOIN
     classes AS c ON p.classe = c.id
@@ -501,17 +496,17 @@ LEFT JOIN
 LEFT JOIN
     complementos_exp02 AS com 
     ON 
-	com."unidadeID" = m."unidadeID" 
-	AND com."anoPrimeiroMovimento" >= p."anoPrimeiroMovimento"
+    com."anoPrimeiroMovimento" = p."anoPrimeiroMovimento"
+	AND com."unidadeID" = m."unidadeID" 
 	AND com."movimentoID" = m."id" 
 LEFT JOIN
     servidores AS s ON s."servidorID" = m."usuarioID"
 LEFT JOIN
     documentos AS d ON d."id" = m."documentoID"
 WHERE 
-    p."unidadeID" = 18006 AND p."anoPrimeiroMovimento" >= 2020
-	AND m."unidadeID" = 18006 AND m."anoPrimeiroMovimento" >= 2020
-	AND com."unidadeID" = 18006 AND com."anoPrimeiroMovimento" >= 2020
+    p."anoPrimeiroMovimento" >= 2020 AND p."unidadeID" = 18006 
+	AND m."anoPrimeiroMovimento" >= 2020 AND m."unidadeID" = 18006
+	AND com."anoPrimeiroMovimento" >= 2020 AND com."unidadeID" = 18006
 ORDER BY 
     p."processoID", m."dataFinal";
 ```
@@ -530,24 +525,29 @@ ORDER BY
 | 13                               | 10                  | 130          |                0 | 25711,1 ms    | 6014,0 ms      | 37431,0 ms     | 26599,0 ms      |
 | 21                               | 10                  | 210          |                0 | 40961,6 ms    | 11836,0 ms     | 79113,0 ms     | 42867,5 ms      |
 | 34                               | 10                  | 340          |                0 | 72349,7 ms    | 15597,0 ms     | 109198,0 ms    | 74255,0 ms      |
-| 55                               | 10                  | 550          |               72 | 139699,7 ms   | 14745,0 ms     | 181299,0 ms    | 148002,5 ms     |
+| 55                               | 10                  | 550          |                0 |    42021,2 ms |      1053,0 ms |     89423,0 ms |      42734,0 ms |
+| 89                               | 10                  | 890          |                0 |    81786,3 ms |      6292,0 ms |    161277,0 ms |      84520,0 ms |
+| 144                              | 10                  | 1440         |              536 |   123681,9 ms |       904,0 ms |    209116,0 ms |     128444,0 ms |
 
-Constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 72 (13,09%), casos onde o tempo de resposta foram superiores ao limite estabelecido para o timeout de execução de query de 180.000 ms (3 minutos), e portanto, não permitiu escalar o banco de dados para atender o crescimento da demanda e exeucuções em paralelo, conforme a execução dos testes.
+
+Constatamos que a partir do cenário com 144 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 536 (37,22%), casos onde o tempo de resposta foram superiores ao limite estabelecido para o timeout de execução de query de 180.000 ms (3 minutos), e portanto, não permitiu escalar o banco de dados para atender o crescimento da demanda e exeucuções em paralelo, conforme a execução dos testes.
 
 
 ### 1.7.2 - Utilização de Recursos
 
 | # Threads (Em paralelo) | # Requests/Thread | # Repetições | Uso de CPU | Uso de RAM | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) |
 | ----------------------- | ----------------- | ------------ | ---------- | ---------- | ----------- | ------------ | ---------------------- | ------------------ |
-| 1                       | 10                | 10           | 319,46 %   | 1,25 GB    | 0 KB        | 0 KB         | 859,00 MB              | 1,66 MB            |
-| 2                       | 10                | 20           | 405,96 %   | 1,66 GB    | 0 KB        | 0 KB         | 5,58 MB                | 1,72 GB            |
-| 3                       | 10                | 30           | 411,38 %   | 1,84 GB    | 0 KB        | 0 KB         | 4,94 MB                | 2,58 GB            |
-| 5                       | 10                | 50           | 410,61 %   | 2,37 GB    | 0 KB        | 0 KB         | 5,72 MB                | 4,30 GB            |
-| 8                       | 10                | 80           | 447,99 %   | 2,79 GB    | 0 KB        | 0 KB         | 8,42 MB                | 6,89 GB            |
-| 13                      | 10                | 80           | 410,71 %   | 3,91 GB    | 0 KB        | 0 KB         | 14,70 MB               | 11,20 GB           |
-| 21                      | 10                | 210          | 416,86 %   | 4,95 GB    | 0 KB        | 0 KB         | 37,60 MB               | 18,10 GB           |
-| 34                      | 10                | 340          | 450,60 %   | 8,01 GB    | 0 KB        | 0 KB         | 57,00 MB               | 29,30 GB           |
-| 55                      | 10                | 550          | 434,66 %   | 11,73 GB   | 35,4 MB     | 152 MB       | 112,00 MB              | 43,30 GB           |
+| 1                       | 10                | 10           | 319,46 %   | 1,25 GB    | 0 KB        | 4,1 KB       | 859,00 MB              | 1,66 MB            |
+| 2                       | 10                | 20           | 405,96 %   | 1,66 GB    | 0 KB        | 4,1 KB       | 5,58 MB                | 1,72 GB            |
+| 3                       | 10                | 30           | 411,38 %   | 1,84 GB    | 0 KB        | 4,1 KB       | 4,94 MB                | 2,58 GB            |
+| 5                       | 10                | 50           | 410,61 %   | 2,37 GB    | 0 KB        | 4,1 KB       | 5,72 MB                | 4,30 GB            |
+| 8                       | 10                | 80           | 447,99 %   | 2,79 GB    | 0 KB        | 4,1 KB       | 8,42 MB                | 6,89 GB            |
+| 13                      | 10                | 80           | 410,71 %   | 3,91 GB    | 0 KB        | 4,1 KB       | 14,70 MB               | 11,20 GB           |
+| 21                      | 10                | 210          | 416,86 %   | 4,95 GB    | 0 KB        | 4,1 KB       | 37,60 MB               | 18,10 GB           |
+| 34                      | 10                | 340          | 450,60 %   | 8,01 GB    | 0 KB        | 4,1 KB       | 57,00 MB               | 29,30 GB           |
+| 55                      | 10                | 550          | 452,83 %   |    6,91 GB | 0 KB        | 4,1 KB       |               31,90 MB |           47,30 GB |
+| 89                      | 10                | 890          | 426,08 %   |   11,72 GB | 0 KB        | 4,1 KB       |               86,10 MB |           76,70 GB |
+| 144                     | 10                | 1440         | 431,16 %   |   12,00 GB |    324,0 MB |      1,24 GB |              102,00 MB |           79,40 GB |
 
 Abaixo, estão os screenshots das estatísticas coletadas para cada cenário executado:
 

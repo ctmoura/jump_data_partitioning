@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import javax.sql.DataSource;
@@ -106,8 +107,8 @@ public class LoadTestService {
                 "INNER JOIN\n" + //
                 "    movimentos_exp02 AS m \n" + //
                 "    ON \n" + //
-                "\tm.\"unidadeID\" = p.\"unidadeID\"\n" + //
-                "\tAND m.\"anoPrimeiroMovimento\" >= p.\"anoPrimeiroMovimento\"\n" + //
+                "\tm.\"anoPrimeiroMovimento\" = p.\"anoPrimeiroMovimento\"\n" + //
+                "\tAND m.\"unidadeID\" = p.\"unidadeID\"\n" + //
                 "\tAND m.\"processoID\" = p.\"processoID\"\n" + //
                 "INNER JOIN\n" + //
                 "    classes AS c ON p.classe = c.id\n" + //
@@ -116,17 +117,17 @@ public class LoadTestService {
                 "LEFT JOIN\n" + //
                 "    complementos_exp02 AS com \n" + //
                 "    ON \n" + //
-                "\tcom.\"unidadeID\" = m.\"unidadeID\" \n" + //
-                "\tAND com.\"anoPrimeiroMovimento\" >= p.\"anoPrimeiroMovimento\"\n" + //
+                "    com.\"anoPrimeiroMovimento\" = p.\"anoPrimeiroMovimento\"\n" + //
+                "\tAND com.\"unidadeID\" = m.\"unidadeID\" \n" + //
                 "\tAND com.\"movimentoID\" = m.\"id\" \n" + //
                 "LEFT JOIN\n" + //
                 "    servidores AS s ON s.\"servidorID\" = m.\"usuarioID\"\n" + //
                 "LEFT JOIN\n" + //
                 "    documentos AS d ON d.\"id\" = m.\"documentoID\"\n" + //
                 "WHERE \n" + //
-                "    p.\"unidadeID\" = ? AND p.\"anoPrimeiroMovimento\" >= 2020\n" + //
-                "\tAND m.\"unidadeID\" = ? AND m.\"anoPrimeiroMovimento\" >= 2020\n" + //
-                "\tAND com.\"unidadeID\" = ? AND com.\"anoPrimeiroMovimento\" >= 2020\n" + //
+                "    p.\"anoPrimeiroMovimento\" >= 2020 AND p.\"unidadeID\" = ? \n" + //
+                "\tAND m.\"anoPrimeiroMovimento\" >= 2020 AND m.\"unidadeID\" = ?\n" + //
+                "\tAND com.\"anoPrimeiroMovimento\" >= 2020 AND com.\"unidadeID\" = ?\n" + //
                 "ORDER BY \n" + //
                 "    p.\"processoID\", m.\"dataFinal\";";
 
@@ -216,7 +217,7 @@ public class LoadTestService {
             throw e;
         }
         LocalDateTime endTime = LocalDateTime.now();
-        log.info("UnidadeId: {}, Duration: {}", unidadeId, startTime.until(endTime, ChronoUnit.MILLIS));
+        log.info("{}, {}", startTime, startTime.until(endTime, ChronoUnit.MILLIS));
     }
 
     private void executeQuery(String query) throws Exception {

@@ -800,14 +800,14 @@ Onde:
 
 Sendo assim, temos:
 
-- P_Acessadas: **6**
-- P_Total: **13**
+- P_Acessadas: **18**
+- P_Total: **39**
 - T_Query: **0,913 segundos**
 - T_Ideal: **10 segundos** 
 
-> Eficiência (%) =  (1 - (6 / 13)) * (1 - (0,913 / 10)) * 100 => (1 - (0,461538461538462)) * (1 - (0,0913)) * 100 = **48,92%**
+> Eficiência (%) =  (1 - (18 / 39)) * (1 - (0,913 / 10)) * 100 => (1 - (0,461538461538462)) * (1 - (0,0913)) * 100 = **48,93%**
 
-Nesta arquitetura, a consulta foi **48,92%** mais eficiente do que na arquitetura atual.
+Nesta arquitetura, a consulta foi **48,932%** mais eficiente do que na arquitetura atual.
 
 
 ### 1.7.8 - Consistência de Dados
