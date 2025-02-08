@@ -587,6 +587,15 @@ Abaixo, estão os screenshots das estatísticas coletadas para cada cenário exe
 
 ![Stats - 55 Threads](./stats-55.jpg)
 
+#### 89 Threads
+
+![Stats - 89 Threads](./stats-89.jpg)
+
+#### 144 Threads
+
+![Stats - 144 Threads](./stats-144.jpg)
+
+
 A partir deste cenário, com 55 usuários simultâneos, começamos a evidenciar erros de execução nas consultas ao banco de dados, pois o tempo de resposta de algumas delas estavam superando o query timeout estabelecido em 180.000 ms (3 minutos).
 
 ### 1.7.3 - Escalabilidade
