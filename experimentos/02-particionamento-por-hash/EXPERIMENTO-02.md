@@ -685,27 +685,28 @@ Onde:
 
 Sendo assim, temos:
 
-- P_Acessadas: **23**
-- P_Total: **117**
-- T_Query: **6,04 segundos**
+- P_Acessadas: **39**
+- P_Total: **39**
+- T_Query: **0,82 segundos**
 - T_Ideal: **10 segundos** 
 
-> Eficiência (%) =  (1 - (23 / 117)) * (1 - (6,04 / 10)) * 100 => (1 - (0,196581196581197)) * (1 - (0,604)) * 100 = **31,81%**
+> Eficiência (%) =  (1 - (39 / 39)) * (1 - (0,80251 / 10)) * 100 => 0 * 0,919749 * 100 = **0,00%**
 
-Nesta arquitetura, a consulta foi **31,81%** mais eficiente do que na arquitetura atual.
+Mesmo com um excelente tempo de resposa, consideramos que nesta arquitetura, a consulta obteve uma eficiência de **0,00%** pois todas as partições foram acessadas.
+Ou seja, isso pode sugerir que a estratégia de particionamento utilizada não é a ideal para a natureza da consulta, nem dos filtros aplicados a ela.
 
 
 ### 1.7.8 - Consistência de Dados
 
-Essa métrica não se aplica a essa estratégia, uma vez que não existe movimentação de dados, seja no próprio host ou em hosts distintos.
+Não se aplica.
 
 ### 1.7.9 - Capacidade de Adaptação
 
-Essa métrica não se aplica a essa estratégia, uma vez que ela não realiza mudanças ou ajustes dinâmicamente.
+Não se aplica.
 
 ### 1.7.10 - Custo Operacional
 
-Não foi avaliado o custo operacional pois se trata da estratégia atualmente implementada.
+Não foi avaliado.
 
 ## 1.8 - Considerações
 
