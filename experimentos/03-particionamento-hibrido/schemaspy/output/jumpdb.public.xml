@@ -244,6 +244,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="complementos_exp03_2013_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2013_unid_18007" numRows="33420" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -277,6 +282,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2013_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2013_unid_18008" numRows="33420" remarks="" schema="public" type="TABLE">
@@ -312,6 +322,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2013_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2014_unid_18006" numRows="3003" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -345,6 +360,11 @@
          <index name="complementos_exp03_2014_unid__anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="complementos_exp03_2014_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2014_unid_18007" numRows="3003" remarks="" schema="public" type="TABLE">
@@ -380,6 +400,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2014_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2014_unid_18008" numRows="3003" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -413,6 +438,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2014_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2015_unid_18006" numRows="159647" remarks="" schema="public" type="TABLE">
@@ -448,6 +478,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="complementos_exp03_2015_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2015_unid_18007" numRows="159647" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -481,6 +516,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2015_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2015_unid_18008" numRows="159647" remarks="" schema="public" type="TABLE">
@@ -516,6 +556,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2015_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2016_unid_18006" numRows="317504" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -549,6 +594,11 @@
          <index name="complementos_exp03_2016_unid__anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="complementos_exp03_2016_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2016_unid_18007" numRows="317504" remarks="" schema="public" type="TABLE">
@@ -584,6 +634,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2016_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2016_unid_18008" numRows="317504" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -617,6 +672,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2016_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2017_unid_18006" numRows="38152" remarks="" schema="public" type="TABLE">
@@ -652,6 +712,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="complementos_exp03_2017_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2017_unid_18007" numRows="38152" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -685,6 +750,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2017_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2017_unid_18008" numRows="38152" remarks="" schema="public" type="TABLE">
@@ -720,6 +790,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2017_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2018_unid_18006" numRows="273057" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -753,6 +828,11 @@
          <index name="complementos_exp03_2018_unid__anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="complementos_exp03_2018_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2018_unid_18007" numRows="273057" remarks="" schema="public" type="TABLE">
@@ -788,6 +868,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2018_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2018_unid_18008" numRows="273057" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -821,6 +906,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2018_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2019_unid_18006" numRows="60477" remarks="" schema="public" type="TABLE">
@@ -856,6 +946,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="complementos_exp03_2019_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2019_unid_18007" numRows="60477" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -889,6 +984,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2019_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2019_unid_18008" numRows="60477" remarks="" schema="public" type="TABLE">
@@ -924,6 +1024,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2019_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2020_unid_18006" numRows="49654" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -957,6 +1062,11 @@
          <index name="complementos_exp03_2020_unid__anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="complementos_exp03_2020_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2020_unid_18007" numRows="49654" remarks="" schema="public" type="TABLE">
@@ -992,6 +1102,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2020_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2020_unid_18008" numRows="49654" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -1025,6 +1140,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2020_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2021_unid_18006" numRows="75734" remarks="" schema="public" type="TABLE">
@@ -1060,6 +1180,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="complementos_exp03_2021_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2021_unid_18007" numRows="75734" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -1093,6 +1218,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2021_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2021_unid_18008" numRows="75734" remarks="" schema="public" type="TABLE">
@@ -1128,6 +1258,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2021_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2022_unid_18006" numRows="128136" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -1161,6 +1296,11 @@
          <index name="complementos_exp03_2022_unid__anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="complementos_exp03_2022_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2022_unid_18007" numRows="128136" remarks="" schema="public" type="TABLE">
@@ -1196,6 +1336,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2022_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2022_unid_18008" numRows="128136" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -1229,6 +1374,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2022_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2023_unid_18006" numRows="67798" remarks="" schema="public" type="TABLE">
@@ -1264,6 +1414,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="complementos_exp03_2023_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2023_unid_18007" numRows="67798" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -1297,6 +1452,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2023_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2023_unid_18008" numRows="67798" remarks="" schema="public" type="TABLE">
@@ -1332,6 +1492,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2023_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2024_unid_18006" numRows="32619" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -1365,6 +1530,11 @@
          <index name="complementos_exp03_2024_unid__anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="complementos_exp03_2024_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2024_unid_18007" numRows="32619" remarks="" schema="public" type="TABLE">
@@ -1400,6 +1570,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2024_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2024_unid_18008" numRows="32619" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -1433,6 +1608,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2024_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="complementos_exp03_2025_unid_18006" numRows="4" remarks="" schema="public" type="TABLE">
@@ -1468,6 +1648,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="complementos_exp03_2025_unid_anoPrimeiroMovimento_unidade_idx12" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2025_unid_18007" numRows="4" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -1502,6 +1687,11 @@
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
          </index>
+         <index name="complementos_exp03_2025_unid_anoPrimeiroMovimento_unidade_idx13" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
       </table>
       <table name="complementos_exp03_2025_unid_18008" numRows="4" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('&quot;complementos_exp03_complementoID_seq&quot;'::regclass)" digits="0" id="0" name="complementoID" nullable="false" remarks="" size="19" type="bigserial" typeCode="-5"/>
@@ -1535,6 +1725,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="complementoID"/>
+         </index>
+         <index name="complementos_exp03_2025_unid_anoPrimeiroMovimento_unidade_idx14" unique="false">
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
       </table>
       <table name="documentos" numRows="1389980" remarks="" schema="public" type="TABLE">
@@ -1609,6 +1804,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2013_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2013_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -1627,6 +1826,33 @@
          <index name="movimentos_exp03_2013_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2013_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -1662,6 +1888,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2013_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2013_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -1675,6 +1905,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2013_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -1715,6 +1972,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2013_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2013_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -1728,6 +1989,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2013_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2013_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -1768,6 +2056,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2014_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2014_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -1786,6 +2078,33 @@
          <index name="movimentos_exp03_2014_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2014_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -1821,6 +2140,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2014_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2014_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -1834,6 +2157,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2014_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -1874,6 +2224,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2014_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2014_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -1887,6 +2241,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2014_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2014_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -1927,6 +2308,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2015_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2015_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -1945,6 +2330,33 @@
          <index name="movimentos_exp03_2015_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2015_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -1980,6 +2392,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2015_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2015_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -1993,6 +2409,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2015_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2033,6 +2476,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2015_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2015_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2046,6 +2493,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2015_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2015_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2086,6 +2560,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2016_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2016_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2104,6 +2582,33 @@
          <index name="movimentos_exp03_2016_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2016_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2139,6 +2644,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2016_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2016_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2152,6 +2661,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2016_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2192,6 +2728,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2016_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2016_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2205,6 +2745,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2016_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2016_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2245,6 +2812,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2017_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2017_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2263,6 +2834,33 @@
          <index name="movimentos_exp03_2017_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2017_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2298,6 +2896,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2017_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2017_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2311,6 +2913,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2017_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2351,6 +2980,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2017_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2017_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2364,6 +2997,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2017_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2017_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2404,6 +3064,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2018_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2018_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2422,6 +3086,33 @@
          <index name="movimentos_exp03_2018_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2018_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2457,6 +3148,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2018_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2018_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2470,6 +3165,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2018_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2510,6 +3232,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2018_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2018_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2523,6 +3249,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2018_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2018_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2563,6 +3316,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2019_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2019_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2581,6 +3338,33 @@
          <index name="movimentos_exp03_2019_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2019_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2616,6 +3400,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2019_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2019_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2629,6 +3417,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2019_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2669,6 +3484,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2019_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2019_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2682,6 +3501,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2019_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2019_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2722,6 +3568,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2020_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2020_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2740,6 +3590,33 @@
          <index name="movimentos_exp03_2020_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2020_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2775,6 +3652,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2020_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2020_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2788,6 +3669,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2020_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2828,6 +3736,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2020_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2020_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2841,6 +3753,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2020_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2020_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2881,6 +3820,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2021_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2021_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2899,6 +3842,33 @@
          <index name="movimentos_exp03_2021_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2021_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2934,6 +3904,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2021_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2021_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -2947,6 +3921,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2021_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -2987,6 +3988,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2021_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2021_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3000,6 +4005,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2021_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2021_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3040,6 +4072,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2022_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2022_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3058,6 +4094,33 @@
          <index name="movimentos_exp03_2022_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2022_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3093,6 +4156,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2022_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2022_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3106,6 +4173,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2022_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3146,6 +4240,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2022_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2022_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3159,6 +4257,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2022_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2022_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3199,6 +4324,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2023_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2023_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3217,6 +4346,33 @@
          <index name="movimentos_exp03_2023_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2023_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3252,6 +4408,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2023_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2023_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3265,6 +4425,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2023_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3305,6 +4492,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2023_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2023_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3318,6 +4509,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2023_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2023_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3358,6 +4576,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2024_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2024_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3376,6 +4598,33 @@
          <index name="movimentos_exp03_2024_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2024_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3411,6 +4660,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2024_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2024_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3424,6 +4677,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2024_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3464,6 +4744,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2024_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2024_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3477,6 +4761,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2024_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2024_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3517,6 +4828,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2025_unid_18006_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2025_unid_18_anoPrimeiroMovimento_unidade_idx3" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3535,6 +4850,33 @@
          <index name="movimentos_exp03_2025_unid_18_anoPrimeiroMovimento_unidadeI_idx" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_processoID_unidadeID_dataFina_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_unidadeID_anoPrimeiroMovimen_idx3" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_unidadeID_anoPrimeiroMoviment_idx" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
          </index>
          <index name="movimentos_exp03_2025_unid_1_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3570,6 +4912,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2025_unid_18007_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2025_unid_18_anoPrimeiroMovimento_unidade_idx1" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3583,6 +4929,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_processoID_unidadeID_dataFin_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_unidadeID_anoPrimeiroMovimen_idx1" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_unidadeID_anoPrimeiroMovimen_idx4" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2025_unid_1_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3623,6 +4996,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="anoPrimeiroMovimento" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="anoPrimeiroMovimento" foreignKey="movimentos_exp03_processoID_fkey" implied="false" onDeleteCascade="true" schema="public" table="processos_exp03"/>
          </column>
+         <index name="movimentos_exp03_2025_unid_18008_processoID_dataFinal_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
+         </index>
          <index name="movimentos_exp03_2025_unid_18_anoPrimeiroMovimento_unidade_idx2" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3636,6 +5013,33 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="processoID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_processoID_unidadeID_dataFin_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="dataFinal"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_unidadeID_anoPrimeiroMovimen_idx2" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="activity"/>
+            <column ascending="true" name="duration"/>
+            <column ascending="true" name="movimentoID"/>
+         </index>
+         <index name="movimentos_exp03_2025_unid_18_unidadeID_anoPrimeiroMovimen_idx5" unique="false">
+            <column ascending="true" name="unidadeID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="dataFinal"/>
          </index>
          <index name="movimentos_exp03_2025_unid_1_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3703,6 +5107,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2013_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2013_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3758,6 +5167,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2013_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2013_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3819,6 +5233,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2013_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2013_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -3886,6 +5305,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2014_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2014_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -3941,6 +5365,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2014_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2014_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4002,6 +5431,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2014_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2014_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4069,6 +5503,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2015_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2015_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -4124,6 +5563,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2015_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2015_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4185,6 +5629,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2015_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2015_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4252,6 +5701,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2016_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2016_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -4307,6 +5761,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2016_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2016_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4368,6 +5827,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2016_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2016_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4435,6 +5899,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2017_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2017_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -4490,6 +5959,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2017_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2017_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4551,6 +6025,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2017_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2017_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4618,6 +6097,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2018_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2018_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -4673,6 +6157,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2018_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2018_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4734,6 +6223,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2018_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2018_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4801,6 +6295,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2019_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2019_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -4856,6 +6355,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2019_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2019_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4917,6 +6421,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2019_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2019_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -4984,6 +6493,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2020_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2020_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -5039,6 +6553,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2020_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2020_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5100,6 +6619,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2020_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2020_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5167,6 +6691,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2021_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2021_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -5222,6 +6751,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2021_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2021_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5283,6 +6817,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2021_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2021_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5350,6 +6889,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2022_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2022_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -5405,6 +6949,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2022_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2022_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5466,6 +7015,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2022_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2022_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5533,6 +7087,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2023_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2023_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -5588,6 +7147,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2023_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2023_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5649,6 +7213,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2023_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2023_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5716,6 +7285,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2024_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2024_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -5771,6 +7345,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2024_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2024_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5832,6 +7411,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2024_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2024_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -5899,6 +7483,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
          </index>
+         <index name="processos_exp03_2025_unid_180_processoID_anoPrimeiroMovimen_idx" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
+         </index>
          <index name="processos_exp03_2025_unid_18_anoPrimeiroMovimento_unidade_idx12" unique="true">
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
@@ -5954,6 +7543,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2025_unid_180_processoID_anoPrimeiroMovime_idx1" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2025_unid_18_anoPrimeiroMovimento_unidade_idx10" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>
@@ -6015,6 +7609,11 @@
             <column ascending="true" name="anoPrimeiroMovimento"/>
             <column ascending="true" name="unidadeID"/>
             <column ascending="true" name="assunto"/>
+         </index>
+         <index name="processos_exp03_2025_unid_180_processoID_anoPrimeiroMovime_idx2" unique="false">
+            <column ascending="true" name="processoID"/>
+            <column ascending="true" name="anoPrimeiroMovimento"/>
+            <column ascending="true" name="unidadeID"/>
          </index>
          <index name="processos_exp03_2025_unid_18_anoPrimeiroMovimento_unidade_idx11" unique="false">
             <column ascending="true" name="anoPrimeiroMovimento"/>

@@ -1,4 +1,4 @@
-# 1 - Experimento 03 - Particionamento Híbrido
+# 1 - Experimento 03 - Particionamento Híbrido (Intervalo + Lista)
 
 O **Particionamento Híbrido** combina duas ou mais técnicas de particionamento de dados para aproveitar as vantagens de diferentes estratégias e mitigar suas limitações. Essa abordagem é utilizada em cenários onde um único tipo de particionamento não atende de forma eficiente os requisitos de desempenho e escalabilidade do sistema.
 
@@ -180,7 +180,7 @@ CREATE INDEX processos_exp03_idx2 ON public.processos_exp03 ("anoPrimeiroMovimen
 CREATE INDEX processos_exp03_idx3 ON public.processos_exp03 ("anoPrimeiroMovimento", "unidadeID", "assunto");
 CREATE INDEX processos_exp03_idx4 ON public.processos_exp03 ("anoPrimeiroMovimento", "unidadeID", "classe");
 CREATE INDEX processos_exp03_idx5 ON public.processos_exp03 ("anoPrimeiroMovimento", "unidadeID", "processoID", "classe", "assunto");
-
+CREATE INDEX processos_exp03_idx6 ON public.processos_exp03 ("processoID", "anoPrimeiroMovimento", "unidadeID");
 
 
 CREATE UNIQUE INDEX processos_exp03_unq1 ON public.processos_exp03 ("anoPrimeiroMovimento", "unidadeID", "processoID");
@@ -321,6 +321,12 @@ CREATE INDEX movimentos_exp03_idx3 ON public.movimentos_exp03 ("anoPrimeiroMovim
 CREATE INDEX movimentos_exp03_idx4 ON public.movimentos_exp03 ("anoPrimeiroMovimento", "unidadeID", "documentoID");
 CREATE INDEX movimentos_exp03_idx5 ON public.movimentos_exp03 ("anoPrimeiroMovimento", "unidadeID", "processoID", "id", "dataFinal");
 
+CREATE INDEX movimentos_exp03_idx6 ON public.movimentos_exp03 ("processoID", "unidadeID", "dataFinal") INCLUDE (activity, duration, "movimentoID");
+CREATE INDEX movimentos_exp03_idx7 ON public.movimentos_exp03 ("unidadeID", "anoPrimeiroMovimento", "processoID") INCLUDE (activity, duration, "movimentoID");
+CREATE INDEX movimentos_exp03_idx8 ON public.movimentos_exp03 ("processoID", "anoPrimeiroMovimento", "unidadeID");
+CREATE INDEX movimentos_exp03_idx9 ON public.movimentos_exp03 ("unidadeID", "anoPrimeiroMovimento", "processoID", "dataFinal");
+CREATE INDEX movimentos_exp03_idx10 ON public.movimentos_exp03 ("processoID", "dataFinal");
+
 
 CREATE UNIQUE INDEX movimentos_exp03_unq1 ON public.movimentos_exp03 ("anoPrimeiroMovimento", "unidadeID", "id");
 
@@ -447,6 +453,8 @@ CREATE TABLE complementos_exp03_2025_unid_18008 PARTITION OF complementos_exp03_
 CREATE INDEX complementos_exp03_idx1 ON public.complementos_exp03 ("anoPrimeiroMovimento", "unidadeID");
 CREATE INDEX complementos_exp03_idx2 ON public.complementos_exp03 ("anoPrimeiroMovimento", "unidadeID", "complementoID");
 CREATE INDEX complementos_exp03_idx3 ON public.complementos_exp03 ("anoPrimeiroMovimento", "unidadeID", "movimentoID") INCLUDE (descricao);
+CREATE INDEX complementos_exp03_idx4 ON public.complementos_exp03 ("anoPrimeiroMovimento", "unidadeID", "movimentoID");
+
 
 CREATE UNIQUE INDEX complementos_exp03_unq1 ON public.complementos_exp03 ("anoPrimeiroMovimento", "unidadeID", "complementoID");
 
@@ -509,6 +517,10 @@ SELECT c.*, m."anoPrimeiroMovimento"
 	FROM public.complementos_18008 c
 	INNER JOIN public.movimentos_exp03 m ON
 		m."unidadeID" = c."unidadeID" AND m.id = c."movimentoID";
+
+VACUUM ANALYZE complementos_exp03;
+VACUUM ANALYZE movimentos_exp03;
+VACUUM ANALYZE processos_exp03;
 
 ```
 
@@ -616,32 +628,35 @@ ORDER BY
 
 | # Threads (Usuários em paralelo) | # Requests / Thread | # Repetições | Falhas (Timeout) | Duração média | Duração mínima | Duração máxima | Duração mediana |
 | -------------------------------- | ------------------- | ------------ | ---------------- | ------------- | -------------- | -------------- | --------------- |
-| 1                                | 10                  | 10           |                0 |     1511,3 ms |      1247,0 ms |      2084,0 ms |       1443,5 ms |
-| 2                                | 10                  | 20           |                0 |     1977,6 ms |      1622,0 ms |      3049,0 ms |       1823,5 ms |
-| 3                                | 10                  | 30           |                0 |     2413,6 ms |      1753,0 ms |      3620,0 ms |       2270,5 ms |
-| 5                                | 10                  | 50           |                0 |     3696,9 ms |      1236,0 ms |      6091,0 ms |       3643,5 ms |
-| 8                                | 10                  | 80           |                0 |     5477,3 ms |      2349,0 ms |      8380,0 ms |       5266,0 ms |
-| 13                               | 10                  | 130          |                0 |     8542,6 ms |      1342,0 ms |     13769,0 ms |       8536,5 ms |
-| 21                               | 10                  | 210          |                0 |    14307,7 ms |      2142,0 ms |     31022,0 ms |      13942,5 ms |
-| 34                               | 10                  | 340          |                0 |    23898,4 ms |      1436,0 ms |     54789,0 ms |      23041,0 ms |
-| 55                               | 10                  | 550          |              277 |    24086,6 ms |       959,0 ms |     69352,0 ms |      24094,0 ms |
+| 1                                | 10                  | 10           |                0 |      825,2 ms |       606,0 ms |      1642,0 ms |        703,5 ms |
+| 2                                | 10                  | 20           |                0 |     1156,5 ms |       645,0 ms |      2399,0 ms |       1077,5 ms |
+| 3                                | 10                  | 30           |                0 |     1341,4 ms |       534,0 ms |      2342,0 ms |       1337,0 ms |
+| 5                                | 10                  | 50           |                0 |     2591,6 ms |       693,0 ms |      3777,0 ms |       2521,0 ms |
+| 8                                | 10                  | 80           |                0 |     3999,9 ms |      1042,0 ms |      5890,0 ms |       3860,5 ms |
+| 13                               | 10                  | 130          |                0 |     6502,5 ms |      1696,0 ms |     10302,0 ms |       6134,5 ms |
+| 21                               | 10                  | 210          |                0 |    11907,2 ms |      3598,0 ms |     16977,0 ms |      11641,0 ms |
+| 34                               | 10                  | 340          |                0 |    25228,7 ms |      3766,0 ms |     47382,0 ms |      25860,5 ms |
+| 55                               | 10                  | 550          |                0 |    57333,6 ms |      2086,0 ms |     94647,0 ms |      59659,0 ms |
+| 89                               | 10                  | 890          |              449 |    40425,1 ms |      2491,0 ms |     68339,0 ms |      44496,0 ms |
 
-Constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 277 casos (50.36%). Que representa um aumento de 37,27% na quantidade de falhas. Porém, uma diferença é que os erros ocorridos neste experimento não foram por motivo de exceder o tempo máximo de execução das consultas, mas foi relacionado ao uso concorrente de memória no acesso simultâneo as partições. O que não significa que esta estrategia tenha sido pior que a anterior, mas apenas que a limitação do teste em 3 unidades faz com que a concorrência seja maior nas mesmas partições. Portanto, esta estratégia se mostra mais eficiente em relação as demais pois permitirá uma maior escalabilidade em uma base real e acesso real de usuários em diferentes unidades.
+
+Constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 449 casos (50.44%). Que representa um aumento de 37,27% na quantidade de falhas. Porém, uma diferença é que os erros ocorridos neste experimento não foram por motivo de exceder o tempo máximo de execução das consultas, mas foi relacionado ao uso concorrente de memória no acesso simultâneo as partições. O que não significa que esta estrategia tenha sido pior que a anterior, mas apenas que a limitação do teste em 3 unidades faz com que a concorrência seja maior nas mesmas partições. Portanto, esta estratégia se mostra mais eficiente em relação as demais pois permitirá uma maior escalabilidade em uma base real e acesso real de usuários em diferentes unidades.
 
 
 ### 1.7.2 - Utilização de Recursos
 
 | # Threads (Em paralelo) | # Requests/Thread | # Repetições | Uso de CPU | Uso de RAM | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) |
 | ----------------------- | ----------------- | ------------ | ---------- | ---------- | ----------- | ------------ | ---------------------- | ------------------ |
-| 1                       | 10                | 10           | 167,14 %   |  896,20 MB |        0 KB |         0 KB |                3,06 MB |          863,00 MB |
-| 2                       | 10                | 20           | 358,92 %   |    1,27 GB |        0 KB |         0 KB |                2,71 MB |            1,72 GB |
-| 3                       | 10                | 30           | 406,48 %   |    1,78 GB |        0 KB |         0 KB |                2,42 MB |            2,58 GB |
-| 5                       | 10                | 50           | 417,98 %   |    2,16 GB |        0 KB |         0 KB |                3,28 MB |            4,29 GB |
-| 8                       | 10                | 80           | 413,07 %   |    2,99 GB |        0 KB |         0 KB |                5,95 MB |            6,87 GB |
-| 13                      | 10                | 130          | 436,21 %   |    3,65 GB |        0 KB |         0 KB |               10,20 MB |           11,20 GB |
-| 21                      | 10                | 210          | 416,34 %   |    5,77 GB |        0 KB |         0 KB |               37,60 MB |           18,10 GB |
-| 34                      | 10                | 340          | 436,92 %   |    7,38 GB |        0 KB |         0 KB |               22,30 MB |           29,20 GB |
-| 55                      | 10                | 550          | 446,23 %   |    8,88 GB |        0 KB |         0 KB |               18,40 MB |           23,00 GB |
+| 1                       | 10                | 10           |    70,29 % |  761,70 MB |        0 KB |       4,1 KB |                2,16 MB |          861,00 MB |
+| 2                       | 10                | 20           |   254,21 % |    1,25 GB |        0 KB |       4,1 KB |                1,89 MB |            1,72 GB |
+| 3                       | 10                | 30           |   273,56 % |    1,09 GB |        0 KB |       4,1 KB |                2,53 MB |            2,58 GB |
+| 5                       | 10                | 50           |   331,12 % |    1,89 GB |        0 KB |       4,1 KB |                2,91 MB |            4,29 GB |
+| 8                       | 10                | 80           |   255,61 % |    3,00 GB |        0 KB |       4,1 KB |                3,76 MB |            6,86 GB |
+| 13                      | 10                | 130          |   405,70 % |    4,34 GB |        0 KB |       4,1 KB |                5,41 MB |           11,10 GB |
+| 21                      | 10                | 210          |   416,08 % |    6,37 GB |     8,19 KB |       4,1 KB |                8,11 MB |           18,00 GB |
+| 34                      | 10                | 340          |   443,53 % |    7,90 GB |    188,0 KB |       4,1 KB |               13,40 MB |           29,20 GB |
+| 55                      | 10                | 550          |   453,14 % |    8,65 GB |     53,3 KB |       4,1 KB |               23,10 MB |           47,20 GB |
+| 89                      | 10                | 890          |   432,87 % |    8,05 GB |     72,3 MB |       4,1 KB |               17,10 MB |           37,60 GB |
 
 Abaixo, estão os screenshots das estatísticas coletadas para cada cenário executado:
 
@@ -773,11 +788,11 @@ Onde:
 Sendo assim, temos:
 
 - P_Acessadas: **18**
-- P_Total: **117**
+- P_Total: **39**
 - T_Query: **0.464 segundos**
 - T_Ideal: **10 segundos** 
 
-> Eficiência (%) =  (1 - (18 / 117)) * (1 - (0,464 / 10)) * 100 => (1 - (0,153846153846154)) * (1 - (0,0464)) * 100 = **80,68%**
+> Eficiência (%) =  (1 - (18 / 39)) * (1 - (0,464 / 10)) * 100 => (1 - (0,461538461538462)) * (1 - (0,0464)) * 100 = **51,34%**
 
 Nesta arquitetura, a consulta foi **80,68%** mais eficiente do que na arquitetura atual, e **48,87%** mais eficiente que a estratégia de particionamento por hash.
 

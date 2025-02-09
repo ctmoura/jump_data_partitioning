@@ -152,9 +152,9 @@ public class LoadTestService {
                 "INNER JOIN\n" + //
                 "    movimentos_exp03 AS m \n" + //
                 "    ON \n" + //
-                "\tm.\"anoPrimeiroMovimento\" = p.\"anoPrimeiroMovimento\"\n" + //
-                "\tAND m.\"unidadeID\" = p.\"unidadeID\"\n" + //
-                "\tAND m.\"processoID\" = p.\"processoID\"\n" + //
+                "m.\"anoPrimeiroMovimento\" = p.\"anoPrimeiroMovimento\"\n" + //
+                "AND m.\"unidadeID\" = p.\"unidadeID\"\n" + //
+                "AND m.\"processoID\" = p.\"processoID\"\n" + //
                 "INNER JOIN\n" + //
                 "    classes AS c ON p.classe = c.id\n" + //
                 "LEFT JOIN\n" + //
@@ -162,17 +162,17 @@ public class LoadTestService {
                 "LEFT JOIN\n" + //
                 "    complementos_exp03 AS com \n" + //
                 "    ON \n" + //
-                "\tcom.\"anoPrimeiroMovimento\" = p.\"anoPrimeiroMovimento\"\n" + //
-                "\tAND com.\"unidadeID\" = m.\"unidadeID\" \n" + //
-                "\tAND com.\"movimentoID\" = m.\"id\" \n" + //
+                "    com.\"anoPrimeiroMovimento\" = p.\"anoPrimeiroMovimento\"\n" + //
+                "AND com.\"unidadeID\" = m.\"unidadeID\" \n" + //
+                "AND com.\"movimentoID\" = m.\"id\" \n" + //
                 "LEFT JOIN\n" + //
                 "    servidores AS s ON s.\"servidorID\" = m.\"usuarioID\"\n" + //
                 "LEFT JOIN\n" + //
                 "    documentos AS d ON d.\"id\" = m.\"documentoID\"\n" + //
                 "WHERE \n" + //
                 "    p.\"anoPrimeiroMovimento\" >= 2020 AND p.\"unidadeID\" = ? \n" + //
-                "\tAND m.\"anoPrimeiroMovimento\" >= 2020 AND m.\"unidadeID\" = ?\n" + //
-                "\tAND com.\"anoPrimeiroMovimento\" >= 2020 AND com.\"unidadeID\" = ?\n" + //
+                "AND m.\"anoPrimeiroMovimento\" >= 2020 AND m.\"unidadeID\" = ?\n" + //
+                "AND com.\"anoPrimeiroMovimento\" >= 2020 AND com.\"unidadeID\" = ?\n" + //
                 "ORDER BY \n" + //
                 "    p.\"processoID\", m.\"dataFinal\";";
 
