@@ -94,119 +94,102 @@ Os cenários do plano de teste segue uma sequencia fibonaci para determinar a qu
 
 ## 1.5 - Métricas avaliadas e resultados
 
-| # Threads (Usuários em paralelo) | # Requests / Thread    | # Repetições     | Duração média | Duração mínima | Duração máxima | Duração mediana | 
-| -------------------------------- | ---------------------- | ---------------- | ------------- | -------------- | -------------- | --------------- |
-| 1                                | 10                     | 10               |     1794,8 ms |      1545,0 ms |      2603,0 ms |       1715,5 ms |
-| 2                                | 10                     | 20               |     2682,0 ms |      2336,0 ms |      3328,0 ms |       2667,0 ms |
-| 3                                | 10                     | 30               |     3369,8 ms |      1444,0 ms |      5510,0 ms |       3346,0 ms |
-| 5                                | 10                     | 50               |     5222,7 ms |      2057,0 ms |     11074,0 ms |       4513,5 ms |
-| 8                                | 10                     | 80               |     8836,6 ms |      1779,0 ms |     16170,0 ms |       7960,5 ms |
-| 13                               | 10                     | 130              |     --------- |      --------- |     ---------- |       --------- |
+A imagem abaixo apresentamos os gráficos da utilização de recursos durante a execução do experimento. Estes gráficos foram coletados a partir do dashboard do Docker, referente ao container de execução do banco de dados Postgres.
 
+![Stats](./stats-geral.jpg)
 
-### 1.5.2 - Utilização de Recursos  
+A tabela abaixo apresenta os resultados consolidados das métricas coletadas durante a execução do experimento.
 
-| # Threads (Usuários em paralelo) | # Requests / Thread  | # Repetições  | Uso máximo de CPU | Uso de RAM  | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) | 
-| -------------------------------- | -------------------- | ------------- | ----------------- | ----------- | ----------- | ------------ | ---------------------  | ------------------ |
-| 1                                | 10                   | 10            |          213,22 % |     1,49 GB |        0 KB |         0 KB |                6,25 MB |            1,98 GB |
-| 2                                | 10                   | 20            |          347,73 % |     2,14 GB |        0 KB |         0 KB |                1,78 MB |            3,94 GB |
-| 3                                | 10                   | 30            |          390,09 % |     2,77 GB |        0 KB |         0 KB |                4,16 MB |            5,92 GB |
-| 5                                | 10                   | 50            |          401,10 % |     5,56 GB |        0 KB |         0 KB |                6,48 MB |            9,86 GB |
-| 8                                | 10                   | 80            |          419,55 % |     5,51 GB |        0 KB |         0 KB |                6,94 MB |           15,80 GB |
+![Tabela de resultados](./tabela-exp-00.jpg)
 
-Abaixo, estão os screenshots das estatísticas coletadas para cada cenário executado:
+> Podemos perceber, a partir do cenário de testes com 21 usuários simultâneos, o banco de dados passou falhar **45,76%** das consultas realizadas.
 
-#### 1 Thread
+### 1.5.1 - Tempo de Resposta
 
-![Stats - 1 Thread](./stats-1.jpg)
+A tebela também apresenta as durações da execução em: Menor duração, Maior duração, e	Duração média, para cada cenário do teste.
 
-#### 2 Threads
+### 1.5.2 - Escalabilidade
 
-![Stats - 2 Thread](./stats-2.jpg)
+De acordo com a tabela podemos perceber que e a arquitetura atual permitiu escalar até o cenário com 13 usuários simultâneos, e a partir do cenário com 21 usuários, o banco de dados passou falhar **45,76%** das consultas realizadas.
 
-#### 3 Threads
+### 1.5.3 - Equilíbrio de Carga
 
-![Stats - 3 Thread](./stats-3.jpg)
+A carga de execução foi distribuída de forma equilibrada, uma vez que todas as unidades possuem exatamente a mesma quantidade de registros em suas respectivas tabelas.
 
-#### 5 Threads
+### 1.5.4 - Taxa de Transferência de Dados
 
-![Stats - 5 Thread](./stats-5.jpg)
-
-#### 8 Threads
-
-![Stats - 8 Thread](./stats-8.jpg)
-
-#### 13 Threads
-
-Não foi possível executar o cenário uma vez que o servidor não conseguiu responder as solicitações simultâneas.
-
-
-### 1.5.3 - Escalabilidade
-
-Para essa métrica, implementamos uma aplicação em Java utilizando Spring Boot, que publica um endpoint REST responsável por executar a query de referência, realizar a leitura do ResultSet, capturando o timestamp inicial e final da execução para cálculo da duração.
-
-Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou simular a carga de usuários simultâneos utilizando a aplicação.
-
-| # Threads (Usuários em paralelo) | # Requests / Thread    | # Repetições     | Duração média | Duração mínima | Duração máxima | Duração mediana | 
-| -------------------------------- | ---------------------- | ---------------- | ------------- | -------------- | -------------- | --------------- |
-| 1                                | 10                     | 10               |     1794,8 ms |      1545,0 ms |      2603,0 ms |       1715,5 ms |
-| 2                                | 10                     | 20               |     2682,0 ms |      2336,0 ms |      3328,0 ms |       2667,0 ms |
-| 3                                | 10                     | 30               |     3369,8 ms |      1444,0 ms |      5510,0 ms |       3346,0 ms |
-| 5                                | 10                     | 50               |     5222,7 ms |      2057,0 ms |     11074,0 ms |       4513,5 ms |
-| 8                                | 10                     | 80               |     8836,6 ms |      1779,0 ms |     16170,0 ms |       7960,5 ms |
-| 13                               | 10                     | 130              |     --------- |      --------- |     ---------- |       --------- |
-
-Constatamos que a partir do cenário com 13 threads simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento
-da demanda conforme a execução dos testes, uma vez que com o aumento de usuários em paralelo, a execução da query passou a superar o limite máximo de 
-180.000 ms (3 minutos).
-
-### 1.5.4 - Equilíbrio de Carga
-
-Não se aplica.
-
-### 1.5.5 - Taxa de Transferência de Dados (Throughput)
-
-- Comando para ativar o rastreamento de tempos de entrada/saída (I/O) em operações realizadas pelo banco de dados.
+Foi executado o seguinte comando recuperar o plano de execução da query, com as informações sobre a execução.
 
 ```sql
-SET track_io_timing = on;
-
 EXPLAIN ANALYZE 
-    -- CONSULTA SQL DE REFERÊNCIA
-    SELECT * FROM ...;
-    
+SELECT
+    p."NPU", 
+    p."processoID", 
+    p."ultimaAtualizacao",
+    c.descricao AS classe, 
+    a.descricao AS assunto,
+    m.activity, 
+    m."dataInicio", 
+    m."dataFinal", 
+    m."usuarioID",
+    m.duration, 
+    m."movimentoID", 
+    com.descricao AS complemento,
+    s."nomeServidor", 
+    s."tipoServidor", 
+    d.tipo AS documento
+FROM 
+    processos_18006 AS p
+INNER JOIN
+    movimentos_18006 AS m 
+    ON m."processoID" = p."processoID"
+INNER JOIN
+    classes AS c ON p.classe = c.id
+LEFT JOIN
+    assuntos AS a ON p.assunto = a.id
+LEFT JOIN
+    complementos_18006 AS com 
+    ON com."movimentoID" = m."id" 
+LEFT JOIN
+    servidores AS s ON s."servidorID" = m."usuarioID"
+LEFT JOIN
+    documentos AS d ON d."id" = m."documentoID"
+WHERE 
+    p."dataPrimeiroMovimento" >= '2020-01-01' 
+ORDER BY 
+    p."processoID", m."dataFinal";
 ```
 
-- Taxa: **3.364.537 registros** / **7,44 segundos** = **451897,94 registros por segundo**
+- Taxa: **815.477** registros / **3,48** segundos = **234.332,47** registros por segundo**
 
-### 1.5.6 - Custo de Redistribuição
+### 1.5.5 - Custo de Redistribuição
 
-Não se aplica.
+Nessa abordagem, não existe custo de redistribuição dos dados pois eles estão armazenados em tabelas por unidade. 
 
 ### 1.5.7 - Eficiência de Consultas
 
-A eficiência pode ser expressa como uma relação entre o tempo de execução e o número de partições acessadas:
+A eficiência pode ser expressa como uma relação entre o tempo de execução, tempo ideal e o número de partições acessadas:
 
 #### Fórmula:
 
-```plaintext 
-Eficiência (%) = (1 / Tempo de Execução Total) * (Número de Partições Acessadas / Partições Totais) * 100
+
+```plaintext
+Eficiência (%) = (1 - (P_Acessadas / P_Total)) * (1 - (T_Query / T_Ideal)) * 100
 ```
 
-- Tempo de Execução Total: **10 segundos**
-- Número de Partições Acessadas: **1**
-- Partições Totais: **1**
+Onde:
+- P_Acessadas: Quantidade de partições acessadas.
+- P_Total: Total de partições disponíveis.
+- T_Query: Tempo total de execução da query (Execution Time no EXPLAIN ANALYZE).
+- T_Ideal: Tempo esperado para a melhor execução possível (vamos estabelecer como ideal o tempo de execução limite de **3 segundos**).
 
-> Eficiência (%) = (1 / 10) * (1 / 1) * 100 = **10%**
+Sendo assim, temos:
 
-### 1.5.8 - Consistência de Dados
+- P_Acessadas: **3**
+- P_Total: **9**
+- T_Query: **3,48 segundos**
+- T_Ideal: **3 segundos** 
 
-Essa métrica não se aplica a essa estratégia, uma vez que não existe movimentação de dados, seja no próprio host ou em hosts distintos.
+> Eficiência (%) =  (1 - (3 / 9)) * (1 - (3,48 / 3)) * 100 => (1 - 0,333333333333333) * (1 - 1,16) * 100 = **-10,66%**
 
-### 1.5.9 - Capacidade de Adaptação
-
-Essa métrica não se aplica a essa estratégia, uma vez que ela não realiza mudanças ou ajustes dinâmicamente.
-
-### 1.5.10 - Custo Operacional
-
-Não foi avaliado o custo operacional pois se trata da estratégia atualmente implementada.
+Nesta arquitetura, a consulta obteve uma eficiencia negativa de **-10,66%**.
