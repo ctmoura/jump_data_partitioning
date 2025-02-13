@@ -12,87 +12,225 @@ Para uma comparação justa das estratégias, os recursos disponíveis de memór
 
 Neste experimento, que reflete a arquitetura atual do JuMP, a estratégia utilizada é a de particionamento por chave, que para cada Unidade Judiciária, novas tabelas de: processos, movimentos e complementos são criadas e cada uma delas tem um sufixo respectivo que é o identificador da unidade judiciária. Por exemplo, para um dado tribunal que possui uma unidade judiciária com o ID 1000, serão criadas as respectivas tabelas: processos_1000, movimentos_1000 e complementos_1000.
 
-## 1.2 - Cenários de testes
+## 1.2 - Preparação
 
-Para avaliar essa estratégia será utilizada a seguinte consulta SQL de referêcia:
+A base de dados que foi fornecida precisou ser enrriquecida com mais dados, portanto, clonamos as tabelas e registros das tabelas **processos_18006**, **movimentos_18006**, e **complementos_18006**, efetuando as devidas correções de referências de chaves estrangeiras, a fim de que pudessemos simular a utilização dos usuários em consultas de dados de diferentes unidades.
+
+
+1. Criando a coluna **unidadeID** nas tabelas originais de **processos_18006**, **movimentos_18006**, e **complementos_18006**.
 
 ```sql
+-- Unidade Judiciária: 18006
+
+-- Tabelas para complementos_18006
+ALTER TABLE IF EXISTS public.complementos_18006
+    ADD COLUMN "unidadeID" bigint;
+UPDATE public.complementos_18006 SET "unidadeID" = 18006;
+ALTER TABLE IF EXISTS public.complementos_18006
+    ALTER COLUMN "unidadeID" SET NOT NULL;
+
+-- Tabelas para movimentos_18006
+ALTER TABLE IF EXISTS public.movimentos_18006
+    ADD COLUMN "unidadeID" bigint;
+UPDATE public.movimentos_18006 SET "unidadeID" = 18006;
+ALTER TABLE IF EXISTS public.movimentos_18006
+    ALTER COLUMN "unidadeID" SET NOT NULL;
+
+-- Tabelas para processos_18006
+ALTER TABLE IF EXISTS public.processos_18006
+    ADD COLUMN "unidadeID" bigint;
+UPDATE public.processos_18006 SET "unidadeID" = 18006;
+ALTER TABLE IF EXISTS public.processos_18006
+    ALTER COLUMN "unidadeID" SET NOT NULL;
+```
+
+2. Clonando as tabelas e dados da unidade judiciária existente para novas unidades.
+
+```sql
+
+-- Clonando para criar tabelas da unidade: 18007
+
+-- processos_18007
+
+CREATE TABLE public.processos_18007 AS
 SELECT
-    p."NPU", p."processoID", p."ultimaAtualizacao",
-  	c.descricao AS classe, a.descricao AS assunto,
-  	m.activity, m."dataInicio", m."dataFinal", m."usuarioID",
-    m.duration, m."movimentoID", com.descricao AS complemento,
-  	s."nomeServidor", s."tipoServidor", d.tipo AS documento
+"processoID" + 1000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
+"NPU", liminar, natureza, "valorCausa", "nivelSigilo", competencia,
+"situacaoMigracao", "justicaGratuita", "dataAjuizamento", assunto, classe,
+"ultimaAtualizacao", "ultimoMovimento", "dataPrimeiroMovimento", "dataUltimoMovimento",
+'18007'::bigint AS "unidadeID"
+FROM public.processos_18006;
+
+ALTER TABLE IF EXISTS public.processos_18007
+    ADD CONSTRAINT processos_18007_pkey PRIMARY KEY ("processoID");
+ALTER TABLE IF EXISTS public.processos_18007
+    ADD CONSTRAINT processos_18007_classe_fkey FOREIGN KEY (classe)
+    REFERENCES public.classes (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+ALTER TABLE IF EXISTS public.processos_18007
+    ADD CONSTRAINT processos_18007_assunto_fkey FOREIGN KEY (assunto)
+    REFERENCES public.assuntos (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+-- movimentos_18007
+
+CREATE TABLE public.movimentos_18007 AS
+SELECT
+id + 10000000000 AS id, -- Adiciona um offset para as chaves primárias serem únicas
+"processoID" + 1000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
+"NPU", activity, duration, "dataInicio", "dataFinal", "usuarioID", "documentoID", "movimentoID",
+'18007'::bigint AS "unidadeID"
+FROM public.movimentos_18006;
+
+
+ALTER TABLE IF EXISTS public.movimentos_18007
+    ADD CONSTRAINT movimentos_18007_pkey PRIMARY KEY (id);
+ALTER TABLE IF EXISTS public.movimentos_18007
+    ADD CONSTRAINT "movimentos_18007_processoID_fkey" FOREIGN KEY ("processoID")
+    REFERENCES public.processos_18007 ("processoID") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+ALTER TABLE IF EXISTS public.movimentos_18007
+    ADD CONSTRAINT "movimentos_18007_movimentoID_fkey" FOREIGN KEY ("movimentoID")
+    REFERENCES public.cod_movimentos (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+-- complementos_18007
+
+CREATE TABLE public.complementos_18007 AS
+SELECT
+"complementoID" + 10000000000 AS "complementoID", -- Adiciona um offset para as chaves primárias serem únicas
+"movimentoID" + 10000000000 AS "movimentoID", -- Adiciona um offset para as chaves primárias serem únicas
+tipo, descricao,
+'18007'::bigint AS "unidadeID"
+FROM public.complementos_18006;
+
+ALTER TABLE IF EXISTS public.complementos_18007
+    ADD CONSTRAINT complementos_18007_pkey PRIMARY KEY ("complementoID");
+ALTER TABLE IF EXISTS public.complementos_18007
+    ADD CONSTRAINT "complementos_18007_movimentoID_fkey" FOREIGN KEY ("movimentoID")
+    REFERENCES public.movimentos_18007 (id) MATCH SIMPLE
+    ON UPDATE CASCADE
+    ON DELETE CASCADE;
+
+-- Clonando para criar tabelas da unidade: 18008
+
+-- processos_18008
+
+CREATE TABLE public.processos_18008 AS
+SELECT
+"processoID" + 2000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
+"NPU", liminar, natureza, "valorCausa", "nivelSigilo", competencia,
+"situacaoMigracao", "justicaGratuita", "dataAjuizamento", assunto, classe,
+"ultimaAtualizacao", "ultimoMovimento", "dataPrimeiroMovimento", "dataUltimoMovimento",
+'18008'::bigint AS "unidadeID"
+FROM public.processos_18006;
+
+ALTER TABLE IF EXISTS public.processos_18008
+    ADD CONSTRAINT processos_18008_pkey PRIMARY KEY ("processoID");
+ALTER TABLE IF EXISTS public.processos_18008
+    ADD CONSTRAINT processos_18008_classe_fkey FOREIGN KEY (classe)
+    REFERENCES public.classes (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+ALTER TABLE IF EXISTS public.processos_18008
+    ADD CONSTRAINT processos_18008_assunto_fkey FOREIGN KEY (assunto)
+    REFERENCES public.assuntos (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+-- movimentos_18008
+
+CREATE TABLE public.movimentos_18008 AS
+SELECT
+id + 20000000000 AS id, -- Adiciona um offset para as chaves primárias serem únicas
+"processoID" + 2000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
+"NPU", activity, duration, "dataInicio", "dataFinal", "usuarioID", "documentoID", "movimentoID",
+'18008'::bigint AS "unidadeID"
+FROM public.movimentos_18006;
+
+
+ALTER TABLE IF EXISTS public.movimentos_18008
+    ADD CONSTRAINT movimentos_18008_pkey PRIMARY KEY (id);
+ALTER TABLE IF EXISTS public.movimentos_18008
+    ADD CONSTRAINT "movimentos_18008_processoID_fkey" FOREIGN KEY ("processoID")
+    REFERENCES public.processos_18008 ("processoID") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+ALTER TABLE IF EXISTS public.movimentos_18008
+    ADD CONSTRAINT "movimentos_18008_movimentoID_fkey" FOREIGN KEY ("movimentoID")
+    REFERENCES public.cod_movimentos (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+-- complementos_18008
+
+CREATE TABLE public.complementos_18008 AS
+SELECT
+"complementoID" + 20000000000 AS "complementoID", -- Adiciona um offset para as chaves primárias serem únicas
+"movimentoID" + 20000000000 AS "movimentoID", -- Adiciona um offset para as chaves primárias serem únicas
+tipo, descricao,
+'18008'::bigint AS "unidadeID"
+FROM public.complementos_18006;
+
+ALTER TABLE IF EXISTS public.complementos_18008
+    ADD CONSTRAINT complementos_18008_pkey PRIMARY KEY ("complementoID");
+ALTER TABLE IF EXISTS public.complementos_18008
+    ADD CONSTRAINT "complementos_18008_movimentoID_fkey" FOREIGN KEY ("movimentoID")
+    REFERENCES public.movimentos_18008 (id) MATCH SIMPLE
+    ON UPDATE CASCADE
+    ON DELETE CASCADE;
+```
+
+## 1.3 - Consulta SQL de referência
+
+Neste experimento foi utilizada a consulta SQL de referência abaixo:
+
+```sql
+EXPLAIN ANALYZE 
+SELECT
+    p."NPU", 
+    p."processoID", 
+    p."ultimaAtualizacao",
+    c.descricao AS classe, 
+    a.descricao AS assunto,
+    m.activity, 
+    m."dataInicio", 
+    m."dataFinal", 
+    m."usuarioID",
+    m.duration, 
+    m."movimentoID", 
+    com.descricao AS complemento,
+    s."nomeServidor", 
+    s."tipoServidor", 
+    d.tipo AS documento
 FROM 
-	movimentos_18006 AS m
+    processos_18006 AS p
 INNER JOIN
-    processos_18006 AS p ON p."processoID" = m."processoID"
+    movimentos_18006 AS m 
+    ON m."processoID" = p."processoID"
 INNER JOIN
     classes AS c ON p.classe = c.id
 LEFT JOIN
     assuntos AS a ON p.assunto = a.id
 LEFT JOIN
-    complementos_18006 AS com ON com."movimentoID" = m.id
+    complementos_18006 AS com 
+    ON com."movimentoID" = m."id" 
 LEFT JOIN
     servidores AS s ON s."servidorID" = m."usuarioID"
 LEFT JOIN
-	documentos AS d ON d."id" = m."documentoID"
-WHERE '2000-01-01' <= p."dataPrimeiroMovimento"
-ORDER BY "processoID", "dataFinal";
+    documentos AS d ON d."id" = m."documentoID"
+WHERE 
+    p."dataPrimeiroMovimento" >= '2020-01-01' 
+ORDER BY 
+    p."processoID", m."dataFinal";
 ```
 
-- Total de registros retornando pela query: **3.364.537**
 
-## 1.3 - Ambiente de testes
-
-### 1.3.1 - Equipamento Host
-
-- MacBook Pro 
-- Apple M2 Max
-- 32 GB
-- SSD 1TB
-
-### 1.3.2 - Execução em containers
-
-Será utilizado o Docker como ferramenta de virtualização em containers para execução do servidor de banco de dados Postgres.
-
-- Docker: version 27.4.0, build bde2b89
-- Docker Compose: version v2.31.0-desktop.2
-
-### 1.3.3 - Banco de dados
-
-Utilizamos Postgres: version 16.2, que é o banco de dados utilizado pelo JuMP.
-
-#### Configurações
-
-> 01 instância de container
-
-```yaml
-services:
-
-  postgres:
-    image: postgres:16.2
-    shm_size: "4g"
-    deploy:
-      resources:
-        limits:
-          cpus: "4.0"
-          memory: "12g"
-        reservations:
-          cpus: "2.0"
-          memory: "6g"
-```
-
-## 1.4 - Simulação da carga
-
-Para simulação de cargas de execução utilizaremos a ferramenta JMeter para criar um plano de testes que possibile simular diferentes cenários de cargas dos usuários utilizando a aplicação.
-
-Os cenários do plano de teste segue uma sequencia fibonaci para determinar a quantidade de threads (usuários simulâneos) em cada cenário, sendo que cada thread (usuário) executa 10 requisições sequenciais de disparo da query no banco de dados.
-
-- [Apache JMeter: version 5.6.3](https://jmeter.apache.org/index.html)  
-
-
-## 1.5 - Métricas avaliadas e resultados
+## 1.4 - Métricas avaliadas e resultados
 
 A imagem abaixo apresentamos os gráficos da utilização de recursos durante a execução do experimento. Estes gráficos foram coletados a partir do dashboard do Docker, referente ao container de execução do banco de dados Postgres.
 
@@ -104,19 +242,19 @@ A tabela abaixo apresenta os resultados consolidados das métricas coletadas dur
 
 > Podemos perceber, a partir do cenário de testes com 21 usuários simultâneos, o banco de dados passou falhar **45,76%** das consultas realizadas.
 
-### 1.5.1 - Tempo de Resposta
+### 1.4.1 - Tempo de Resposta
 
 A tebela também apresenta as durações da execução em: Menor duração, Maior duração, e	Duração média, para cada cenário do teste.
 
-### 1.5.2 - Escalabilidade
+### 1.4.2 - Escalabilidade
 
 De acordo com a tabela podemos perceber que e a arquitetura atual permitiu escalar até o cenário com 13 usuários simultâneos, e a partir do cenário com 21 usuários, o banco de dados passou falhar **45,76%** das consultas realizadas.
 
-### 1.5.3 - Equilíbrio de Carga
+### 1.4.3 - Equilíbrio de Carga
 
 A carga de execução foi distribuída de forma equilibrada, uma vez que todas as unidades possuem exatamente a mesma quantidade de registros em suas respectivas tabelas.
 
-### 1.5.4 - Taxa de Transferência de Dados
+### 1.4.4 - Taxa de Transferência de Dados
 
 Foi executado o seguinte comando recuperar o plano de execução da query, com as informações sobre a execução.
 
@@ -162,11 +300,11 @@ ORDER BY
 
 - Taxa: **815.477** registros / **3,48** segundos = **234.332,47** registros por segundo**
 
-### 1.5.5 - Custo de Redistribuição
+### 1.4.5 - Custo de Redistribuição
 
 Nessa abordagem, não existe custo de redistribuição dos dados pois eles estão armazenados em tabelas por unidade. 
 
-### 1.5.7 - Eficiência de Consultas
+### 1.4.6 - Eficiência de Consultas
 
 A eficiência pode ser expressa como uma relação entre o tempo de execução, tempo ideal e o número de partições acessadas:
 

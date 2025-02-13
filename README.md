@@ -79,64 +79,56 @@ services:
 
   postgres:
     image: postgres:16.2
-    shm_size: "4g"
+    shm_size: "8g" # sets the size of the shared memory 
+    sysctls:
+      kernel.shmmax: 8589934592
+      kernel.shmall: 2097152
     deploy:
       resources:
         limits:
           cpus: "4.0"
           memory: "12g"
         reservations:
-          cpus: "2.0"
-          memory: "6g"
+          cpus: "4.0"
+          memory: "12g"
 ```
 
-## 4. Estrutura dos experimentos
+### 3.3 Configurações do Banco de Dados (PostgreSQL)
 
-Para realização dos experimentos será utilizada a seguinte estrutura para documentação da avaliação e resultados de cada uma das estratégias de particionamento.
-
-
-| #         | Seção                                    | Descrição |
-| --------- | ---------------------------------------- | --------- |
-| 1         | **Estratégia de particionamento**        | Descreve a estratégia de particionamento a ser avaliada. |
-| 2         | **Cenários de testes**                   | Descreve os cenários e/ou consultas (queries) a serem avaliadas. |
-| 3         | **Ambiente de testes**                   | Descreve o ambiente e recursos disponíveis para realização dos testes. |
-| 4         | **Simulação da carga**                   | Descreve o processo e ferramentas utilizadas para simulação da carga. |
-| 5         | **Métricas avaliadas e resultados**      | Descreve as métricas e resultados obtidos após os testes. |
-
-
-## 5. Execução e resultados dos Experimentos
-
-Esta seção apresenta os experimentos realizados e seus resultados.
-
-### Configurações do Banco de dados (Postgres)
+Utilizamos Postgres: version 16.2, que é o banco de dados utilizado pelo JuMP.
 
 Para realização dos experimentos, foram realizadas alterações nos seguintes parâmetros do Postgres, para permitir a execução de queries paralelas e de longa duração. Os parâmtros abaixo estão configurados no arquivo: [./conf/postgresql/postgresql.conf](./conf/postgresql/postgresql.conf).
 
 ```txt
 max_connections = 200
 
-shared_buffers = 2GB
+shared_buffers = 1GB
 
-work_mem = 128MB
+work_mem = 32MB
 maintenance_work_mem = 128MB
 
 max_worker_processes = 8
-max_parallel_workers_per_gather = 4
-max_parallel_workers = 8
+max_parallel_workers_per_gather = 2
+max_parallel_workers = 4
+
+enable_partitionwise_join = on
 
 effective_cache_size = 4GB
 
-statement_timeout = 180000
-lock_timeout = 30000
-idle_in_transaction_session_timeout = 90000
-idle_session_timeout = 90000
+statement_timeout = 30000
+lock_timeout = 15000
+idle_in_transaction_session_timeout = 60000
+idle_session_timeout = 60000
 ```
 
-### Preparação da massa de dados
+### 3.4 Preparação dos dados para os experimentos
+
+Esta seção apresenta as etapas realizadas para preparação da base de dados utilizada para o experimento.
 
 Foi fornecido pela equipe do Centro de Informática da UFPE um backup do banco de dados do JuMP com uma massa de dados representativa, e dados já anonimizados. Os arquivos desse backup estão disponíveis em: [./data/postgresql/split_init.sql.zip](./data/postgresql/split_init.sql.zip).
 
-Para descompactar esse arquivo, pode-se utilizar o seguinte comando do utilitário ZIP para unificar as partes em um único arquivo ZIP, a partir da pasta: `./data/postgresql`:
+
+Para descompactar o arquivo ZIP fornecido, utilizamos o seguinte comando do utilitário ZIP para unificar as partes em um único arquivo ZIP, a partir da pasta: `./data/postgresql`:
 
 > zip -s 0 split_init.sql.zip --out init.sql.zip
 
@@ -146,16 +138,115 @@ Em seguida, pode-se executar o seguinte comando para descompactar o arquivo ZIP,
 
 Agora a aplicação será capaz de inicializar o banco de dados a partir deste backup.
 
-### Execução do ambiente
+### 3.5 Inicialização do ambiente
 
 Primeiramente, para rodar o ambiente simulado do JuMP execute o comando abaixo responsável por iniciar os containers com docker.
 
 > docker-compose up -d
 
-Em seguida, execute o comando que executa a aplicação SpringBoot responsável por executar a query de consulta que será utilizada para avaliar o desempenho do sistema para os cenários de cada experimento.
+
+## 4. Aplicação para execução dos experimentos e coleta dos dados
+
+Para realização dos experimentos de uma forma eficiente, implementamos uma aplicação Java, utilizando o framework SpringBoot, que está disponível em repositório GitHub no link, [https://github.com/ctmoura/jump_data_partitioning](https://github.com/ctmoura/jump_data_partitioning).
+
+Nesta aplicação, foram implementadas APIs REST que são responsáveis por disparar a execução de uma query no banco de dados, e realizar a coleta de métricas relevantes para comparação de cada estratégia.
+
+### 4.1 Iniciando a aplicação
+
+Para executar a aplicação, o comando abaixo deve ser executado:
 
 > ./mvnw spring-boot:run
 
+### 4.2 APIs disponíveis
+
+Para cada uma das estratégias utilizadas, foi implementada uma API, responsável por executar a query no banco de dados. Essa API possui os seguintes parâmetros de entrada:
+
+- origemId: representa o identificador da unidade judiciária.
+- qtdeUsuarios: representa a quantidade de usuários simultâneos do cenário de testes em execução.
+
+Abaixo estão descritas as APIs de cada uma das estratégias.
+
+#### Experimento 00 - Situação Atual
+
+> GET /load-test-exp00?origemId={origemId}&qtdeUsuarios={qtdeUsuarios}
+
+#### Experimento 01 - Particionamento Por Intervalo
+
+> GET /load-test-exp01?origemId={origemId}&qtdeUsuarios={qtdeUsuarios}
+
+#### Experimento 02 - Particionamento Por Hash
+
+> GET /load-test-exp02?origemId={origemId}&qtdeUsuarios={qtdeUsuarios}
+
+#### Experimento 03 - Particionamento Híbrido (Intervalo + Lista)
+
+> GET /load-test-exp03?origemId={origemId}&qtdeUsuarios={qtdeUsuarios}
+
+#### Experimento 04 - Particionamento Híbrido (Intervalo + Hash)
+
+> GET /load-test-exp03?origemId={origemId}&qtdeUsuarios={qtdeUsuarios}
+
+### 4.2 Simulação da carga
+
+Para realizar a simulação de cargas de execução utilizamos a ferramenta JMeter para criar um plano de testes que possibila simular diferentes cenários de cargas dos usuários utilizando a aplicação.
+
+Os cenários do plano de teste seguem uma sequencia fibonaci para determinar a quantidade de threads (usuários simulâneos) em cada um dos cenários, sendo que cada thread (usuário) executa requisições sequenciais de disparo da query no banco de dados.
+
+- [Apache JMeter: version 5.6.3](https://jmeter.apache.org/index.html)  
+
+#### Cenário 01
+
+01 usuário realiza requisições sequenciais por 10 segundos.
+
+#### Cenário 02
+
+02 usuários realizam requisições sequenciais por 20 segundos;
+
+#### Cenário 03
+
+03 usuários realizam requisições sequenciais por 30 segundos;
+
+#### Cenário 04
+
+05 usuários realizam requisições sequenciais por 30 segundos;
+
+#### Cenário 05
+
+08 usuários realizam requisições sequenciais por 30 segundos;
+
+#### Cenário 06
+
+13 usuários realizam requisições sequenciais por 60 segundos;
+
+#### Cenário 07
+
+21 usuários realizam requisições sequenciais por 60 segundos;
+
+#### Cenário 08
+
+34 usuários realizam requisições sequenciais por 60 segundos;
+
+#### Cenário 09
+
+55 usuários realizam requisições sequenciais por 60 segundos;
+
+#### Cenário 10
+
+89 usuários realizam requisições sequenciais por 60 segundos;
+
+
+## 5. Estrutura dos experimentos
+
+Para realização dos experimentos será utilizada a seguinte estrutura para documentação da avaliação e resultados de cada uma das estratégias de particionamento.
+
+
+| #         | Seção                                    | Descrição |
+| --------- | ---------------------------------------- | --------- |
+| 1         | **Estratégia de particionamento**        | Descreve a estratégia de particionamento a ser avaliada. |
+| 2         | **Preparação**                           | Descreve as etapas necessárias para configuração da estratégia. |
+| 3         | **Consulta SQL de referência**           | Descreve a consulta SQL de referência utilizada no experimento. |
+| 4         | **Métricas avaliadas e resultados**      | Descreve o processo e ferramentas utilizadas para simulação da carga. |
+| 5         | **Considerações**                        | Descreve as métricas e resultados obtidos após os testes. |
 
 ### 5.1 Experimentos
 

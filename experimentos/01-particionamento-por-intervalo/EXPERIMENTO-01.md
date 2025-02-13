@@ -1,14 +1,20 @@
-# 1 - Experimento 03 - Particionamento Híbrido
+# 1 - Experimento 01 - Particionamento por Intervalo
+
+## 1.1 - Estratégia de particionamento
 
 O **particionamento por intervalo** é uma estratégia em que os dados são distribuídos entre partições com base em intervalos contínuos de valores em uma coluna específica, como uma data ou um identificador numérico. Em uma instância única de banco de dados, essa abordagem facilita consultas baseadas em intervalos, como relatórios ou análises temporais, pois direciona automaticamente as operações à partição relevante, reduzindo o escopo da leitura e melhorando a performance. Entre os benefícios, destacam-se a simplicidade na configuração e a eficiência em cenários com padrões previsíveis de acesso, como consultas de dados históricos ou por períodos específicos. Contudo, apresenta limitações, como o potencial de desequilíbrio na carga de trabalho caso os dados não sejam uniformemente distribuídos entre os intervalos, resultando em partições desproporcionalmente grandes. Além disso, consultas que cruzam vários intervalos podem se tornar menos eficientes, exigindo a leitura de múltiplas partições. O particionamento por intervalo é ideal para aplicações em que os dados possuem um ordenamento natural e as consultas frequentemente operam dentro de faixas específicas.
 
-## 1.1 - Preparação
+## 1.2 - Preparação
 
-Para avaliar essa estratégia se faz necessário executar alguns procedimentos no banco de dados para que as tabelas tenham suporte ao particionamento de dados por intervalo. Pois o banco de dados não suporta o particionamento em tabela pré existente.
+Nesta estapa, iremos preparar a base de dados para o particionamento das tabelas por intervalo.
 
-1. Avaliar distribuição dos dados para determinar a segmentação das tabelas.
+> Premissa: Esta etapa já foi realizada no `Experimento 00`, caso necessário, repita os passos descritos na respectiva seção.
 
-Analisando os dados da base fornecida podemos verificar os processos estão distribuídos em cada ano, o que define a quantidade de partições necessárias.
+### 1.2.1 - Criação das tabelas com Particionamento por Intervalo
+
+Para realização do particionamento por intervalo, primeiramento realizamos uma analise da distribuição dos dados ao longo dos anos, a fim de definir a granularidade das partições. 
+
+A query abaixo nos dá o resultado de como os processos estão distribuídos em cada ano.
 
 ```sql
 SELECT 
@@ -19,8 +25,8 @@ GROUP BY DATE_TRUNC('year', "dataPrimeiroMovimento")
 ORDER BY DATE_TRUNC('year', "dataPrimeiroMovimento")
 ```
 
-| ano                 | qtd_processos |
-| ------------------- | ------------- |
+| ano                   | qtd_processos |
+| --------------------- | ------------- |
 | 2013-01-01 00:00:00	|          5324 |
 | 2014-01-01 00:00:00	|           465 |
 | 2015-01-01 00:00:00	|         25329 |
@@ -36,193 +42,17 @@ ORDER BY DATE_TRUNC('year', "dataPrimeiroMovimento")
 | 2025-01-01 00:00:00	|             2 |
 | NULL	                |            60 |
 
-Considerando o **particionamento por intervalo de anos**, verificamos que os processos estão distribuídos em **13 partições**.
+Dessa forma, verificamos que os processos estão distribuídos em 13 anos, ou seja, **13 partições**.
+
+### 1.2.2 - Criação das tabelas com o Particionamento por Intervalo
+
+Nesta etapa, iremos descrever os comandos necessários para criação das tabelas de **processos_exp01**, **movimentos_exp01** e **complementos_exp01** com o particionamento por intervalo ativado. 
+Como descrito anteriormente, essas tabelas serão particionadas por ano, utilizando a técnica de particionamento do PostgreSQL chamada **Range Partitioning**, aplicada a coluna `dataPrimeiroMovimento`.
 
 
-## 1.2 - Incremento de dados e unificação dos registros nas tabelas únicas
-
-Nesta etapa, iremos unificar os registros existentes em tabelas únicas.
-
-Como a base de dados que foi fornecida só dispunha de registros para uma única unidade judiciária (id: 18006), optamos por clonar as tabelas desta unidade para simular o cenário com múltiplas unidades judiciárias.
-
-1. Criando a coluna **unidadeID** nas tabelas originais de `complementos_18006`, `movimentos_18006` e `processos_18006`.
-
-```sql
--- Unidade Judiciária: 18006
-
--- Tabelas para complementos_18006
-ALTER TABLE IF EXISTS public.complementos_18006
-    ADD COLUMN "unidadeID" bigint;
-UPDATE public.complementos_18006 SET "unidadeID" = 18006;
-ALTER TABLE IF EXISTS public.complementos_18006
-    ALTER COLUMN "unidadeID" SET NOT NULL;
-
--- Tabelas para movimentos_18006
-ALTER TABLE IF EXISTS public.movimentos_18006
-    ADD COLUMN "unidadeID" bigint;
-UPDATE public.movimentos_18006 SET "unidadeID" = 18006;
-ALTER TABLE IF EXISTS public.movimentos_18006
-    ALTER COLUMN "unidadeID" SET NOT NULL;
-
--- Tabelas para processos_18006
-ALTER TABLE IF EXISTS public.processos_18006
-    ADD COLUMN "unidadeID" bigint;
-UPDATE public.processos_18006 SET "unidadeID" = 18006;
-ALTER TABLE IF EXISTS public.processos_18006
-    ALTER COLUMN "unidadeID" SET NOT NULL;
-```
-
-2. Clonando as tabelas da unidade judiciária existente
+1. O comando abaixo cria seguintes tabelas: **processos_exp01**, **movimentos_exp01** e **complementos_exp01**:
 
 ```sql
-
--- Clonando para criar tabelas da unidade: 18007
-
--- processos_18007
-
-CREATE TABLE public.processos_18007 AS
-SELECT
-"processoID" + 1000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
-"NPU", liminar, natureza, "valorCausa", "nivelSigilo", competencia,
-"situacaoMigracao", "justicaGratuita", "dataAjuizamento", assunto, classe,
-"ultimaAtualizacao", "ultimoMovimento", "dataPrimeiroMovimento", "dataUltimoMovimento",
-'18007'::bigint AS "unidadeID"
-FROM public.processos_18006;
-
-ALTER TABLE IF EXISTS public.processos_18007
-    ADD CONSTRAINT processos_18007_pkey PRIMARY KEY ("processoID");
-ALTER TABLE IF EXISTS public.processos_18007
-    ADD CONSTRAINT processos_18007_classe_fkey FOREIGN KEY (classe)
-    REFERENCES public.classes (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-ALTER TABLE IF EXISTS public.processos_18007
-    ADD CONSTRAINT processos_18007_assunto_fkey FOREIGN KEY (assunto)
-    REFERENCES public.assuntos (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-
--- movimentos_18007
-
-CREATE TABLE public.movimentos_18007 AS
-SELECT
-id + 10000000000 AS id, -- Adiciona um offset para as chaves primárias serem únicas
-"processoID" + 1000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
-"NPU", activity, duration, "dataInicio", "dataFinal", "usuarioID", "documentoID", "movimentoID",
-'18007'::bigint AS "unidadeID"
-FROM public.movimentos_18006;
-
-
-ALTER TABLE IF EXISTS public.movimentos_18007
-    ADD CONSTRAINT movimentos_18007_pkey PRIMARY KEY (id);
-ALTER TABLE IF EXISTS public.movimentos_18007
-    ADD CONSTRAINT "movimentos_18007_processoID_fkey" FOREIGN KEY ("processoID")
-    REFERENCES public.processos_18007 ("processoID") MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-ALTER TABLE IF EXISTS public.movimentos_18007
-    ADD CONSTRAINT "movimentos_18007_movimentoID_fkey" FOREIGN KEY ("movimentoID")
-    REFERENCES public.cod_movimentos (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-
--- complementos_18007
-
-CREATE TABLE public.complementos_18007 AS
-SELECT
-"complementoID" + 10000000000 AS "complementoID", -- Adiciona um offset para as chaves primárias serem únicas
-"movimentoID" + 10000000000 AS "movimentoID", -- Adiciona um offset para as chaves primárias serem únicas
-tipo, descricao,
-'18007'::bigint AS "unidadeID"
-FROM public.complementos_18006;
-
-ALTER TABLE IF EXISTS public.complementos_18007
-    ADD CONSTRAINT complementos_18007_pkey PRIMARY KEY ("complementoID");
-ALTER TABLE IF EXISTS public.complementos_18007
-    ADD CONSTRAINT "complementos_18007_movimentoID_fkey" FOREIGN KEY ("movimentoID")
-    REFERENCES public.movimentos_18007 (id) MATCH SIMPLE
-    ON UPDATE CASCADE
-    ON DELETE CASCADE;
-
--- Clonando para criar tabelas da unidade: 18008
-
--- processos_18008
-
-CREATE TABLE public.processos_18008 AS
-SELECT
-"processoID" + 2000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
-"NPU", liminar, natureza, "valorCausa", "nivelSigilo", competencia,
-"situacaoMigracao", "justicaGratuita", "dataAjuizamento", assunto, classe,
-"ultimaAtualizacao", "ultimoMovimento", "dataPrimeiroMovimento", "dataUltimoMovimento",
-'18008'::bigint AS "unidadeID"
-FROM public.processos_18006;
-
-ALTER TABLE IF EXISTS public.processos_18008
-    ADD CONSTRAINT processos_18008_pkey PRIMARY KEY ("processoID");
-ALTER TABLE IF EXISTS public.processos_18008
-    ADD CONSTRAINT processos_18008_classe_fkey FOREIGN KEY (classe)
-    REFERENCES public.classes (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-ALTER TABLE IF EXISTS public.processos_18008
-    ADD CONSTRAINT processos_18008_assunto_fkey FOREIGN KEY (assunto)
-    REFERENCES public.assuntos (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-
--- movimentos_18008
-
-CREATE TABLE public.movimentos_18008 AS
-SELECT
-id + 20000000000 AS id, -- Adiciona um offset para as chaves primárias serem únicas
-"processoID" + 2000000000 AS "processoID", -- Adiciona um offset para as chaves primárias serem únicas
-"NPU", activity, duration, "dataInicio", "dataFinal", "usuarioID", "documentoID", "movimentoID",
-'18008'::bigint AS "unidadeID"
-FROM public.movimentos_18006;
-
-
-ALTER TABLE IF EXISTS public.movimentos_18008
-    ADD CONSTRAINT movimentos_18008_pkey PRIMARY KEY (id);
-ALTER TABLE IF EXISTS public.movimentos_18008
-    ADD CONSTRAINT "movimentos_18008_processoID_fkey" FOREIGN KEY ("processoID")
-    REFERENCES public.processos_18008 ("processoID") MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-ALTER TABLE IF EXISTS public.movimentos_18008
-    ADD CONSTRAINT "movimentos_18008_movimentoID_fkey" FOREIGN KEY ("movimentoID")
-    REFERENCES public.cod_movimentos (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-
--- complementos_18008
-
-CREATE TABLE public.complementos_18008 AS
-SELECT
-"complementoID" + 20000000000 AS "complementoID", -- Adiciona um offset para as chaves primárias serem únicas
-"movimentoID" + 20000000000 AS "movimentoID", -- Adiciona um offset para as chaves primárias serem únicas
-tipo, descricao,
-'18008'::bigint AS "unidadeID"
-FROM public.complementos_18006;
-
-ALTER TABLE IF EXISTS public.complementos_18008
-    ADD CONSTRAINT complementos_18008_pkey PRIMARY KEY ("complementoID");
-ALTER TABLE IF EXISTS public.complementos_18008
-    ADD CONSTRAINT "complementos_18008_movimentoID_fkey" FOREIGN KEY ("movimentoID")
-    REFERENCES public.movimentos_18008 (id) MATCH SIMPLE
-    ON UPDATE CASCADE
-    ON DELETE CASCADE;
-
-```
-
-## 1.3 - Criação das tabelas com o Particionamento por Intervalo
-
-Nesta etapa, iremos descrever os comandos necessários para criação das tabelas de **processos_exp01**, **movimentos_exp01** e **complementos_exp01** com o particionamento por intervalo ativado. Como descrito anteriormente, iremos particionar as tabelas por ano, utilizando a técnica de **Particionamento por Intervalo (RANGE)** aplicada a coluna `dataPrimeiroMovimento`.
-
-
-O comando abaixo cria seguintes tabelas: **processos_exp01**, **movimentos_exp01** e **complementos_exp01**:
-
-```sql
-
 ----------------------------------------
 -- tabela particionada: processos_exp01
 ----------------------------------------
@@ -472,11 +302,14 @@ CREATE UNIQUE INDEX complementos_exp01_unq1 ON public.complementos_exp01 ("dataP
 
 ```
 
-## 1.4 - Migração dos dados existentes, da tabela original (não particionada) para tabela particionada.
+### 1.2.3 - Migração de dados
 
-Nessa estapa realizaremos a migração dos dados existentes nas tabelas de origem para as tabelas particionadas.
+Nessa estapa realizaremos a migração dos dados existentes nas tabelas de origem (não particionadas), para as novas tabelas com particionamento.
 
 > Atenção: Foi necessário aplicar o filtro `"dataPrimeiroMovimento" IS NOT NULL` pois existem registros onde o campo utilizado para particionamento é nulo.
+
+
+1. Os comandos abaixo são utilizados para migrar os dados:
 
 ```sql
 
@@ -538,59 +371,11 @@ VACUUM ANALYZE processos_exp01;
 
 ```
 
-## 1.5 - Ambiente de testes
+## 1.3 - Consulta SQL de referência
 
-### 1.5.1 - Equipamento Host
+Neste experimento a query de referência foi ajustada para utilizar as tabelas com o respectivo particionamento.
 
-- MacBook Pro
-- Apple M2 Max
-- 32 GB
-- SSD 1TB
-
-### 1.5.2 - Execução em containers
-
-Será utilizado o Docker como ferramenta de virtualização em containers para execução do servidor de banco de dados Postgres.
-
-- Docker: version 27.4.0, build bde2b89
-- Docker Compose: version v2.31.0-desktop.2
-
-### 1.5.3 - Banco de dados
-
-Utilizamos Postgres: version 16.2, que é o banco de dados utilizado pelo JuMP.
-
-#### Configurações
-
-> 01 instância de container
-
-```yaml
-services:
-  postgres:
-    image: postgres:16.2
-    shm_size: "6g"
-    sysctls:
-      kernel.shmmax: 6442450944
-      kernel.shmall: 1572864
-    deploy:
-      resources:
-        limits:
-          cpus: "4.0"
-          memory: "12g"
-        reservations:
-          cpus: "2.0"
-          memory: "6g"
-```
-
-## 1.6 - Simulação da carga
-
-Para simulação de cargas de execução utilizaremos a ferramenta JMeter para criar um plano de testes que possibile simular diferentes cenários de cargas dos usuários utilizando a aplicação.
-
-Os cenários do plano de teste segue uma sequencia fibonaci para determinar a quantidade de threads (usuários simulâneos) em cada cenário, sendo que cada thread (usuário) executa 10 requisições sequenciais de disparo da query no banco de dados.
-
-- [Apache JMeter: version 5.6.3](https://jmeter.apache.org/index.html)
-
-### 1.6.1 Query
-
-Para avaliar essa estratégia será utilizada a seguinte consulta SQL de referêcia:
+Abaixo está a consulta SQL utilizada:
 
 ```sql
 EXPLAIN ANALYSE
@@ -634,107 +419,38 @@ ORDER BY
     p."processoID", m."dataFinal";
 ```
 
-## 1.7 - Métricas avaliadas e resultados
+## 1.4 - Métricas avaliadas e resultados
 
-### 1.7.1 - Tempo de Processamento
+A imagem abaixo apresentamos os gráficos da utilização de recursos durante a execução deste experimento. 
 
-| # Threads (Usuários em paralelo) | # Requests / Thread | # Repetições | Falhas (Timeout) | Duração média | Duração mínima | Duração máxima | Duração mediana |
-| -------------------------------- | ------------------- | ------------ | ---------------- | ------------- | -------------- | -------------- | --------------- |
-| 1                                | 10                  | 10           |                0 |     1401,9 ms |      1183,0 ms |      2106,0 ms |       1366,0 ms |
-| 2                                | 10                  | 20           |                0 |     1783,8 ms |      1500,0 ms |      2733,0 ms |       1707,0 ms |
-| 3                                | 10                  | 30           |                0 |     1954,7 ms |      1140,0 ms |      2977,0 ms |       1871,5 ms |
-| 5                                | 10                  | 50           |                0 |     2767,8 ms |      1169,0 ms |      4382,0 ms |       2659,0 ms |
-| 8                                | 10                  | 80           |                0 |     4207,2 ms |      2050,0 ms |      6290,0 ms |       4295,5 ms |
-| 13                               | 10                  | 130          |                0 |     6530,6 ms |      1681,0 ms |      9178,0 ms |       6411,5 ms |
-| 21                               | 10                  | 210          |                0 |    10331,7 ms |      1881,0 ms |     17482,0 ms |      10062,0 ms |
-| 34                               | 10                  | 340          |                0 |    17294,1 ms |      2008,0 ms |     34351,0 ms |      16678,0 ms |
-| 55                               | 10                  | 550          |                0 |    35743,0 ms |      2849,0 ms |     68093,0 ms |      36322,0 ms |
-| 89                               | 10                  | 890          |              510 |    32509,4 ms |       930,0 ms |     79656,0 ms |      32387,0 ms |
+Estes gráficos foram coletados a partir do Docker dashboard para o container de execução do banco de dados PostgreSQL.
 
+![Stats](./stats-geral.jpg)
 
+A tabela abaixo apresenta os resultados consolidados das métricas coletadas durante a execução deste experimento.
 
-Constatamos que a partir do cenário com 89 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de X casos de erro (57.30%). 
-Os erros ocorridos neste experimento estão diretamente relacionado ao alto consumo de memória com a execução concorrente das consultas que realizam acessos simultâneos às partições. 
-Isso demonstra que com o aumento de dados nas partições (fixas), com mais unidades sendo carregadas na base de dados, a tendência é que esse tipo de erro seja experimentado com mais frequencia, mesmo em cenários com menos usuários simultâneos.
+![Tabela de resultados](./tabela-exp-00.jpg)
 
+> Podemos perceber, a partir do cenário de testes com 21 usuários simultâneos, o banco de dados passou falhar **45,76%** das consultas realizadas.
 
-### 1.7.2 - Utilização de Recursos
+### 1.4.1 - Tempo de Resposta
 
-| # Threads (Em paralelo) | # Requests/Thread | # Repetições | Uso de CPU | Uso de RAM | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) |
-| ----------------------- | ----------------- | ------------ | ---------- | ---------- | ----------- | ------------ | ---------------------- | ------------------ |
-| 1                       | 10                | 10           | 197,83 %   |    1,15 GB |        0 KB |         0 KB |                1,51 MB |            1,97 MB |
-| 2                       | 10                | 20           | 380,66 %   |    1,40 GB |        0 KB |         0 KB |                1,52 MB |            2,11 MB |
-| 3                       | 10                | 30           | 339,01 %   |    1,63 GB |        0 KB |         0 KB |                1,53 MB |            2,26 GB |
-| 5                       | 10                | 50           | 417,98 %   |    2,16 GB |        0 KB |         0 KB |                3,28 MB |            4,29 MB |
-| 8                       | 10                | 80           | 408,68 %   |    2,67 GB |        0 KB |         0 KB |                1,58 MB |            2,97 MB |
-| 13                      | 10                | 130          | 419,29 %   |    3,67 GB |        0 KB |         0 KB |                1,63 MB |            3,68 MB |
-| 21                      | 10                | 210          | 403,92 %   |    4,82 GB |        0 KB |         0 KB |                1,71 MB |            4,82 MB |
-| 34                      | 10                | 340          | 418,57 %   |    6,68 GB |        0 KB |         0 KB |                1,85 MB |            6,68 MB |
-| 55                      | 10                | 550          | 417,63 %   |    9,78 GB |        0 KB |         0 KB |                2,10 MB |            9,74 MB |
-| 89                      | 10                | 890          | 410,03 %   |   11,13 GB |        0 KB |         0 KB |                2,64 MB |            6,78 MB |
+A tebela também apresenta as durações da execução em: Menor duração, Maior duração, e Duração média, para cada cenário do teste.
 
-Abaixo, estão os screenshots das estatísticas coletadas para cada cenário executado:
+### 1.4.2 - Escalabilidade
 
-#### 1 Thread
+De acordo com a tabela podemos perceber que e a arquitetura atual permitiu escalar até o cenário com 34 usuários simultâneos, e a partir do cenário com 55 usuários, o banco de dados passou falhar **16,43%** das consultas realizadas.
 
-![Stats - 1 Thread](./stats-1.jpg)
+### 1.4.3 - Equilíbrio de Carga
 
-#### 2 Threads
+A carga de execução foi distribuída de forma equilibrada, uma vez que todas as unidades possuem exatamente a mesma quantidade de registros em suas respectivas tabelas.
 
-![Stats - 2 Threads](./stats-2.jpg)
+### 1.4.4 - Taxa de Transferência de Dados
 
-#### 3 Threads
-
-![Stats - 3 Threads](./stats-3.jpg)
-
-#### 5 Threads
-
-![Stats - 5 Threads](./stats-5.jpg)
-
-#### 8 Threads
-
-![Stats - 8 Threads](./stats-8.jpg)
-
-#### 13 Threads
-
-![Stats - 13 Threads](./stats-13.jpg)
-
-#### 21 Threads
-
-![Stats - 21 Threads](./stats-21.jpg)
-
-#### 34 Threads
-
-![Stats - 34 Threads](./stats-34.jpg)
-
-#### 55 Threads
-
-![Stats - 55 Threads](./stats-55.jpg)
-
-#### 89 Threads
-
-![Stats - 89 Threads](./stats-89.jpg)
-
-A partir deste cenário, com 89 usuários simultâneos, começamos a experimentar erros de execução nas consultas ao banco de dados.
-
-### 1.7.3 - Escalabilidade
-
-Para essa métrica, implementamos uma aplicação em Java utilizando Spring Boot, que publica um endpoint REST responsável por executar a query de referência, realizar a leitura do ResultSet, capturando o timestamp inicial e final da execução para cálculo da duração.
-
-Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou simular a carga de usuários simultâneos utilizando a aplicação.
-
-Conforme apresentado na tabela `1.7.1 - Tempo de Processamento`, constatamos que a partir do cenário com 89 threads simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento da demanda, conforme a execução dos testes, uma vez que com o aumento de usuários em paralelo a execução da query passou a superar o limite máximo de 180.000 ms (3 minutos).
-
-### 1.7.4 - Equilíbrio de Carga
-
-Não se aplica.
-
-### 1.7.5 - Taxa de Transferência de Dados (Throughput)
-
-- Comando para ativar o rastreamento de tempos de entrada/saída (I/O) em operações realizadas pelo banco de dados.
+Foi executado o seguinte comando recuperar o plano de execução da query, com as informações sobre a execução.
 
 ```sql
-EXPLAIN ANALYSE
+EXPLAIN ANALYZE 
 SELECT
     p."NPU", 
     p."processoID", 
@@ -775,13 +491,13 @@ ORDER BY
     p."processoID", m."dataFinal";
 ```
 
-- Taxa: **353.945 registros** / **0,913 segundos** = **353.945 registros por segundo**
+- Taxa: **353.945** registros / **1,19** segundos = **297.432,77** registros por segundo.
 
-### 1.7.6 - Custo de Redistribuição
+### 1.4.5 - Custo de Redistribuição
 
-Não se aplica.
+Nessa abordagem, o custo de redistribuição é baixo para o cenário de novos anos, uma vez que só precisa ser criada a nova partição na eminência de novos registros para anos que ainda não estejam particionados. 
 
-### 1.7.7 - Eficiência de Consultas
+### 1.4.6 - Eficiência de Consultas
 
 A eficiência pode ser expressa como uma relação entre o tempo de execução, tempo ideal e o número de partições acessadas:
 
@@ -796,33 +512,21 @@ Onde:
 - P_Acessadas: Quantidade de partições acessadas.
 - P_Total: Total de partições disponíveis.
 - T_Query: Tempo total de execução da query (Execution Time no EXPLAIN ANALYZE).
-- T_Ideal: Tempo esperado para a melhor execução possível (vamos estabelecer como ideal o tempo de execução na arquitetura atual = 10 segundos).
+- T_Ideal: Tempo esperado para a melhor execução possível (vamos estabelecer como ideal o tempo de execução limite de **3 segundos**).
 
 Sendo assim, temos:
 
 - P_Acessadas: **18**
 - P_Total: **39**
-- T_Query: **0,913 segundos**
-- T_Ideal: **10 segundos** 
+- T_Query: **1,19 segundos**
+- T_Ideal: **3 segundos** 
 
-> Eficiência (%) =  (1 - (18 / 39)) * (1 - (0,913 / 10)) * 100 => (1 - (0,461538461538462)) * (1 - (0,0913)) * 100 = **48,93%**
+> Eficiência (%) =  (1 - (18 / 39)) * (1 - (1,19 / 3)) * 100 => (1 - (0,461538461538462)) * (1 - (0,396666666666667)) * 100 = **32,48%**
 
-Nesta arquitetura, a consulta foi **48,932%** mais eficiente do que na arquitetura atual.
+Nesta arquitetura, a consulta obteve uma eficiencia de **32,48%**, que aponta uma eficiência **43,14** maior que a situação atual.
 
 
-### 1.7.8 - Consistência de Dados
-
-Essa métrica não se aplica a essa estratégia, uma vez que não existe movimentação de dados, seja no próprio host ou em hosts distintos.
-
-### 1.7.9 - Capacidade de Adaptação
-
-Essa métrica não se aplica a essa estratégia, uma vez que ela não realiza mudanças ou ajustes dinâmicamente.
-
-### 1.7.10 - Custo Operacional
-
-Não foi avaliado o custo operacional pois se trata da estratégia atualmente implementada.
-
-## 1.8 - Considerações
+## 1.5 - Considerações
 
 > Vantagens:
 
