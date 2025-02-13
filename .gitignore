@@ -36,3 +36,4 @@ jmeter.log
 .DS_Store
 data/postgresql/init.sql
 data/postgresql/init.sql.zip
+jump_dp.log

@@ -162,4 +162,5 @@ Em seguida, execute o comando que executa a aplicação SpringBoot responsável 
 * [00 - AS-IS](./experimentos/00-as-is/EXPERIMENTO-00.md)
 * [01 - Particionamento por Intervalo](./experimentos/01-particionamento-por-intervalo/EXPERIMENTO-01.md)
 * [02 - Particionamento por Hash](./experimentos/02-particionamento-por-hash/EXPERIMENTO-02.md)
-* [03 - Particionamento Híbrido](./experimentos/03-particionamento-hibrido/EXPERIMENTO-03.md)
+* [03 - Particionamento Híbrido (Intervalo + Lista)](./experimentos/03-particionamento-hibrido-01/EXPERIMENTO-03.md)
+* [04 - Particionamento Híbrido (Intervalo + Hash)](./experimentos/04-particionamento-hibrido-02/EXPERIMENTO-04.md)

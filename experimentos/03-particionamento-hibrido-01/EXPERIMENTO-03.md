@@ -7,22 +7,20 @@ Essa técnica é especialmente útil em bancos de dados de grande escala, onde o
 O particionamento híbrido geralmente combina:
 
 * Particionamento por Intervalo (Range Partitioning) + Particionamento por Hash (Hash Partitioning)
-* Particionamento por Valor (List Partitioning) + Particionamento por Intervalo (Range Partitioning)
+* Particionamento por Lista (List Partitioning) + Particionamento por Intervalo (Range Partitioning)
 * Outras combinações de estratégias, dependendo das necessidades do sistema
 
-A idéia é dividir os dados em um primeiro nível usando uma estratégia mais abrangente (range ou list) e, dentro de cada partição, aplicar um segundo nível de particionamento para balancear a carga (hash).
+A idéia é dividir os dados em um primeiro nível usando uma estratégia mais abrangente (Intervalo ou Lista) e, dentro de cada partição, aplicar um segundo nível de particionamento para balancear a carga (Hash), por exemplo.
+
+Neste experimento, estamos avaliando a combinação de particionamento por intervalo aplicada a coluna `anoPrimeiroMovimento` no primeiro nível, e particionamento por lista aplicada a coluna `unidadeID` no segundo nível.
 
 ## 1.1 - Preparação
 
-Para avaliar essa estratégia se faz necessário executar alguns procedimentos no banco de dados para que as tabelas tenham suporte ao particionamento de dados por valor, utilizando o método de particionamento LIST implementado pelo PostgreSQL.
-
-Além disso, o modelo de dados atual está armazenando os registros de processos, movimentos e complementos em tabelas separadas por unidade judiciária, ou seja, para cada unidade judiciária existem as respectivas tabelas de processos, movimentos e complementos daquela unidade.
-
-Para avalidar a estratégia de particionamento por valor, iremos unificar as tabelas de processos, movimentos e complementos, de cada unidade em tabelas únicas de processos, movimentos e complementos, adicionando uma coluna que representa a chave de unidade judiciária.
+O modelo de dados atual armazena os registros de processos, movimentos e complementos em tabelas separadas por unidade judiciária, ou seja, para cada unidade judiciária existem as respectivas tabelas de processos, movimentos e complementos daquela unidade. Sendo que, para que possamos avalidar a estratégia de Particionamento por Lista, aplicada a coluna de `unidadeID`, precisamos unificar as tabelas de processos, movimentos e complementos, de cada unidade em tabelas únicas de processos, movimentos e complementos, adicionando a elas uma coluna `unidadeID` que representa a chave de unidade judiciária.
 
 ## 1.2 - Definição das técnicas de particionamento
 
-As partições das tabelas de **processos**, **movimentos** e **complementos** serão criadas com dois níveis de particionamento, no primeiro nível será utilizada a técnica de **Particionamento por Intervalo (RANGE)** aplicada a coluna `anoPrimeiroMovimento`, que cria uma nova partição para cada ano. Já no segundo nível será utilizada a técnica de **Particionamento por Valor (LIST)** aplicada a coluna `unidadeID` nas partições do primeiro nível.
+As partições das tabelas de **processos**, **movimentos** e **complementos** serão criadas com dois níveis de particionamento, no primeiro nível será utilizada a técnica de **Particionamento por Intervalo (RANGE)** aplicada a coluna `anoPrimeiroMovimento`, que cria uma nova partição para cada ano. Já no segundo nível será utilizada a técnica de **Particionamento por Lista (LIST)** aplicada a coluna `unidadeID` nas partições do primeiro nível.
 
 
 ## 1.3 - Unificação dos registros nas tabelas particionadas
@@ -31,7 +29,7 @@ No experimento 02, já realizamos as etapas de unificação dos registros existe
 
 ## 1.4 - Criação das tabelas com o particionamento híbrido
 
-Nesta etapa, iremos descrever os comandos necessários para criação das tabelas de **processos**, **movimentos** e **complementos** com o particionamento híbrido ativado. Como descrito anteriormente, iremos primeiramento particionar as tabelas por ano, utilizando a técnica de **Particionamento por Intervalo (RANGE)** aplicada a coluna `anoPrimeiroMovimento`. Em seguida, para cada tabela de partição por ano, utilizaremos a técnica de **Particionamento por Valor (LIST)** aplicada a coluna `unidadeID`, para que tenhamos a distribuição dos dados por ano e por unidade judiciária.
+Nesta etapa, iremos descrever os comandos necessários para criação das tabelas de **processos**, **movimentos** e **complementos** com o particionamento híbrido ativado. Como descrito anteriormente, iremos primeiramento particionar as tabelas por ano, utilizando a técnica de **Particionamento por Intervalo (RANGE)** aplicada a coluna `anoPrimeiroMovimento`. Em seguida, para cada tabela de partição por ano, utilizaremos a técnica de **Particionamento por Lista (LIST)** aplicada a coluna `unidadeID`, para que tenhamos a distribuição dos dados por ano e por unidade judiciária.
 
 
 ### 1.4.1 Criando as tabelas com Particionamento por Intervalo (RANGE)
@@ -794,7 +792,7 @@ Sendo assim, temos:
 
 > Eficiência (%) =  (1 - (18 / 39)) * (1 - (0,464 / 10)) * 100 => (1 - (0,461538461538462)) * (1 - (0,0464)) * 100 = **51,34%**
 
-Nesta arquitetura, a consulta foi **80,68%** mais eficiente do que na arquitetura atual, e **48,87%** mais eficiente que a estratégia de particionamento por hash.
+Nesta arquitetura, a consulta foi **51,34%** mais eficiente do que na arquitetura atual.
 
 
 ### 1.7.8 - Consistência de Dados

@@ -22,7 +22,7 @@ A função hash combina os dois valores, o que significa:
 
 Assim, ambos os registros serão armazenados na partição **processos_exp02_3**, por exemplo. Permitindo que dados de diferentes anos e unidades apareçam em uma mesma partição.
 
-Essa distribuição visa equilibrar partições, não agrupar por valores. Ao contrário do particionamento por valor (LIST) ou por intervalo (RANGE), que garante o agrupamento lógico, o particionamento por hash distribui os dados uniformemente em todas as partições.
+Essa distribuição visa equilibrar partições, não agrupar por valores. Ao contrário do Particionamento por Lista (LIST) ou por intervalo (RANGE), que garante o agrupamento lógico, o particionamento por hash distribui os dados uniformemente em todas as partições.
 
 ## 1.2 - Definição da quantidade de partições
 

@@ -2,5 +2,5 @@
 
 docker-compose down
 docker-compose up -d 
-rm -rf jump_dp.log
+rm -rf logs/jump_dp.log
 ./mvnw spring-boot:run 

@@ -11,23 +11,23 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-    shm_size: "6g"
+    shm_size: "8g"
     sysctls:
-      kernel.shmmax: 6442450944
-      kernel.shmall: 1572864
+      kernel.shmmax: 8589934592
+      kernel.shmall: 2097152
     deploy:
       resources:
         limits:
           cpus: "4.0"
           memory: "12g"
         reservations:
-          cpus: "2.0"
-          memory: "6g"
-    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+          cpus: "4.0"
+          memory: "12g"
+    #command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
     volumes:
       - ./data/postgresql/data:/var/lib/postgresql/data
       - ./data/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./conf/postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
+    #  - ./conf/postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
     networks:
       - jump_sharding-network
 
@@ -56,8 +56,8 @@ services:
       # - ./experimentos/01-particionamento-por-intervalo/schemaspy.properties:/schemaspy.properties
       # - ./experimentos/02-particionamento-por-hash/schemaspy/output:/output
       # - ./experimentos/02-particionamento-por-hash/schemaspy.properties:/schemaspy.properties
-      - ./experimentos/03-particionamento-hibrido/schemaspy/output:/output
-      - ./experimentos/03-particionamento-hibrido/schemaspy.properties:/schemaspy.properties
+      - ./experimentos/03-particionamento-hibrido-01/schemaspy/output:/output
+      - ./experimentos/03-particionamento-hibrido-01/schemaspy.properties:/schemaspy.properties
     depends_on:
       postgres:
         condition: service_healthy
