@@ -56,19 +56,15 @@ Na tabela abaixo destacamos as principais métricas para essa finalidade. Contud
 
 ### 1.4.1 - Tempo de Resposta
 
-Esta métrica está definida em millisegundos e foi obtida por meio da execução da consulta SQL de referência de duas maneiras, sendo a primeira executando-a de forma isolada no banco de dados, e a segunda, por meio dos cenários de teste com a simulação de carga.
-
-A execução da consulta SQL de forma isolada levou: **0,779** segundos.
-
-A tabela anterior apresenta o tempo de resposta mínimo, máximo e médio, para cada um dos cenários de teste que simulam a carga crescente de usuários.
+Esta métrica está definida em millisegundos e é obtida por meio da execução da consulta SQL de referência de duas maneiras, a primeira executando-a de forma isolada no banco de dados, e a segunda por meio da execução dos cenários de teste que realiza a simulação de carga de usuários.
 
 ### 1.4.2 - Utilização de Recursos
 
-Durante a execução dos testes, coletamos a utilização máxima de CPU e de Memória RAM, para apresentar como o consumo dos recursos está relacionado com a carga de usuários simultâneos.
+Durante a execução dos cenários de teste que realiza a simulação de carga de usuários, coletamos a utilização máxima de CPU e de Memória RAM, para apresentar como o consumo dos recursos está relacionado com o aumento da carga de usuários simultâneos.
 
 ### 1.4.3 - Escalabilidade
 
-A escalabilidade da estratégia foi medida de acordo com a capacidade do banco de dados responder às consultas de multiplos usuários simultâneos. Para isso, implementamos cenários de testes com a ferramenta JMeter, com uma quantidade crescente de usuários em cada ciclo de testes, onde o incremento dessa quantidade de usuário segue a sequencia fibonnaci. Em todos os cenários foi utilizado um filtro de dados na consulta para trazer dados dos últimos 5 anos e pertencente a uma unidade judiciária, sendo o filtro da unidade judiciária alternado em cada execução entre as 3 unidades disponíveis na base.
+A escalabilidade da estratégia é medida de acordo com a capacidade do banco de dados responder às consultas de multiplos usuários simultâneos. Para isso, implementamos cenários de testes com a ferramenta JMeter, com uma quantidade crescente de usuários em cada ciclo de testes, onde o incremento dessa quantidade de usuário segue a sequencia fibonnaci. Em todos os cenários foi utilizado um filtro de dados na consulta para trazer dados dos últimos 5 anos e pertencente a uma unidade judiciária, sendo o filtro da unidade judiciária alternado em cada execução entre as 3 unidades disponíveis na base.
 
 No cenário 01, simulamos 01 usuário único realizando a consulta SQL de forma sequencial por 60 segundos.
 
