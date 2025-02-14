@@ -90,7 +90,11 @@ Perceba que incrementamos o tempo de execução dos testes no 3 últimos cenári
 
 ### 1.4.3 - Equilíbrio de Carga
 
-Para avaliar o equilíbrio de carga um controle nos testes para garantir uma alternancia entre as unidades e não sobrecarregar as consultas em tabelas/partições de uma única unidade. E para avaliar o quão equilibrada está uma consulta, utilizamos a seguinte fórmula para calcular a taxa de uso das partições:
+Na implementação dos cenários de teste que simula a carga de usuários, foi implementado um controle para garantir uma alternancia entre as unidades e não sobrecarregar as consultas em tabelas/partições de uma única unidade.
+
+E para avaliar o equilíbrio de carga de uma consulta SQL, utilizamos a seguinte fórmula para calcular a taxa de uso das partições, que é apresentada em % percentual, onde uma taxa de 100% significa que todas as partições foram utilizadas.
+
+### Fórmula:
 
 ```plaintext
 Taxa de uso das partições (%) = (P_Acessadas / P_Total) * 100
