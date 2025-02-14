@@ -1,5 +1,7 @@
 # 1 - Experimento 03 - Particionamento Híbrido (Intervalo + Lista)
 
+## 1.1 - Estratégia de particionamento
+
 O **Particionamento Híbrido** combina duas ou mais técnicas de particionamento de dados para aproveitar as vantagens de diferentes estratégias e mitigar suas limitações. Essa abordagem é utilizada em cenários onde um único tipo de particionamento não atende de forma eficiente os requisitos de desempenho e escalabilidade do sistema.
 
 Essa técnica é especialmente útil em bancos de dados de grande escala, onde o acesso aos dados precisa ser otimizado para diferentes tipos de consultas e operações.
@@ -12,29 +14,29 @@ O particionamento híbrido geralmente combina:
 
 A idéia é dividir os dados em um primeiro nível usando uma estratégia mais abrangente (Intervalo ou Lista) e, dentro de cada partição, aplicar um segundo nível de particionamento para balancear a carga (Hash), por exemplo.
 
-Neste experimento, estamos avaliando a combinação de particionamento por intervalo aplicada a coluna `anoPrimeiroMovimento` no primeiro nível, e particionamento por lista aplicada a coluna `unidadeID` no segundo nível.
+Neste experimento, estamos avaliando a combinação de particionamento por intervalo aplicada a coluna `anoPrimeiroMovimento` no primeiro nível, e o particionamento por lista aplicada a coluna `unidadeID` no segundo nível.
 
-## 1.1 - Preparação
+## 1.2 - Preparação
 
-O modelo de dados atual armazena os registros de processos, movimentos e complementos em tabelas separadas por unidade judiciária, ou seja, para cada unidade judiciária existem as respectivas tabelas de processos, movimentos e complementos daquela unidade. Sendo que, para que possamos avalidar a estratégia de Particionamento por Lista, aplicada a coluna de `unidadeID`, precisamos unificar as tabelas de processos, movimentos e complementos, de cada unidade em tabelas únicas de processos, movimentos e complementos, adicionando a elas uma coluna `unidadeID` que representa a chave de unidade judiciária.
+Nesta estapa, iremos preparar a base de dados para o particionamento das tabelas por intervalo.
 
-## 1.2 - Definição das técnicas de particionamento
+> Premissa: Esta etapa já foi realizada no `Experimento 00`, caso necessário, repita os passos descritos na respectiva seção.
+
+### 1.2.1 - Definição das técnicas de particionamento
 
 As partições das tabelas de **processos**, **movimentos** e **complementos** serão criadas com dois níveis de particionamento, no primeiro nível será utilizada a técnica de **Particionamento por Intervalo (RANGE)** aplicada a coluna `anoPrimeiroMovimento`, que cria uma nova partição para cada ano. Já no segundo nível será utilizada a técnica de **Particionamento por Lista (LIST)** aplicada a coluna `unidadeID` nas partições do primeiro nível.
 
+### 1.2.2 - Definição da quantidade de partições
 
-## 1.3 - Unificação dos registros nas tabelas particionadas
+Considerando que na base de dados os processos estão distribuídos em 13 anos e em 3 unidades judiciárias, utilizaremos no primeiro nível, 13 partições por intervalo, e no segundo nível 3 partições, sendo uma para cada unidade, no particionamento por lista. 
 
-No experimento 02, já realizamos as etapas de unificação dos registros existentes em tabelas únicas. Portanto, essa etapa será desnecessária neste experimento.
+### 1.2.3 - Criação das tabelas com o Particionamento Híbrido (Intervalo + Lista)
 
-## 1.4 - Criação das tabelas com o particionamento híbrido
+Nesta etapa, iremos descrever os comandos necessários para criação das tabelas de **processos_exp02**, **movimentos_exp02** e **complementos_exp02** com o particionamento híbrido ativado. 
 
-Nesta etapa, iremos descrever os comandos necessários para criação das tabelas de **processos**, **movimentos** e **complementos** com o particionamento híbrido ativado. Como descrito anteriormente, iremos primeiramento particionar as tabelas por ano, utilizando a técnica de **Particionamento por Intervalo (RANGE)** aplicada a coluna `anoPrimeiroMovimento`. Em seguida, para cada tabela de partição por ano, utilizaremos a técnica de **Particionamento por Lista (LIST)** aplicada a coluna `unidadeID`, para que tenhamos a distribuição dos dados por ano e por unidade judiciária.
+Como descrito anteriormente, iremos primeiramento particionar as tabelas por ano, utilizando a técnica de **Range Partitioning** aplicada a coluna `anoPrimeiroMovimento`. Em seguida, para cada tabela de partição por ano, utilizaremos a técnica de **List Partitioning** aplicada a coluna `unidadeID`, para que tenhamos a distribuição dos dados por ano e por unidade judiciária.
 
-
-### 1.4.1 Criando as tabelas com Particionamento por Intervalo (RANGE)
-
-O comando abaixo cria seguintes tabelas: **processos_exp03**, **movimentos_exp03** e **complementos_exp03**, com o Particionamento por Intervalo aplicado a coluna `anoPrimeiroMovimento`.:
+1. O comando abaixo cria as tabelas particionadas:
 
 ```sql
 
@@ -457,9 +459,10 @@ CREATE INDEX complementos_exp03_idx4 ON public.complementos_exp03 ("anoPrimeiroM
 CREATE UNIQUE INDEX complementos_exp03_unq1 ON public.complementos_exp03 ("anoPrimeiroMovimento", "unidadeID", "complementoID");
 
 ```
-## 1.5 - Migração dos dados existentes, da tabela original (não particionada) para tabela particionada.
 
-Nessa estapa realizaremos a migração dos dados existentes na tabela de origem `processos_18006`, para a tabela particionada `processos_exp03`.
+### 1.2.3 - Migração de dados
+
+Nessa estapa realizaremos a migração dos dados existentes nas tabelas de origem (não particionadas), para as novas tabelas com particionamento.
 
 > Atenção: Foi necessário aplicar o filtro `"dataPrimeiroMovimento" IS NOT NULL` pois existem registros onde o campo utilizado para particionamento é nulo.
 
@@ -522,56 +525,11 @@ VACUUM ANALYZE processos_exp03;
 
 ```
 
-## 1.6 - Ambiente de testes
+## 1.3 - Consulta SQL de referência
 
-### 1.6.1 - Equipamento Host
+Neste experimento a query de referência foi ajustada para utilizar as tabelas com o respectivo particionamento.
 
-- MacBook Pro
-- Apple M2 Max
-- 32 GB
-- SSD 1TB
-
-### 1.6.2 - Execução em containers
-
-Será utilizado o Docker como ferramenta de virtualização em containers para execução do servidor de banco de dados Postgres.
-
-- Docker: version 27.4.0, build bde2b89
-- Docker Compose: version v2.31.0-desktop.2
-
-### 1.6.3 - Banco de dados
-
-Utilizamos Postgres: version 16.2, que é o banco de dados utilizado pelo JuMP.
-
-#### Configurações
-
-> 01 instância de container
-
-```yaml
-services:
-  postgres:
-    image: postgres:16.2
-    shm_size: "4g"
-    deploy:
-      resources:
-        limits:
-          cpus: "4.0"
-          memory: "12g"
-        reservations:
-          cpus: "2.0"
-          memory: "6g"
-```
-
-## 1.6 - Simulação da carga
-
-Para simulação de cargas de execução utilizaremos a ferramenta JMeter para criar um plano de testes que possibile simular diferentes cenários de cargas dos usuários utilizando a aplicação.
-
-Os cenários do plano de teste segue uma sequencia fibonaci para determinar a quantidade de threads (usuários simulâneos) em cada cenário, sendo que cada thread (usuário) executa 10 requisições sequenciais de disparo da query no banco de dados.
-
-- [Apache JMeter: version 5.6.3](https://jmeter.apache.org/index.html)
-
-### 1.6.1 Query
-
-Para avaliar essa estratégia será utilizada a seguinte consulta SQL de referêcia:
+Abaixo está a consulta SQL utilizada:
 
 ```sql
 SELECT
@@ -620,97 +578,37 @@ ORDER BY
     p."processoID", m."dataFinal";
 ```
 
-## 1.7 - Métricas avaliadas e resultados
+## 1.4 - Métricas avaliadas e resultados
 
-### 1.7.1 - Tempo de Processamento
+A imagem abaixo apresentamos os gráficos da utilização de recursos durante a execução deste experimento. 
 
-| # Threads (Usuários em paralelo) | # Requests / Thread | # Repetições | Falhas (Timeout) | Duração média | Duração mínima | Duração máxima | Duração mediana |
-| -------------------------------- | ------------------- | ------------ | ---------------- | ------------- | -------------- | -------------- | --------------- |
-| 1                                | 10                  | 10           |                0 |      825,2 ms |       606,0 ms |      1642,0 ms |        703,5 ms |
-| 2                                | 10                  | 20           |                0 |     1156,5 ms |       645,0 ms |      2399,0 ms |       1077,5 ms |
-| 3                                | 10                  | 30           |                0 |     1341,4 ms |       534,0 ms |      2342,0 ms |       1337,0 ms |
-| 5                                | 10                  | 50           |                0 |     2591,6 ms |       693,0 ms |      3777,0 ms |       2521,0 ms |
-| 8                                | 10                  | 80           |                0 |     3999,9 ms |      1042,0 ms |      5890,0 ms |       3860,5 ms |
-| 13                               | 10                  | 130          |                0 |     6502,5 ms |      1696,0 ms |     10302,0 ms |       6134,5 ms |
-| 21                               | 10                  | 210          |                0 |    11907,2 ms |      3598,0 ms |     16977,0 ms |      11641,0 ms |
-| 34                               | 10                  | 340          |                0 |    25228,7 ms |      3766,0 ms |     47382,0 ms |      25860,5 ms |
-| 55                               | 10                  | 550          |                0 |    57333,6 ms |      2086,0 ms |     94647,0 ms |      59659,0 ms |
-| 89                               | 10                  | 890          |              449 |    40425,1 ms |      2491,0 ms |     68339,0 ms |      44496,0 ms |
+Estes gráficos foram coletados a partir do Docker dashboard para o container de execução do banco de dados PostgreSQL.
 
+![Stats](./stats-geral.jpg)
 
-Constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada começou a apresentar falhas, um total de 449 casos (50.44%). Que representa um aumento de 37,27% na quantidade de falhas. Porém, uma diferença é que os erros ocorridos neste experimento não foram por motivo de exceder o tempo máximo de execução das consultas, mas foi relacionado ao uso concorrente de memória no acesso simultâneo as partições. O que não significa que esta estrategia tenha sido pior que a anterior, mas apenas que a limitação do teste em 3 unidades faz com que a concorrência seja maior nas mesmas partições. Portanto, esta estratégia se mostra mais eficiente em relação as demais pois permitirá uma maior escalabilidade em uma base real e acesso real de usuários em diferentes unidades.
+A tabela abaixo apresenta os resultados consolidados das métricas coletadas durante a execução deste experimento.
 
+![Tabela de resultados](./tabela-exp-03.jpg)
 
-### 1.7.2 - Utilização de Recursos
+> Podemos perceber que a partir do cenário de testes com 55 usuários simultâneos, o banco de dados passou falhar **24,65%** das consultas realizadas.
 
-| # Threads (Em paralelo) | # Requests/Thread | # Repetições | Uso de CPU | Uso de RAM | Disk (read) | Disk (write) | Network I/O (received) | Network I/O (sent) |
-| ----------------------- | ----------------- | ------------ | ---------- | ---------- | ----------- | ------------ | ---------------------- | ------------------ |
-| 1                       | 10                | 10           |    70,29 % |  761,70 MB |        0 KB |       4,1 KB |                2,16 MB |          861,00 MB |
-| 2                       | 10                | 20           |   254,21 % |    1,25 GB |        0 KB |       4,1 KB |                1,89 MB |            1,72 GB |
-| 3                       | 10                | 30           |   273,56 % |    1,09 GB |        0 KB |       4,1 KB |                2,53 MB |            2,58 GB |
-| 5                       | 10                | 50           |   331,12 % |    1,89 GB |        0 KB |       4,1 KB |                2,91 MB |            4,29 GB |
-| 8                       | 10                | 80           |   255,61 % |    3,00 GB |        0 KB |       4,1 KB |                3,76 MB |            6,86 GB |
-| 13                      | 10                | 130          |   405,70 % |    4,34 GB |        0 KB |       4,1 KB |                5,41 MB |           11,10 GB |
-| 21                      | 10                | 210          |   416,08 % |    6,37 GB |     8,19 KB |       4,1 KB |                8,11 MB |           18,00 GB |
-| 34                      | 10                | 340          |   443,53 % |    7,90 GB |    188,0 KB |       4,1 KB |               13,40 MB |           29,20 GB |
-| 55                      | 10                | 550          |   453,14 % |    8,65 GB |     53,3 KB |       4,1 KB |               23,10 MB |           47,20 GB |
-| 89                      | 10                | 890          |   432,87 % |    8,05 GB |     72,3 MB |       4,1 KB |               17,10 MB |           37,60 GB |
+### 1.4.1 - Tempo de Resposta
 
-Abaixo, estão os screenshots das estatísticas coletadas para cada cenário executado:
+A tebela também apresenta as durações da execução em: Menor duração, Maior duração e Duração média, para cada cenário do teste.
 
-#### 1 Thread
+Tempo médio no cenário com maior número de usuários e sem falhas: **14004,83 ms**.
 
-![Stats - 1 Thread](./stats-1.jpg)
+### 1.4.2 - Escalabilidade
 
-#### 2 Threads
+De acordo com a tabela podemos perceber que e a arquitetura atual permitiu escalar até o cenário com 34 usuários simultâneos, e a partir do cenário com 55 usuários, o banco de dados passou falhar **24,65%** das consultas realizadas.
 
-![Stats - 2 Threads](./stats-2.jpg)
+### 1.4.3 - Equilíbrio de Carga
 
-#### 3 Threads
+A carga de execução foi distribuída de forma equilibrada, uma vez que todas as unidades possuem exatamente a mesma quantidade de registros em suas respectivas tabelas.
 
-![Stats - 3 Threads](./stats-3.jpg)
+### 1.4.4 - Taxa de Transferência de Dados
 
-#### 5 Threads
-
-![Stats - 5 Threads](./stats-5.jpg)
-
-#### 8 Threads
-
-![Stats - 8 Threads](./stats-8.jpg)
-
-#### 13 Threads
-
-![Stats - 13 Threads](./stats-13.jpg)
-
-#### 21 Threads
-
-![Stats - 21 Threads](./stats-21.jpg)
-
-#### 34 Threads
-
-![Stats - 34 Threads](./stats-34.jpg)
-
-#### 55 Threads
-
-![Stats - 55 Threads](./stats-55.jpg)
-
-A partir deste cenário, com 55 usuários simultâneos, começamos a evidenciar erros de execução nas consultas ao banco de dados.
-
-### 1.7.3 - Escalabilidade
-
-Para essa métrica, implementamos uma aplicação em Java utilizando Spring Boot, que publica um endpoint REST responsável por executar a query de referência, realizar a leitura do ResultSet, capturando o timestamp inicial e final da execução para cálculo da duração.
-
-Utilizamos a ferramenta JMeter para criar um plano de testes que possibilitou simular a carga de usuários simultâneos utilizando a aplicação.
-
-Conforme apresentado na tabela `1.7.1 - Tempo de Processamento`, constatamos que a partir do cenário com 55 threads simultâneas a estratégia utilizada não permitiu escalar o banco de dados para atender o crescimento da demanda, conforme a execução dos testes, uma vez que com o aumento de usuários em paralelo, a execução da query passou a superar o limite máximo de 180.000 ms (3 minutos).
-
-### 1.7.4 - Equilíbrio de Carga
-
-Não se aplica.
-
-### 1.7.5 - Taxa de Transferência de Dados (Throughput)
-
-- Comando para ativar o rastreamento de tempos de entrada/saída (I/O) em operações realizadas pelo banco de dados.
+Foi executado o seguinte comando recuperar o plano de execução da query, com as informações sobre a execução.
 
 ```sql
 EXPLAIN ANALYSE
@@ -760,13 +658,13 @@ ORDER BY
     p."processoID", m."dataFinal";
 ```
 
-- Taxa: **353.945 registros** / **6.04 segundos** = **58600.16 registros por segundo**
+- Taxa: **353.945** registros / **0,603** segundos = **586.973,46** registros por segundo.
 
-### 1.7.6 - Custo de Redistribuição
+### 1.4.5 - Custo de Redistribuição
 
-Não se aplica.
+Nessa abordagem, o custo de redistribuição é baixo para o cenário de novos anos, uma vez que só precisa ser criada a nova partição na eminência de novos registros para anos que ainda não estejam particionados. 
 
-### 1.7.7 - Eficiência de Consultas
+### 1.4.6 - Eficiência de Consultas
 
 A eficiência pode ser expressa como uma relação entre o tempo de execução, tempo ideal e o número de partições acessadas:
 
@@ -781,33 +679,21 @@ Onde:
 - P_Acessadas: Quantidade de partições acessadas.
 - P_Total: Total de partições disponíveis.
 - T_Query: Tempo total de execução da query (Execution Time no EXPLAIN ANALYZE).
-- T_Ideal: Tempo esperado para a melhor execução possível (vamos estabelecer como ideal o tempo de execução na arquitetura atual = 10 segundos).
+- T_Ideal: Tempo esperado para a melhor execução possível (vamos estabelecer como ideal o tempo de execução limite de **3 segundos**).
 
 Sendo assim, temos:
 
 - P_Acessadas: **18**
 - P_Total: **39**
-- T_Query: **0.464 segundos**
-- T_Ideal: **10 segundos** 
+- T_Query: **0,603 segundos**
+- T_Ideal: **3 segundos** 
 
-> Eficiência (%) =  (1 - (18 / 39)) * (1 - (0,464 / 10)) * 100 => (1 - (0,461538461538462)) * (1 - (0,0464)) * 100 = **51,34%**
+> Eficiência (%) =  (1 - (18 / 39)) * (1 - (0,603 / 3)) * 100 => (1 - (0,201)) * (1 - (0,0464)) * 100 = **76,19%**
 
-Nesta arquitetura, a consulta foi **51,34%** mais eficiente do que na arquitetura atual.
+Nesta arquitetura, a consulta obteve uma eficiencia de **76,19%**, que aponta uma eficiência **86,85%** maior que a situação atual.
 
 
-### 1.7.8 - Consistência de Dados
-
-Essa métrica não se aplica a essa estratégia, uma vez que não existe movimentação de dados, seja no próprio host ou em hosts distintos.
-
-### 1.7.9 - Capacidade de Adaptação
-
-Essa métrica não se aplica a essa estratégia, uma vez que ela não realiza mudanças ou ajustes dinâmicamente.
-
-### 1.7.10 - Custo Operacional
-
-Não foi avaliado o custo operacional pois se trata da estratégia atualmente implementada.
-
-## 1.8 - Considerações
+## 1.5 - Considerações
 
 > Vantagens:
 

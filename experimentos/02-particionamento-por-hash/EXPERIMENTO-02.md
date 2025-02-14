@@ -391,17 +391,17 @@ A tabela abaixo apresenta os resultados consolidados das métricas coletadas dur
 
 ![Tabela de resultados](./tabela-exp-02.jpg)
 
-> Podemos perceber que a partir do cenário de testes com 55 usuários simultâneos, o banco de dados passou falhar **16,43%** das consultas realizadas.
+> Podemos perceber que a partir do cenário de testes com 34 usuários simultâneos, o banco de dados passou falhar **10,00%** das consultas realizadas.
 
 ### 1.4.1 - Tempo de Resposta
 
 A tebela também apresenta as durações da execução em: Menor duração, Maior duração e Duração média, para cada cenário do teste.
 
-Tempo médio no cenário com maior número de usuários e sem falhas: **14045,79 ms**.
+Tempo médio no cenário com maior número de usuários e sem falhas: **12583,52 ms**.
 
 ### 1.4.2 - Escalabilidade
 
-De acordo com a tabela podemos perceber que e a arquitetura atual permitiu escalar até o cenário com 34 usuários simultâneos, e a partir do cenário com 55 usuários, o banco de dados passou falhar **16,43%** das consultas realizadas.
+De acordo com a tabela podemos perceber que e a arquitetura atual permitiu escalar até o cenário com 21 usuários simultâneos, e a partir do cenário com 34 usuários, o banco de dados passou falhar **10,00%** das consultas realizadas.
 
 ### 1.4.3 - Equilíbrio de Carga
 
