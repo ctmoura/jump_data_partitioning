@@ -45,16 +45,91 @@ Na tabela abaixo destacamos as principais métricas para essa finalidade. Contud
 
 | #        | Métrica                                                         | Descrição | Relevância | 
 | -------- | --------------------------------------------------------------- | --------- | ---------- |
-| 1        | Tempo de Processamento                                          | Mede o tempo necessário para executar operações específicas, como consultas, inserções e/ou atualizações no sistema. | Avalia a eficiência das estratégias para lidar com grandes volumes de dados. Estratégias mal implementadas podem aumentar a latência. |
+| 1        | Tempo de Resposta                                          | Mede o tempo necessário para executar operações de consulta a dados no sistema. | Avalia a eficiência das estratégias para lidar com grandes volumes de dados. Estratégias mal implementadas podem aumentar a latência. |
 | 2        | Utilização de Recursos                                          | Mede o uso de recursos computacionais, como CPU, memória e disco, durante a execução de operações no sistema. | Identifica gargalos que possam ser introduzidos por estratégias de particionamento. Mostra a eficiência no uso da infraestrutura. |
 | 3        | Escalabilidade                                                  | Avalia como a estratégia se comporta ao aumentar o volume de dados ou a quantidade de nós no sistema. | Sistemas com crescimento contínuo de dados exigem estratégias que possam escalar sem comprometer o desempenho. |
 | 4        | Equilíbrio de Carga                                             | Mede a uniformidade na distribuição de dados e tarefas entre os nós do sistema. | Os desequilíbrios resultam em nós sobrecarregados e outros subutilizados, reduzindo a eficiência do sistema. |
 | 5        | Taxa de Transferência de Dados (Throughput)                     | Mede a quantidade de operações processadas por unidade de tempo (ex.: consultas por segundo ou registros inseridos por segundo). | Avalia o desempenho global do sistema em cenários com alta concorrência. |
 | 6        | Custo de Redistribuição                                         | Avalia o impacto de redistribuir dados em tempo real devido a alterações na carga ou na configuração do sistema. | Estratégias dinâmicas, como particionamento adaptativo, podem causar interrupções ou consumir recursos durante redistribuições. |
 | 7        | Eficiência de Consultas                                         | Mede a eficácia da estratégia para consultas específicas, como aquelas que atravessam várias partições. | Importante para sistemas como o JuMP, onde dados são frequentemente acessados de diferentes tribunais e regiões. |
-| 8        | Consistência de Dados                                           | Mede a capacidade da estratégia de manter a consistência dos dados em diferentes nós. | Garantir que não haja discrepâncias ou conflitos de dados ao lidar com alta concorrência. |
-| 9        | Capacidade de Adaptação                                         | Avalia a capacidade da estratégia de ajustar dinamicamente o particionamento para lidar com padrões de acesso variáveis. | Particularmente relevante para cenários onde a carga de trabalho muda com frequência. |
-| 10       | Custo Operacional                                               | Mede os custos associados à implementação e manutenção de cada estratégia. | Identifica estratégias que exigem maior esforço de administração ou mais recursos computacionais. |
+
+
+### 1.4.1 - Tempo de Resposta
+
+Esta métrica está definida em millisegundos e foi obtida por meio da execução da consulta SQL de referência de duas maneiras, sendo a primeira executando-a de forma isolada no banco de dados, e a segunda, por meio dos cenários de teste com a simulação de carga.
+
+A execução da consulta SQL de forma isolada levou: **0,779** segundos.
+
+A tabela anterior apresenta o tempo de resposta mínimo, máximo e médio, para cada um dos cenários de teste que simulam a carga crescente de usuários.
+
+### 1.4.2 - Utilização de Recursos
+
+Durante a execução dos testes, coletamos a utilização máxima de CPU e de Memória RAM, para apresentar como o consumo dos recursos está relacionado com a carga de usuários simultâneos.
+
+### 1.4.3 - Escalabilidade
+
+A escalabilidade da estratégia foi medida de acordo com a capacidade do banco de dados responder às consultas de multiplos usuários simultâneos. Para isso, implementamos cenários de testes com a ferramenta JMeter, com uma quantidade crescente de usuários em cada ciclo de testes, onde o incremento dessa quantidade de usuário segue a sequencia fibonnaci. Em todos os cenários foi utilizado um filtro de dados na consulta para trazer dados dos últimos 5 anos e pertencente a uma unidade judiciária, sendo o filtro da unidade judiciária alternado em cada execução entre as 3 unidades disponíveis na base.
+
+No cenário 01, simulamos 01 usuário único realizando a consulta SQL de forma sequencial por 60 segundos.
+
+No cenário 02, simulamos 02 usuários simultâneos, cada um deles realizando a consulta SQL de forma sequencial por 60 segundos.
+
+No cenário 03, simulamos 03 usuários simultâneos, cada um deles realizando a consulta SQL de forma sequencial por 60 segundos.
+
+No cenário 04, simulamos 05 usuários simultâneos, cada um deles realizando a consulta SQL de forma sequencial por 60 segundos.
+
+No cenário 05, simulamos 08 usuários simultâneos, cada um deles realizando a consulta SQL de forma sequencial por 60 segundos.
+
+No cenário 06, simulamos 13 usuários simultâneos, cada um deles realizando a consulta SQL de forma sequencial por 60 segundos.
+
+No cenário 07, simulamos 21 usuários simultâneos, cada um deles realizando a consulta SQL de forma sequencial por 60 segundos.
+
+No cenário 08, simulamos 34 usuários simultâneos, cada um deles realizando a consulta SQL de forma sequencial por 90 segundos.
+
+No cenário 09, simulamos 55 usuários simultâneos, cada um deles realizando a consulta SQL de forma sequencial por 120 segundos.
+
+No cenário 10, simulamos 89 usuários simultâneos, cada um deles realizando a consulta SQL de forma sequencial por 180 segundos.
+
+Perceba que incrementamos o tempo de execução dos testes no 3 últimos cenários para permitir que as consultas fossem ser executadas, e não canceladas pelo teste.
+
+### 1.4.3 - Equilíbrio de Carga
+
+Para avaliar o equilíbrio de carga um controle nos testes para garantir uma alternancia entre as unidades e não sobrecarregar as consultas em tabelas/partições de uma única unidade. E para avaliar o quão equilibrada está uma consulta, utilizamos a seguinte fórmula para calcular a taxa de uso das partições:
+
+```plaintext
+Taxa de uso das partições (%) = (P_Acessadas / P_Total) * 100
+```
+
+### 1.4.4 - Taxa de Transferência de Dados
+
+Para calcular a taxa de transferência utilizamos o comando `EXPLAIN ANALYSE` do PostgreSQL aplicado a consulta SQL de referência, e esse comando devolve o tempo exato qua a query levou para completar sua execução, e também a quantidade de registros retornados pela consulta. Com essas informações, dividimos a quantidade de registros pelo tempo, e econtramos a Taxa de Transferência de dados. 
+
+```sql
+EXPLAIN ANALYSE
+<<QUERY>>
+```
+
+- Taxa: **000.000** registros / **0,000** segundos = **000.000,00** registros por segundo.
+
+### 1.4.5 - Custo de Redistribuição
+
+O custo da redistribuição é avaliado em uma escala de: BAIXO, MÉDIA e ALTO, de acordo com a complexidade de realizar a redistribuição dos dados entre as partições. Por exemplo, quando novas partições são adicionadas, a depender da estratégia, essa operação pode ter um complexidade elevada e levar um logo tempo para redistribuir os dados.
+
+### 1.4.6 - Eficiência de Consultas
+
+A eficiência pode ser expressa como uma relação entre o tempo de execução, tempo ideal e o número de partições acessadas:
+
+#### Fórmula:
+
+```plaintext
+Eficiência (%) = (P_Acessadas / P_Total) * (1 - (T_Query / T_Ideal)) * 100
+```
+
+Onde:
+- P_Acessadas: Quantidade de partições acessadas.
+- P_Total: Total de partições disponíveis.
+- T_Query: Tempo total de execução da query (Execution Time no EXPLAIN ANALYZE).
+- T_Ideal: Tempo esperado para a melhor execução possível (vamos estabelecer como ideal o tempo de execução limite de **3 segundos**).
 
 
 ## 3. Ambiente utilizado para os experimentos

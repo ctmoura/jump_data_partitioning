@@ -435,88 +435,35 @@ A tabela abaixo apresenta os resultados consolidados das métricas coletadas dur
 
 ### 1.4.1 - Tempo de Resposta
 
-A tebela também apresenta as durações da execução em: Menor duração, Maior duração e Duração média, para cada cenário do teste.
+A execução da consulta SQL de forma isolada levou: **1,19** segundos.
 
-Tempo médio no cenário com maior número de usuários e sem falhas: **14045,79 ms**.
+A tabela anterior apresenta o tempo de resposta mínimo, máximo e médio, para cada um dos cenários de teste que simulam a carga crescente de usuários.
 
-### 1.4.2 - Escalabilidade
+### 1.4.2 - Utilização de Recursos
+
+A imagem abaixo apresenta os gráficos de consumo de CPU e Memória, durante a execução dos cenários de teste.
+
+![Tabela de resultados](./consumo-recursos.jpg)
+
+### 1.4.3 - Escalabilidade
 
 De acordo com a tabela podemos perceber que e a arquitetura atual permitiu escalar até o cenário com 34 usuários simultâneos, e a partir do cenário com 55 usuários, o banco de dados passou falhar **16,43%** das consultas realizadas.
 
-### 1.4.3 - Equilíbrio de Carga
+### 1.4.4 - Equilíbrio de Carga
 
-A carga de execução foi distribuída de forma equilibrada, uma vez que todas as unidades possuem exatamente a mesma quantidade de registros em suas respectivas tabelas.
+Taxa de uso das partições (%) =  (18 / 39) * 100 = **46,15%**
 
-### 1.4.4 - Taxa de Transferência de Dados
+### 1.4.5 - Taxa de Transferência de Dados
 
-Foi executado o seguinte comando recuperar o plano de execução da query, com as informações sobre a execução.
+Taxa: **353.945** registros / **1,19** segundos = **297.432,77** registros por segundo.
 
-```sql
-EXPLAIN ANALYZE 
-SELECT
-    p."NPU", 
-    p."processoID", 
-    p."ultimaAtualizacao",
-    c.descricao AS classe, 
-    a.descricao AS assunto,
-    m.activity, 
-    m."dataInicio", 
-    m."dataFinal", 
-    m."usuarioID",
-    m.duration, 
-    m."movimentoID", 
-    com.descricao AS complemento,
-    s."nomeServidor", 
-    s."tipoServidor", 
-    d.tipo AS documento
-FROM 
-    processos_exp01 AS p
-INNER JOIN
-    movimentos_exp01 AS m 
-    ON m."processoID" = p."processoID"
-INNER JOIN
-    classes AS c ON p.classe = c.id
-LEFT JOIN
-    assuntos AS a ON p.assunto = a.id
-LEFT JOIN
-    complementos_exp01 AS com 
-    ON com."movimentoID" = m."id" 
-LEFT JOIN
-    servidores AS s ON s."servidorID" = m."usuarioID"
-LEFT JOIN
-    documentos AS d ON d."id" = m."documentoID"
-WHERE 
-    p."dataPrimeiroMovimento" >= '2020-01-01'AND p."unidadeID" = 18006 
-	AND m."dataPrimeiroMovimento" >= '2020-01-01' AND m."unidadeID" = 18006
-	AND com."dataPrimeiroMovimento" >= '2020-01-01' AND com."unidadeID" = 18006
-ORDER BY 
-    p."processoID", m."dataFinal";
-```
+### 1.4.6 - Custo de Redistribuição
 
-- Taxa: **353.945** registros / **1,19** segundos = **297.432,77** registros por segundo.
+Nessa abordagem, o custo de redistribuição é BAIXO, uma vez que para incluir um novo ano basta criar uma nova partição, que pode ser realizado feito de forma automatizada. 
 
-### 1.4.5 - Custo de Redistribuição
+### 1.4.7 - Eficiência de Consultas
 
-Nessa abordagem, o custo de redistribuição é baixo para o cenário de novos anos, uma vez que só precisa ser criada a nova partição na eminência de novos registros para anos que ainda não estejam particionados. 
-
-### 1.4.6 - Eficiência de Consultas
-
-A eficiência pode ser expressa como uma relação entre o tempo de execução, tempo ideal e o número de partições acessadas:
-
-#### Fórmula:
-
-
-```plaintext
-Eficiência (%) = (P_Acessadas / P_Total) * (1 - (T_Query / T_Ideal)) * 100
-```
-
-Onde:
-- P_Acessadas: Quantidade de partições acessadas.
-- P_Total: Total de partições disponíveis.
-- T_Query: Tempo total de execução da query (Execution Time no EXPLAIN ANALYZE).
-- T_Ideal: Tempo esperado para a melhor execução possível (vamos estabelecer como ideal o tempo de execução limite de **3 segundos**).
-
-Sendo assim, temos:
+Temos:
 
 - P_Acessadas: **18**
 - P_Total: **39**
