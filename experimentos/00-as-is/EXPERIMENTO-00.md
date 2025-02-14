@@ -183,6 +183,11 @@ ALTER TABLE IF EXISTS public.complementos_18008
     REFERENCES public.movimentos_18008 (id) MATCH SIMPLE
     ON UPDATE CASCADE
     ON DELETE CASCADE;
+
+
+CREATE INDEX servidores_idx ON servidores ("servidorID");
+CREATE INDEX documentos_idx ON documentos ("id");
+
 ```
 
 ## 1.3 - Consulta SQL de referência
@@ -240,7 +245,7 @@ A tabela abaixo apresenta os resultados consolidados das métricas coletadas dur
 
 ![Tabela de resultados](./tabela-exp-00.jpg)
 
-> Podemos perceber, a partir do cenário de testes com 21 usuários simultâneos, o banco de dados passou falhar **45,76%** das consultas realizadas.
+> Podemos perceber que a partir do cenário de testes com 21 usuários simultâneos, o banco de dados passou falhar **45,76%** das consultas realizadas.
 
 ### 1.4.1 - Tempo de Resposta
 

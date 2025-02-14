@@ -10,7 +10,7 @@ Nesta estapa, iremos preparar a base de dados para o particionamento das tabelas
 
 > Premissa: Esta etapa já foi realizada no `Experimento 00`, caso necessário, repita os passos descritos na respectiva seção.
 
-### 1.2.1 - Criação das tabelas com Particionamento por Intervalo
+### 1.2.1 - Analise da distribuição dos dados
 
 Para realização do particionamento por intervalo, primeiramento realizamos uma analise da distribuição dos dados ao longo dos anos, a fim de definir a granularidade das partições. 
 
@@ -50,7 +50,7 @@ Nesta etapa, iremos descrever os comandos necessários para criação das tabela
 Como descrito anteriormente, essas tabelas serão particionadas por ano, utilizando a técnica de particionamento do PostgreSQL chamada **Range Partitioning**, aplicada a coluna `dataPrimeiroMovimento`.
 
 
-1. O comando abaixo cria seguintes tabelas: **processos_exp01**, **movimentos_exp01** e **complementos_exp01**:
+1. O comando abaixo cria as tabelas particionadas:
 
 ```sql
 ----------------------------------------
@@ -429,13 +429,15 @@ Estes gráficos foram coletados a partir do Docker dashboard para o container de
 
 A tabela abaixo apresenta os resultados consolidados das métricas coletadas durante a execução deste experimento.
 
-![Tabela de resultados](./tabela-exp-00.jpg)
+![Tabela de resultados](./tabela-exp-01.jpg)
 
-> Podemos perceber, a partir do cenário de testes com 21 usuários simultâneos, o banco de dados passou falhar **45,76%** das consultas realizadas.
+> Podemos perceber que a partir do cenário de testes com 55 usuários simultâneos, o banco de dados passou falhar **16,43%** das consultas realizadas.
 
 ### 1.4.1 - Tempo de Resposta
 
-A tebela também apresenta as durações da execução em: Menor duração, Maior duração, e Duração média, para cada cenário do teste.
+A tebela também apresenta as durações da execução em: Menor duração, Maior duração e Duração média, para cada cenário do teste.
+
+Tempo médio no cenário com maior número de usuários e sem falhas: **14045,79 ms**.
 
 ### 1.4.2 - Escalabilidade
 
@@ -521,10 +523,9 @@ Sendo assim, temos:
 - T_Query: **1,19 segundos**
 - T_Ideal: **3 segundos** 
 
-> Eficiência (%) =  (1 - (18 / 39)) * (1 - (1,19 / 3)) * 100 => (1 - (0,461538461538462)) * (1 - (0,396666666666667)) * 100 = **32,48%**
+> Eficiência (%) =  (1 - (18 / 39)) * (1 - (1,19 / 3)) * 100 => (1 - (0,461538461538462)) * (1 - (0,396666666666667)) * 100 = **32,48%**.
 
-Nesta arquitetura, a consulta obteve uma eficiencia de **32,48%**, que aponta uma eficiência **43,14** maior que a situação atual.
-
+Nesta arquitetura, a consulta obteve uma eficiencia de **32,48%**, que aponta uma eficiência **43,14%** maior que a situação atual.
 
 ## 1.5 - Considerações
 
