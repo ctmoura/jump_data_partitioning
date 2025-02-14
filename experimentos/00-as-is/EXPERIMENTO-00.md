@@ -317,7 +317,7 @@ A eficiência pode ser expressa como uma relação entre o tempo de execução, 
 
 
 ```plaintext
-Eficiência (%) = (1 - (P_Acessadas / P_Total)) * (1 - (T_Query / T_Ideal)) * 100
+Eficiência (%) = (P_Acessadas / P_Total) * (1 - (T_Query / T_Ideal)) * 100
 ```
 
 Onde:
@@ -333,6 +333,6 @@ Sendo assim, temos:
 - T_Query: **3,48 segundos**
 - T_Ideal: **3 segundos** 
 
-> Eficiência (%) =  (1 - (3 / 9)) * (1 - (3,48 / 3)) * 100 => (1 - 0,333333333333333) * (1 - 1,16) * 100 = **-10,66%**
+> Eficiência (%) =  (3 / 9) * (1 - (3,48 / 3)) * 100 => **-5,33%**
 
-Nesta arquitetura, a consulta obteve uma eficiencia negativa de **-10,66%**.
+Nesta arquitetura, a consulta obteve uma eficiencia negativa de **-5,33%**.

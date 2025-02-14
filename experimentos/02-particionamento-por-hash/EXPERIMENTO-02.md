@@ -473,7 +473,7 @@ Para este estratégia de particionamento, a eficiência pode ser expressa como b
 
 
 ```plaintext
-Eficiência (%) = (1 - (T_Query / T_Ideal)) * 100
+Eficiência (%) = (P_Acessadas / P_Total) * (1 - (T_Query / T_Ideal)) * 100
 ```
 
 Onde:
@@ -489,9 +489,9 @@ Sendo assim, temos:
 - T_Query: **0,824 segundos**
 - T_Ideal: **3 segundos** 
 
-> Eficiência (%) =  (1 - (0,824 / 3)) * 100 => 0,725333333333333 * 100 = **72,53%**.
+> Eficiência (%) = (39 / 39) * (1 - (0,824 / 3)) * 100 => **72,53%**.
 
-Nesta arquitetura, a consulta obteve uma eficiencia de **72,53%**, que aponta uma eficiência **83,19%** maior que a situação atual.
+Constatamos que nessa estratégia a consulta obteve uma eficiencia **77,86%** maior que a situação atual.
 
 ## 1.5 - Considerações
 

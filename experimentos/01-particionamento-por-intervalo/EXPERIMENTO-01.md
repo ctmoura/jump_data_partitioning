@@ -507,7 +507,7 @@ A eficiência pode ser expressa como uma relação entre o tempo de execução, 
 
 
 ```plaintext
-Eficiência (%) = (1 - (P_Acessadas / P_Total)) * (1 - (T_Query / T_Ideal)) * 100
+Eficiência (%) = (P_Acessadas / P_Total) * (1 - (T_Query / T_Ideal)) * 100
 ```
 
 Onde:
@@ -523,9 +523,9 @@ Sendo assim, temos:
 - T_Query: **1,19 segundos**
 - T_Ideal: **3 segundos** 
 
-> Eficiência (%) =  (1 - (18 / 39)) * (1 - (1,19 / 3)) * 100 => (1 - (0,461538461538462)) * (1 - (0,396666666666667)) * 100 = **32,48%**.
+> Eficiência (%) =  (18 / 39) * (1 - (1,19 / 3)) * 100 => **27,84%**.
 
-Nesta arquitetura, a consulta obteve uma eficiencia de **32,48%**, que aponta uma eficiência **43,14%** maior que a situação atual.
+Constatamos que nessa estratégia a consulta obteve uma eficiencia **33,17%** maior que a situação atual.
 
 ## 1.5 - Considerações
 

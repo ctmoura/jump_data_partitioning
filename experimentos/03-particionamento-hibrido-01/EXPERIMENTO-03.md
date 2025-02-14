@@ -32,7 +32,7 @@ Considerando que na base de dados os processos estão distribuídos em 13 anos e
 
 ### 1.2.3 - Criação das tabelas com o Particionamento Híbrido (Intervalo + Lista)
 
-Nesta etapa, iremos descrever os comandos necessários para criação das tabelas de **processos_exp02**, **movimentos_exp02** e **complementos_exp02** com o particionamento híbrido ativado. 
+Nesta etapa, iremos descrever os comandos necessários para criação das tabelas de **processos_exp03**, **movimentos_exp03** e **complementos_exp03** com o particionamento híbrido ativado. 
 
 Como descrito anteriormente, iremos primeiramento particionar as tabelas por ano, utilizando a técnica de **Range Partitioning** aplicada a coluna `anoPrimeiroMovimento`. Em seguida, para cada tabela de partição por ano, utilizaremos a técnica de **List Partitioning** aplicada a coluna `unidadeID`, para que tenhamos a distribuição dos dados por ano e por unidade judiciária.
 
@@ -662,7 +662,7 @@ ORDER BY
 
 ### 1.4.5 - Custo de Redistribuição
 
-Nessa abordagem, o custo de redistribuição é baixo para o cenário de novos anos, uma vez que só precisa ser criada a nova partição na eminência de novos registros para anos que ainda não estejam particionados. 
+Nessa abordagem, o custo de redistribuição é baixo para os cenários de novos anos e novas unidades, uma vez que só precisam ser criadas as novas partições na eminência de novos registros para anos e unidades que ainda não estejam particionados.
 
 ### 1.4.6 - Eficiência de Consultas
 
@@ -672,7 +672,7 @@ A eficiência pode ser expressa como uma relação entre o tempo de execução, 
 
 
 ```plaintext
-Eficiência (%) = (1 - (P_Acessadas / P_Total)) * (1 - (T_Query / T_Ideal)) * 100
+Eficiência (%) = (P_Acessadas / P_Total) * (1 - (T_Query / T_Ideal)) * 100
 ```
 
 Onde:
@@ -688,58 +688,66 @@ Sendo assim, temos:
 - T_Query: **0,603 segundos**
 - T_Ideal: **3 segundos** 
 
-> Eficiência (%) =  (1 - (18 / 39)) * (1 - (0,603 / 3)) * 100 => (1 - (0,201)) * (1 - (0,0464)) * 100 = **76,19%**
+> Eficiência (%) =  (18 / 39) * (1 - (0,603 / 3)) * 100 =>  **36,87%**
 
-Nesta arquitetura, a consulta obteve uma eficiencia de **76,19%**, que aponta uma eficiência **86,85%** maior que a situação atual.
-
+Constatamos que nessa estratégia a consulta obteve uma eficiencia **42,2%** maior que a situação atual.
 
 ## 1.5 - Considerações
 
-> Vantagens:
+> **Vantagens**  
 
-1️⃣ Melhor Organização e Gerenciamento de Dados
-- Permite dividir os dados em camadas lógicas bem definidas.
-- Cada partição contém um subconjunto mais gerenciável de registros, reduzindo a sobrecarga ao acessar os dados.
+1️⃣ **Eficiência em Consultas por Ano**  
+- Como a primeira partição é por **ano**, qualquer consulta que utilize `anoPrimeiroMovimento` pode fazer *partition pruning*, reduzindo o escopo de busca.  
+- **Impacto:** Acessa apenas os dados necessários, melhorando o desempenho das queries históricas.  
 
-2️⃣ Melhor Performance para Consultas Específicas
-- Se a maioria das consultas filtra pelos dois critérios (anoPrimeiroMovimento e unidadeID), o planner do PostgreSQL pode eliminar grandes partes da tabela rapidamente.
-- O partition pruning permite que apenas as partições relevantes sejam acessadas, reduzindo I/O e tempo de execução.
+2️⃣ **Facilidade na Manutenção e Arquivamento**  
+- O modelo de **particionamento por ano** permite uma fácil rotação dos dados antigos, simplificando arquivamento e exclusão de registros.  
+- **Impacto:** Reduz custos operacionais e melhora a eficiência do banco ao longo do tempo.  
 
-3️⃣ Manutenção Facilitada
-- Como os dados são divididos em faixas de tempo (RANGE), é possível arquivar ou remover dados antigos facilmente sem impactar registros mais recentes.
-- Cada partição de unidade (LIST) permite fazer operações de manutenção mais rápidas, como VACUUM e REINDEX, sem bloquear toda a tabela.
+3️⃣ **Otimização de Consultas por Unidade**  
+- Dentro de cada ano, o particionamento por **Lista** segmenta os dados por `unidadeID`, permitindo que consultas direcionadas a uma única unidade evitem acessar dados desnecessários.  
+- **Impacto:** Queries filtradas por ano e unidade são extremamente eficientes.  
 
-4️⃣ Melhor Distribuição de Carga
-- Distribuir os dados entre múltiplas partições melhora a concorrência e evita contention (disputas de locks) ao acessar registros diferentes.
-- Isso é útil em bancos de dados OLTP onde muitas transações ocorrem simultaneamente.
+4️⃣ **Simplicidade na Definição das Partições**  
+- O número de subpartições (`unidadeID`) é fixo e conhecido, garantindo uma organização previsível dos dados.  
+- **Impacto:** Facilita o gerenciamento do banco de dados em comparação ao **Hash Partitioning**, que pode gerar partições desbalanceadas.  
 
-5️⃣ Permite Escalabilidade Horizontal
-- O particionamento híbrido pode ser expandido facilmente conforme a necessidade da aplicação.
-Exemplo: se um novo ano for adicionado (RANGE), basta criar uma nova partição sem afetar os anos anteriores.
+5️⃣ **Redução de Contenção de Locks**  
+- Cada unidade tem sua própria subpartição, permitindo concorrência paralela eficiente.  
+- **Impacto:** Melhor desempenho para transações simultâneas em diferentes unidades judiciárias.  
 
-> Desvantagens:
+---
 
-1️⃣ Complexidade na Gerência de Partições
-- Requer planejamento cuidadoso para definir corretamente os critérios de particionamento.
-- Se o número de unidades (LIST) crescer muito dentro de um ano, pode ser necessário reorganizar as partições.
+> **Desvantagens**  
 
-2️⃣ Custo Alto para Redistribuir Dados
-- Se novos valores de particionamento forem adicionados, pode ser necessário migrar dados existentes para novas partições.
-- Em RANGE, adicionar uma partição para um novo ano é fácil, mas em LIST, redistribuir registros pode ser caro.
+1️⃣ **Dificuldade para Consultas Sem `anoPrimeiroMovimento`**  
+- Se uma query não incluir um filtro por ano, todas as partições serão escaneadas.  
+- **Impacto:** Perda de eficiência para buscas que dependem apenas de `unidadeID`.  
 
-3️⃣ Dificuldade em Consultas Que Não Usam as Chaves de Particionamento
-- Se uma consulta não filtra por anoPrimeiroMovimento ou unidadeID, o PostgreSQL pode ter que varrer todas as partições.
+2️⃣ **Crescimento Rápido do Número de Partições**  
+- Como cada ano tem 3 subpartições (uma por unidade), o total de partições cresce linearmente ao longo do tempo.  
+- **Impacto:** Pode gerar dificuldades no gerenciamento e overhead no *query planner* se não for bem projetado.  
 
-> Exemplo problemático:
-```sql
-SELECT * FROM processos_exp03 WHERE "processoID" = 123456;
-```
-> → Sem filtro por anoPrimeiroMovimento ou unidadeID, a query pode escanear todas as partições.
+3️⃣ **Possível Desbalanceamento de Dados**  
+- Se algumas unidades tiverem muito mais processos do que outras, certas partições podem ficar **desproporcionalmente grandes**, reduzindo a eficiência do modelo.  
+- **Impacto:** Pode exigir reavaliação da estratégia de particionamento ao longo do tempo.  
 
-4️⃣ Índices e Foreign Keys Podem Ser Problemáticos
-- Cada partição precisa de índices próprios, aumentando o consumo de armazenamento.
-- Foreign Keys não são diretamente suportadas em tabelas particionadas, o que pode dificultar integridade referencial.
+4️⃣ **Menor Flexibilidade para Novas Unidades**  
+- Se uma nova unidade judiciária for criada, é necessário **alterar a estrutura das partições** para incluí-la.  
+- **Impacto:** A inserção de novas unidades pode exigir **redesign do particionamento** e migração de dados.  
 
-5️⃣ Gerenciamento de Carga Pode Ser Desbalanceado
-- Se a distribuição dos dados não for bem planejada, algumas partições podem ficar desproporcionalmente grandes.
-- Exemplo: Se um unidadeID específico recebe muito mais registros que os outros, pode ocorrer desbalanceamento de carga, prejudicando consultas e operações de manutenção.
+5️⃣ **Custos de Manutenção de Índices**  
+- Cada partição tem seus próprios índices, aumentando a complexidade na **atualização e manutenção** dos índices globais.  
+- **Impacto:** Pode tornar operações como REINDEX mais demoradas em bases de dados muito grandes.  
+
+---
+
+> **Conclusão**  
+
+O particionamento híbrido **(Intervalo + Lista)** é uma ótima estratégia para **consultas que segmentam por ano e unidade**, garantindo eficiência em acessos históricos e simplificação da administração dos dados. No entanto, exige planejamento para **controlar o crescimento das partições** e prever impactos caso novas unidades sejam adicionadas no futuro.  
+
+**💡 Recomendações para otimização:**  
+✔ **Monitorar o volume de dados por unidade** para evitar desbalanceamento.  
+✔ **Reavaliar a estrutura anualmente** para decidir se novas partições devem ser criadas.  
+✔ **Garantir que todas as consultas utilizem `anoPrimeiroMovimento`** para maximizar *partition pruning*.  
+✔ **Automatizar a criação de partições futuras** para reduzir o esforço manual de administração.
