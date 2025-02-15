@@ -334,14 +334,44 @@ Para realização dos experimentos será utilizada a seguinte estrutura para doc
 
 ## 6 Ranking das estratégias
 
-Analisando as variáveis dos resultados de cada estratégia, estabelecemos pesos para cada uma delas de forma que elas possam influenciar positivamente e/ou negativamente no cálculo de eficiencia da estratégia.
+A metodologia de **rankings individuais** tem sido amplamente utilizada para comparar estratégias de particionamento de dados em bancos de dados, permitindo a avaliação do desempenho de diferentes abordagens. Esse método consiste em atribuir posições para cada estratégia com base em métricas específicas, o que possibilita uma análise comparativa eficiente.
+
+No contexto de bancos de dados, o método de **rankings individuais** é utilizado para comparar estratégias de particionamento, considerando fatores como número de usuários simultâneos suportados, taxa de erros, duração da execução, uso de CPU e memória, e eficiência de cache. Essa abordagem foi aplicada por pesquisadores como Poh et al. (2020) em estudos sobre otimização de desempenho em bancos de dados distribuídos ([arxiv.org](https://arxiv.org/abs/2012.07149)). Eles demonstraram que o uso de técnicas de aprendizado para classificação pode aumentar a eficiência da execução de consultas, reduzindo significativamente os tempos de resposta e o consumo de recursos computacionais.
+
+Para aplicar essa metodologia, atribuímos rankings individuais a cada métrica relevante. Por exemplo, em métricas onde valores menores indicam melhor desempenho (como tempo de execução e uso de recursos), a estratégia com o menor valor recebe a melhor posição. Já para métricas onde valores maiores são preferíveis (como número de usuários simultâneos e eficiência de cache), a classificação é feita de forma inversa.
+
+Após a atribuição dos rankings, somamos todas as posições de cada estratégia para obter um **ranking total**. A estratégia com a menor soma de posições é considerada a mais eficiente. Essa abordagem tem sido utilizada em diversas pesquisas para avaliar a escalabilidade e eficiência de bancos de dados distribuídos, como demonstrado em estudos sobre Apache Spark e PostgreSQL ([scoreplan.com.br](https://scoreplan.com.br/avaliacao-de-desempenho)).
+
+Essa metodologia oferece diversas vantagens:
+- **Simplicidade**: Não requer normalização complexa dos dados, tornando sua implementação mais direta.
+- **Flexibilidade**: Pode ser aplicada em diferentes contextos, incluindo bancos de dados distribuídos e sistemas de Big Data.
+- **Clareza**: Facilita a interpretação dos resultados ao fornecer um ranking direto do desempenho das estratégias avaliadas.
+
+Contudo, a eficácia dessa abordagem depende da escolha adequada das métricas utilizadas e do contexto de aplicação, garantindo que os critérios de avaliação reflitam corretamente os objetivos da análise. Essa metodologia continua sendo uma ferramenta valiosa para avaliar o impacto de diferentes estratégias de particionamento na eficiência operacional de bancos de dados modernos.
 
 ### Variáveis e seus pesos
 
 1. "Nº Usuários": +2                 # Quanto mais usuários, melhor
 2. "Taxa Erros (%)": -1,             # Quanto menor a taxa de erro, melhor
-3. "Duração Média": -1,              # Quanto menor a duração média, melhor
+3. "Duração Média": -2,              # Quanto menor a duração média, melhor
 4. "Tam. Arq. Temp. (GB)": -1,       # Quanto menor o tamanho, melhor
 5. "Cache Hit (%)": 1,               # Quanto maior, melhor
 6. "Uso Máx. CPU": -1,               # Quanto menor, melhor
 7. "Uso Máx. Memória (GB)": -1       # Quanto menor, melhor
+
+
+### Script para comparação
+
+Foi implementado um script em python, disponível neste [link](./experimentos/ranking.py), que analisa a [tabela de resultados](./experimentos/Experimentos_Resultados.csv) dos experimentos e faz a comparação das variáveis utilizando os pesos definidos e estabelece uma pontução para cada uma das estratégias, a fim de estabecer um ranking.
+
+Abaixo temos o resultado desse ranking das estratégias:
+
+### Ranking
+
+| Posição | Estratégia/Experimento | Score     |
+| ------- | ---------------------- | --------- |
+|      1º | Exp_03                 |  5.422969 |
+|      2º | Exp_04                 |  5.401952 |
+|      3º | Exp_01                 |  5.383064 |
+|      4º | Exp_02                 |  5.025569 |
+|      5º | Exp_00                 |  3.575735 |
