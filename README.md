@@ -330,3 +330,18 @@ Para realização dos experimentos será utilizada a seguinte estrutura para doc
 * [02 - Particionamento por Hash](./experimentos/02-particionamento-por-hash/EXPERIMENTO-02.md)
 * [03 - Particionamento Híbrido (Intervalo + Lista)](./experimentos/03-particionamento-hibrido-01/EXPERIMENTO-03.md)
 * [04 - Particionamento Híbrido (Intervalo + Hash)](./experimentos/04-particionamento-hibrido-02/EXPERIMENTO-04.md)
+
+
+## 6 Ranking das estratégias
+
+Analisando as variáveis dos resultados de cada estratégia, estabelecemos pesos para cada uma delas de forma que elas possam influenciar positivamente e/ou negativamente no cálculo de eficiencia da estratégia.
+
+### Variáveis e seus pesos
+
+1. "Nº Usuários": +2                 # Quanto mais usuários, melhor
+2. "Taxa Erros (%)": -1,             # Quanto menor a taxa de erro, melhor
+3. "Duração Média": -1,              # Quanto menor a duração média, melhor
+4. "Tam. Arq. Temp. (GB)": -1,       # Quanto menor o tamanho, melhor
+5. "Cache Hit (%)": 1,               # Quanto maior, melhor
+6. "Uso Máx. CPU": -1,               # Quanto menor, melhor
+7. "Uso Máx. Memória (GB)": -1       # Quanto menor, melhor
