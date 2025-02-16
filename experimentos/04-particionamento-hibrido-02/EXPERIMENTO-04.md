@@ -569,12 +569,6 @@ ORDER BY
 
 ## 1.4 - Métricas avaliadas e resultados
 
-A imagem abaixo apresentamos os gráficos da utilização de recursos durante a execução deste experimento. 
-
-Estes gráficos foram coletados a partir do Docker dashboard para o container de execução do banco de dados PostgreSQL.
-
-![Stats](./stats-geral.jpg)
-
 A tabela abaixo apresenta os resultados consolidados das métricas coletadas durante a execução deste experimento.
 
 ![Tabela de resultados](./tabela-exp-04.jpg)
@@ -599,7 +593,7 @@ De acordo com a tabela podemos perceber que e a arquitetura atual permitiu escal
 
 ### 1.4.4 - Equilíbrio de Carga
 
-Taxa de uso das partições (%) =  (13 / 39) * 100 = **33,33%**
+Taxa de uso das partições (%) =  (18 / 39) * 100 = **46,15%**
 
 ### 1.4.5 - Taxa de Transferência de Dados
 
@@ -618,9 +612,9 @@ Temos:
 - T_Query: **0.779 segundos**
 - T_Ideal: **3 segundos** 
 
-> Eficiência (%) =  (13 / 39) * (1 - (0,779 / 3)) * 100 => **24,67%**
+> Eficiência (%) =  (18 / 39) * (1 - (0,779 / 3)) * 100 => **34,16%**
 
-Constatamos que nessa estratégia a consulta obteve uma eficiencia **30,00%** maior que a situação atual.
+Constatamos que nessa estratégia a consulta obteve uma eficiencia **39,49%** maior que a situação atual.
 
 ## 1.5 - Considerações
 

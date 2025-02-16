@@ -5,13 +5,13 @@ import numpy as np
 csv_file = "./Experimentos_Resultados.csv"  # Nome do arquivo CSV
 df = pd.read_csv(csv_file)
 
-# Normaliza a coluna removendo o % e trocando , por .
+# Normaliza a coluna removendo o %
 df["Uso Máx. CPU"] = df["Uso Máx. CPU"].astype(str).str.replace("%", "")
 
 
-# Convertendo colunas numéricas (substituir vírgula decimal por ponto)
+# Convertendo colunas numéricas (e substituir vírgula decimal por ponto)
 numeric_columns = [
-    "Nº Usuários", "Taxa Erros (%)", "Menor Duração", "Maior Duração", "Duração Média",
+    "Nº Usuários", "Taxa Erros (%)", "Menor Duração", "Maior Duração", "Duração Média", "Conexões Ativas",
     "Tam. Arq. Temp. (GB)", "Cache Hit (%)", "Uso Máx. CPU", "Uso Máx. Memória (GB)"
 ]
 for col in numeric_columns:
@@ -25,13 +25,16 @@ def normalize(column, invert=False):
 
 # Criando pesos para as métricas
 pesos = {
-    "Nº Usuários": 2,                 # Quanto maior número de usuários, melhor
-    "Taxa Erros (%)": -1,             # Quanto menor a taxa de erros, melhor
-    "Duração Média": -2,              # Quanto menor a duração média, melhor
-    "Tam. Arq. Temp. (GB)": -1,       # Quanto menor o tamanho, melhor
-    "Cache Hit (%)": 1,               # Quanto maior, melhor
-    "Uso Máx. CPU": -1,               # Quanto menor, melhor
-    "Uso Máx. Memória (GB)": -1       # Quanto menor, melhor
+    "Nº Usuários": 2.0,                 # Quanto maior número de usuários, melhor
+    "Taxa Erros (%)": -1.0,             # Quanto menor a taxa de erros, melhor
+    "Menor Duração": -1.0,              # Quanto menor a duração média, melhor
+    "Maior Duração": -1.0,              # Quanto menor a duração máxima é melhor
+    "Duração Média": -2.0,              # Quanto menor a duração média é melhor
+    "Conexões Ativas": -1.0,            # Quanto menos conexoes ativas é melhor
+    "Tam. Arq. Temp. (GB)": -1.0,       # Quanto menos arquivo temporario é melhor
+    "Cache Hit (%)": 1.0,               # Quanto maior uso da cache é melhor
+    "Uso Máx. CPU": -1.0,               # Quanto menos uso de CPU é melhor
+    "Uso Máx. Memória (GB)": -2.0       # Quanto menos uso de memória é melhor
 }
 
 # Normalizando os dados

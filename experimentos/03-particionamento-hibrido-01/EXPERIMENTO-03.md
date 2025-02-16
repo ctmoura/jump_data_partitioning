@@ -580,12 +580,6 @@ ORDER BY
 
 ## 1.4 - Métricas avaliadas e resultados
 
-A imagem abaixo apresentamos os gráficos da utilização de recursos durante a execução deste experimento. 
-
-Estes gráficos foram coletados a partir do Docker dashboard para o container de execução do banco de dados PostgreSQL.
-
-![Stats](./stats-geral.jpg)
-
 A tabela abaixo apresenta os resultados consolidados das métricas coletadas durante a execução deste experimento.
 
 ![Tabela de resultados](./tabela-exp-03.jpg)
