@@ -332,46 +332,40 @@ Para realização dos experimentos será utilizada a seguinte estrutura para doc
 * [04 - Particionamento Híbrido (Intervalo + Hash)](./experimentos/04-particionamento-hibrido-02/EXPERIMENTO-04.md)
 
 
-## 6 Ranking das estratégias
+## 6 Avaliação das estratégias utilizando o método TOPSIS
 
-A metodologia de **rankings individuais** tem sido amplamente utilizada para comparar estratégias de particionamento de dados em bancos de dados, permitindo a avaliação do desempenho de diferentes abordagens. Esse método consiste em atribuir posições para cada estratégia com base em métricas específicas, o que possibilita uma análise comparativa eficiente.
+A técnica Technique for Order of Preference by Similarity to Ideal Solution (TOPSIS) é amplamente utilizada para a análise multicritério em diversos contextos, incluindo a otimização de desempenho de bancos de dados relacionais (HWANG; YOON, 1981). O método baseia-se na seleção da alternativa que possui a menor distância para a solução ideal positiva e a maior distância para a solução ideal negativa. Neste capítulo, detalhamos a aplicação do TOPSIS na avaliação comparativa de estratégias de particionamento de dados em bancos de dados relacionais.
 
-No contexto de bancos de dados, o método de **rankings individuais** é utilizado para comparar estratégias de particionamento, considerando fatores como número de usuários simultâneos suportados, taxa de erros, duração da execução, uso de CPU e memória, e eficiência de cache. Essa abordagem foi aplicada por pesquisadores como Poh et al. (2020) em estudos sobre otimização de desempenho em bancos de dados distribuídos ([arxiv.org](https://arxiv.org/abs/2012.07149)). Eles demonstraram que o uso de técnicas de aprendizado para classificação pode aumentar a eficiência da execução de consultas, reduzindo significativamente os tempos de resposta e o consumo de recursos computacionais.
+### 6.1 Definição dos Critérios e Pesos
 
-Para aplicar essa metodologia, atribuímos rankings individuais a cada métrica relevante. Por exemplo, em métricas onde valores menores indicam melhor desempenho (como tempo de execução e uso de recursos), a estratégia com o menor valor recebe a melhor posição. Já para métricas onde valores maiores são preferíveis (como número de usuários simultâneos e eficiência de cache), a classificação é feita de forma inversa.
+A primeira etapa consiste na definição dos critérios de avaliação e sua classificação como critérios de custo ou benefício. Critérios de custo são aqueles cujo menor valor é desejável, enquanto critérios de benefício são aqueles cujo maior valor é preferível. Os critérios de desempenho e pesos foram estabelecidos de acordo com a sua influencia positiva (benefício) ou negativa (custo) na eficiência da estratégia. 
 
-Após a atribuição dos rankings, somamos todas as posições de cada estratégia para obter um **ranking total**. A estratégia com a menor soma de posições é considerada a mais eficiente. Essa abordagem tem sido utilizada em diversas pesquisas para avaliar a escalabilidade e eficiência de bancos de dados distribuídos, como demonstrado em estudos sobre Apache Spark e PostgreSQL ([scoreplan.com.br](https://scoreplan.com.br/avaliacao-de-desempenho)).
-
-Essa metodologia oferece diversas vantagens:
-- **Simplicidade**: Não requer normalização complexa dos dados, tornando sua implementação mais direta.
-- **Flexibilidade**: Pode ser aplicada em diferentes contextos, incluindo bancos de dados distribuídos e sistemas de Big Data.
-- **Clareza**: Facilita a interpretação dos resultados ao fornecer um ranking direto do desempenho das estratégias avaliadas.
-
-Contudo, a eficácia dessa abordagem depende da escolha adequada das métricas utilizadas e do contexto de aplicação, garantindo que os critérios de avaliação reflitam corretamente os objetivos da análise. Essa metodologia continua sendo uma ferramenta valiosa para avaliar o impacto de diferentes estratégias de particionamento na eficiência operacional de bancos de dados modernos.
-
-### Variáveis e seus pesos
-
-1. "Nº Usuários": +2                 # Quanto mais usuários, melhor
-2. "Taxa Erros (%)": -1,             # Quanto menor a taxa de erro, melhor
-3. "Duração Média": -2,              # Quanto menor a duração média, melhor
-4. "Tam. Arq. Temp. (GB)": -1,       # Quanto menor o tamanho, melhor
-5. "Cache Hit (%)": 1,               # Quanto maior, melhor
-6. "Uso Máx. CPU": -1,               # Quanto menor, melhor
-7. "Uso Máx. Memória (GB)": -1       # Quanto menor, melhor
+As seguintes premissas foram adotadas:
+    • **Nº Usuários:** Quanto maior a quantidade de usuários simultâneos, maior é a influencia positiva;
+    • **Taxa Erros (%):** Quanto maior o valor da taxa, maior é a influencia negativa;
+    • **Tempo de Resposta (Mínimo):** Quanto maior o valor, maior é a influencia negativa;
+    • **Tempo de Resposta (Máximo):** Quanto maior o valor, maior é a influencia negativa;
+    • **Tempo de Resposta (Médio):** Quanto maior o valor, maior é a influencia negativa;
+    • **Conexões Ativas:** Quanto maior a quantidade de conexoes, maior é a influencia negativa;
+    • **Tam. Arq. Temp. (GB):** Quanto maior o valor, maior é a influencia negativa;
+    • **Cache Hit (%):** Quanto maior a taxa de uso da cache, maior é a influencia positiva;
+    • **Uso Máx. CPU:** Quanto maior a taxa de uso de CPU, maior é a influencia negativa;
+    • **Uso Máx. Memória (GB):** Quanto maior o consumo de Memória, maior é a influencia negativa;
 
 
-### Script para comparação
+### 6.2 Script de implementação da análise com método TOPSIS
 
 Foi implementado um script em python, disponível neste [link](./experimentos/ranking.py), que analisa a [tabela de resultados](./experimentos/Experimentos_Resultados.csv) dos experimentos e faz a comparação das variáveis utilizando os pesos definidos e estabelece uma pontução para cada uma das estratégias, a fim de estabecer um ranking.
 
+
+### 6.3 Ranking TOPSIS
+
 Abaixo temos o resultado desse ranking das estratégias:
 
-### Ranking
-
-| Posição | Estratégia/Experimento | Score     |
-| ------- | ---------------------- | --------- |
-|      1º | Exp_03                 |  5.422969 |
-|      2º | Exp_04                 |  5.401952 |
-|      3º | Exp_01                 |  5.383064 |
-|      4º | Exp_02                 |  5.025569 |
-|      5º | Exp_00                 |  3.575735 |
+| Posição | Estratégia/Experimento | TOPSIS Score |
+| ------- | ---------------------- | ------------ |
+|      1º | Exp_03                 |     0.827700 |
+|      2º | Exp_04                 |     0.826417 |
+|      3º | Exp_01                 |     0.802033 |
+|      4º | Exp_02                 |     0.801455 |
+|      5º | Exp_00                 |     0.647560 |
