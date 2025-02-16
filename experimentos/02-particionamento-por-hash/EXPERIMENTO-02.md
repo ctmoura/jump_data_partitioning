@@ -325,6 +325,10 @@ VACUUM ANALYZE processos_exp02;
 
 ```
 
+3. Modelo de dados atualizado com a estratégia:
+
+![Modelo de dados](./modelo-exp02.png)
+
 ## 1.3 - Consulta SQL de referência
 
 Neste experimento a query de referência foi ajustada para utilizar as tabelas com o respectivo particionamento.

@@ -33,7 +33,7 @@ Essas tabelas são criadas dinâmicamente, na carga inicial de dados de um Órg�
 
 ### 1.2 Modelo físico do banco de dados
 
-![Stats](./experimentos/00-as-is/schemaspy/output/diagrams/summary/relationships.real.large.png)
+![Stats](./experimentos/00-as-is/modelo-dados.png)
 
 
 ## 2. Métricas de avaliação

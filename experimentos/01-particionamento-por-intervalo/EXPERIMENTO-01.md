@@ -368,8 +368,11 @@ SELECT c.*, m."dataPrimeiroMovimento"
 VACUUM ANALYZE complementos_exp01;
 VACUUM ANALYZE movimentos_exp01;
 VACUUM ANALYZE processos_exp01;
-
 ```
+
+3. Modelo de dados atualizado com a estratégia:
+
+![Modelo de dados](./modelo-exp01.png)
 
 ## 1.3 - Consulta SQL de referência
 

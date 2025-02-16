@@ -190,6 +190,11 @@ CREATE INDEX documentos_idx ON documentos ("id");
 
 ```
 
+3. Modelo de dados atualizado com a estratégia:
+
+![Modelo de dados](./modelo-dados.png)
+
+
 ## 1.3 - Consulta SQL de referência
 
 Neste experimento foi utilizada a consulta SQL de referência abaixo:
