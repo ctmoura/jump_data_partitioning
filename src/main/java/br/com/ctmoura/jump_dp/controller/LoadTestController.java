@@ -7,24 +7,35 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ctmoura.jump_dp.dto.ContainerMetrics;
+import br.com.ctmoura.jump_dp.service.DatabaseStatsService;
+import br.com.ctmoura.jump_dp.service.DockerMetricsService;
 import br.com.ctmoura.jump_dp.service.LoadTestService;
 
 @RestController
 public class LoadTestController {
 
     private final LoadTestService loadTestService;
+    private final DatabaseStatsService databaseStatsService;
+    private final DockerMetricsService dockerMetricsService;
 
-    public LoadTestController(LoadTestService loadTestService) {
+    public LoadTestController(
+        LoadTestService loadTestService,
+        DatabaseStatsService databaseStatsService,
+        DockerMetricsService dockerMetricsService) {
         this.loadTestService = loadTestService;
+        this.databaseStatsService = databaseStatsService;
+        this.dockerMetricsService = dockerMetricsService;
+    }
+
+    @GetMapping("/metrics")
+    public ContainerMetrics getMetrics() {
+        return dockerMetricsService.getContainerMetrics();
     }
 
     @GetMapping("/reset-stats")
     public String executeResetStats() {
-        boolean success = false;
-        try {
-            this.loadTestService.executeResetStats();
-            success = true;
-        } catch (Exception e) {}
+        boolean success = this.databaseStatsService.executeResetStats();
         // Retornar uma mensagem indicando que o teste foi concluído
         return String.format("Estatísticas resetadas: %s", success);
     }

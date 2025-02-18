@@ -18,7 +18,7 @@
     </appender>
 
     <!-- Logger for the Specific Class -->
-    <logger name="br.com.ctmoura.jump_dp.service.LoadTestService" level="INFO" additivity="false">
+    <logger name="br.com.ctmoura.jump_dp.service.ExecutionLoggerService" level="INFO" additivity="false">
         <appender-ref ref="LOAD_TEST_LOGS"/>
         <appender-ref ref="STDOUT"/>
     </logger>
